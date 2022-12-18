@@ -3,7 +3,13 @@ import { View, Text, StyleSheet, Pressable } from 'react-native'
 
 import Stat from './IconStat'
 
-export default function CityListItem({ CityName, CountryName, Action = () => {console.log("press")} }) {
+export default function CityListItem({
+  CityName,
+  CountryName,
+  Action = () => {
+    console.log('press')
+  },
+}) {
   return (
     <Pressable onPress={Action} style={styles.cityItemContainer}>
       <View style={styles.namesContainer}>
@@ -12,11 +18,19 @@ export default function CityListItem({ CityName, CountryName, Action = () => {co
       </View>
 
       <View style={styles.statContainer}>
-        <Stat Icon={require('../../assets/icons/Thermometer.svg')} Stat={'72 F'} />
-        
+        <Stat
+          Icon={require('../../assets/icons/Thermometer.png')}
+          size={20}
+          Stat={'72 F'}
+        />
+
         <View style={styles.divider} />
-        
-        <Stat Icon={require('../../assets/icons/Rain-Shower.svg')} Stat={'20 %'} />
+
+        <Stat
+          Icon={require('../../assets/icons/Rain-Shower.png')}
+          size={20}
+          Stat={'20 %'}
+        />
       </View>
     </Pressable>
   )
@@ -37,12 +51,12 @@ const styles = StyleSheet.create({
   },
 
   cityName: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '400',
   },
 
   countryName: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '350',
   },
 
@@ -63,5 +77,6 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
     borderWidth: 1,
     marginHorizontal: 8,
-  }
+    height: '32%',
+  },
 })

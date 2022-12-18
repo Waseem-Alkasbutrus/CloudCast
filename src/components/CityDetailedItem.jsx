@@ -3,41 +3,73 @@ import { View, Text, StyleSheet, Pressable } from 'react-native'
 
 import Stat from './IconStat'
 
-export default function CityDetailedItem({ CityName, Action = () => {console.log("press")} }) {
+export default function CityDetailedItem({
+  CityName,
+  Action = () => {
+    console.log('press')
+  },
+}) {
   return (
     <Pressable onPress={Action} style={style.cardView}>
       <Text style={style.cardTitle}>{CityName}</Text>
 
       <View style={style.flexRow}>
-        <Stat Icon={require('../../assets/icons/Thermometer.svg')} Stat={'75 f'} Size={32} Weight={'420'}/>
-
-        <View style={style.divider} />
+        <Stat
+          Icon={require('../../assets/icons/Thermometer.png')}
+          Stat={'75 f'}
+          Size={40}
+          Weight={'420'}
+        />
 
         <View style={style.flexCol}>
-          <Stat Stat={'84 f'} />
-          <Stat Stat={'69 f'} />
+          <Stat Size={20} Stat={'84 f'} />
+          <Stat Size={20} Stat={'69 f'} />
         </View>
       </View>
 
       <View style={style.flexRow}>
         <View style={style.flexCol}>
-          <Stat Icon={require('../../assets/icons/Wind.svg')} Stat={'10 mph'} />
-          <Stat Icon={require('../../assets/icons/Pressure.svg')} Stat={'1 atm'} />
+          <Stat
+            Icon={require('../../assets/icons/Wind.png')}
+            Size={20}
+            Stat={'10 mph'}
+          />
+          <Stat
+            Icon={require('../../assets/icons/Pressure.png')}
+            Size={20}
+            Stat={'1 atm'}
+          />
         </View>
 
         <View style={style.divider} />
 
         <View style={style.flexCol}>
-          <Stat Icon={require('../../assets/icons/Humidity.svg')} Stat={'20 %'} />
-          <Stat Icon={require('../../assets/icons/Air-Quality.svg')} Stat={'100'} />
+          <Stat
+            Icon={require('../../assets/icons/Humidity.png')}
+            Size={20}
+            Stat={'20 %'}
+          />
+          <Stat
+            Icon={require('../../assets/icons/Air-Quality.png')}
+            Size={20}
+            Stat={'100'}
+          />
         </View>
 
         <View style={style.divider} />
 
         <View style={style.flexCol}>
-          <Stat Icon={require('../../assets/icons/Rain-Shower.svg')} Stat={'10 %'} />
-          <Stat Icon={require('../../assets/icons/UV.svg')} Stat={'0.4'} />
-        </View >
+          <Stat
+            Icon={require('../../assets/icons/Rain-Shower.png')}
+            Size={20}
+            Stat={'10 %'}
+          />
+          <Stat
+            Icon={require('../../assets/icons/UV.png')}
+            Size={20}
+            Stat={'0.4'}
+          />
+        </View>
       </View>
     </Pressable>
   )
@@ -58,14 +90,14 @@ const style = StyleSheet.create({
     borderRadius: 10,
   },
 
-  flexRow : {
+  flexRow: {
     display: 'flex',
     flexDirection: 'row',
 
     marginVertical: 4,
 
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
 
   flexCol: {
@@ -75,17 +107,18 @@ const style = StyleSheet.create({
     marginRight: 4,
 
     alignItems: 'flex-start',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
 
-  cardTitle :{
+  cardTitle: {
     fontSize: 20,
     fontWeight: '500',
   },
 
   divider: {
     borderColor: '#000000',
-    borderWidth: 1,
+    borderWidth: 0.2,
     marginHorizontal: 8,
-  }
+    height: '32%',
+  },
 })

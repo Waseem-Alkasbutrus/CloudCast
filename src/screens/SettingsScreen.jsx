@@ -31,13 +31,13 @@ export default function SettingsScreen() {
     return (
         <SafeAreaView style={styles.settingsContainer}>
             <TitledSection Label={'Privacy'}>
-                <OpenDialogue SettingName={'Location'} Description={'On'} Icon={require('../../assets/icons/Location.svg')} />
+                <OpenDialogue SettingName={'Location'} Description={'On'} Icon={require('../../assets/icons/Location.png')} />
             </TitledSection>
 
             <TitledSection Label={'Units'}>
-                <OpenDialogue SettingName={'Temperature'} Description={'Fahrenheit'} Icon={require('../../assets/icons/Thermometer.svg')} />
-                <OpenDialogue SettingName={'Length'} Description={'Miles'} Icon={require('../../assets/icons/Ruler.svg')} />
-                <OpenDialogue SettingName={'Pressure'} Description={'Atm'} Icon={require('../../assets/icons/Pressure.svg')} />
+                <OpenDialogue SettingName={'Temperature'} Description={'Fahrenheit'} Icon={require('../../assets/icons/Thermometer.png')} />
+                <OpenDialogue SettingName={'Length'} Description={'Miles'} Icon={require('../../assets/icons/Ruler.png')} />
+                <OpenDialogue SettingName={'Pressure'} Description={'Atm'} Icon={require('../../assets/icons/Pressure.png')} />
             </TitledSection>
 
             <TitledSection Label={'Danger Zone'}>

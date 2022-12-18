@@ -19,7 +19,7 @@ export function OpenDialogue({
         </View>
       </View>
 
-      <Image style={[styles.icon, {transform: [{ rotate: "-90deg" }]}]} source={require('../../assets/icons/Expand-Down-Arrow.svg')} />
+      <Image style={[styles.icon, {transform: [{ rotate: "-90deg" }]}]} source={require('../../assets/icons/Expand-Down-Arrow.png')} />
     </Pressable>
   )
 }
