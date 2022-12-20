@@ -1,13 +1,13 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, ScrollView } from 'react-native'
 
 export default function TitledSection({children, Label}) {
     return (
         <View style={styles.homeContainer}>
             <Text style={styles.heading}>{Label}</Text>
-            <View style={styles.contentContainer}>
+            <ScrollView style={styles.contentContainer}>
                 {children}
-            </View>
+            </ScrollView>
         </View>
     )
 }

@@ -1,24 +1,27 @@
 import React from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, ScrollView } from 'react-native'
 
-import CityListItem from '../components/CityListItem'
 import CityDetailedItem from '../components/CityDetailedItem'
 import TitledSection from '../components/TitledSection'
-import HorizontalScroller from '../components/HorizontalScoller'
 
-export default function CityScreen({route}) {
-
+export default function CityScreen({ route }) {
   console.log(route.params)
 
   return (
-    <View style={style.cityContainer}>
+    <View style={styles.cityContainer}>
       <CityDetailedItem Weather={route.params.Weather}></CityDetailedItem>
 
-      <HorizontalScroller>
-       <WeeklyListItem></WeeklyListItem>
-       <WeeklyListItem></WeeklyListItem>
-       <WeeklyListItem></WeeklyListItem>
-      </HorizontalScroller>
+      <View style={weekly.section}>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <WeeklyListItem></WeeklyListItem>
+          <WeeklyListItem></WeeklyListItem>
+          <WeeklyListItem></WeeklyListItem>
+          <WeeklyListItem></WeeklyListItem>
+          <WeeklyListItem></WeeklyListItem>
+          <WeeklyListItem></WeeklyListItem>
+          <WeeklyListItem></WeeklyListItem>
+        </ScrollView>
+      </View>
 
       <TitledSection Label={'Hourly Forecast'}>
         <Text>Forecast each hour I guess</Text>
@@ -29,17 +32,48 @@ export default function CityScreen({route}) {
 
 function WeeklyListItem() {
   return (
-    <View>
-      <Text>Tue</Text>
-      <Text>80 f</Text>
-      <Text>70 f</Text>
+    <View style={weekly.card}>
+      <Text style={weekly.day}>Tue</Text>
+      <Text style={weekly.temp}>80 f</Text>
+      <Text style={weekly.temp}>70 f</Text>
     </View>
   )
 }
 
-const style = StyleSheet.create({
+const weekly = StyleSheet.create({
+  section: {
+    display: 'flex',
+    gap: 8,
+    flexDirection: 'row',
+    height: 'auto',
+  },
+  card: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    marginHorizontal: 4,
+
+    backgroundColor: 'white',
+    borderRadius: 8,
+
+    height: 'auto',
+  },
+  day: {
+    fontSize: 20,
+    fontWeight: '500',
+    marginBottom: 6,
+  },
+  temp: {
+    fontSize: 16,
+  },
+})
+
+const styles = StyleSheet.create({
   cityContainer: {
     backgroundColor: '#F7F7F7',
-    flexGrow: 1
+    flexGrow: 1,
   },
 })
