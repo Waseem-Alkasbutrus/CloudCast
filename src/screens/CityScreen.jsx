@@ -1,14 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import CityDetailedItem from '../components/CityDetailedItem'
 import TitledSection from '../components/TitledSection'
 
-export default function CityScreen({ route }) {
-  console.log(route.params)
+export default function CityScreen({ navigation, route }) {
+  useEffect(() => {
+    navigation.setOptions({title: route.params.Weather.name})
+  }, [])
 
   return (
-    <View style={styles.cityContainer}>
+    <SafeAreaView style={styles.cityContainer}>
       <CityDetailedItem Weather={route.params.Weather}></CityDetailedItem>
 
       <View style={weekly.section}>
@@ -26,7 +29,7 @@ export default function CityScreen({ route }) {
       <TitledSection Label={'Hourly Forecast'}>
         <Text>Forecast each hour I guess</Text>
       </TitledSection>
-    </View>
+    </SafeAreaView>
   )
 }
 

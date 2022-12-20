@@ -1,4 +1,3 @@
-import react from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import CityScreen from '../screens/CityScreen'
@@ -12,7 +11,7 @@ export default function CityScreenStack({ MainScreen }) {
       screenOptions={{
         headerMode: 'screen',
         headerTintColor: 'white',
-        headerStyle: { backgroundColor: 'tomato' },
+        headerStyle: { backgroundColor: '#00C2FF' },
       }}
     >
       <Stack.Screen

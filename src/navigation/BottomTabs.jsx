@@ -28,6 +28,7 @@ export default function BottomTabs() {
         component={Home}
         options={{
           showIcon: true,
+          headerShown: false,
           tabBarIcon: (tabInfo) => {
             return (
               <Ionicons
@@ -44,6 +45,7 @@ export default function BottomTabs() {
         component={SearchScreen}
         options={{
           showIcon: true,
+          headerShown: false,
           tabBarIcon: (tabInfo) => {
             return (
               <Ionicons
@@ -60,6 +62,7 @@ export default function BottomTabs() {
         component={SettingsScreen}
         options={{
           showIcon: true,
+          headerShown: false,
           tabBarIcon: (tabInfo) => {
             return (
               <Ionicons

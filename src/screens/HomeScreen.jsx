@@ -9,6 +9,7 @@ import TitledSection from '../components/TitledSection'
 import FavoriteCitiesList from '../../assets/FavoriteCities'
 
 import { API_KEY } from '@env'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default function HomeScreen({ navigation }) {
   const [GPSweather, setGPSWeather] = useState()
@@ -47,7 +48,15 @@ export default function HomeScreen({ navigation }) {
     <TitledSection Label={'Favorite Cities'}>
       {FavWeather != undefined ? (
         FavWeather.map((city) => {
-          return <CityListItem key={city.name} Weather={city} Action={() => {navigation.navigate('City', {Weather: city})}}></CityListItem>
+          return (
+            <CityListItem
+              key={city.name}
+              Weather={city}
+              Action={() => {
+                navigation.navigate('City', { Weather: city })
+              }}
+            ></CityListItem>
+          )
         })
       ) : (
         <Text>No Favorites Added</Text>
@@ -56,11 +65,11 @@ export default function HomeScreen({ navigation }) {
   )
 
   return (
-    <View style={style.homeContainer}>
+    <SafeAreaView style={style.homeContainer}>
       <CityDetailedItem Weather={GPSweather}></CityDetailedItem>
 
       {citylistItems}
-    </View>
+    </SafeAreaView>
   )
 }
 
