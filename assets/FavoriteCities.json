@@ -1,0 +1,20 @@
+[
+  {
+    "city": "Austin",
+    "country": "United States",
+    "lat": 30.267,
+    "long": -97.743
+  },
+  {
+    "city": "Arlington",
+    "country": "United States",
+    "lat": 32.736,
+    "long": -97.108
+  },
+  {
+    "city": "Grapevine",
+    "country": "United States",
+    "lat": 32.934,
+    "long": -97.078
+  }
+]
