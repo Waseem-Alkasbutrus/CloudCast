@@ -4,23 +4,28 @@ import { Ionicons } from '@expo/vector-icons'
 import HomeScreen from '../screens/HomeScreen'
 import SettingsScreen from '../screens/SettingsScreen'
 import SearchScreen from '../screens/SearchScreen'
+import CityScreenStack from './CityScreenStack'
 
 const Tab = createBottomTabNavigator()
 
 const active = '#00C2FF'
 const inactive = '#5F5F5F'
 
+function Home() {
+  return <CityScreenStack MainScreen={HomeScreen}></CityScreenStack>
+}
+
 export default function BottomTabs() {
   return (
     <Tab.Navigator
       defaultScreenOptions={'Home'}
       screenOptions={{
-        tabBarStyle: { height: 64, padding: 8, },
+        tabBarStyle: { height: 64, padding: 8 },
       }}
     >
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={Home}
         options={{
           showIcon: true,
           tabBarIcon: (tabInfo) => {

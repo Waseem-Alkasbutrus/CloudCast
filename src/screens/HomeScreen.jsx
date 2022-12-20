@@ -47,7 +47,7 @@ export default function HomeScreen({ navigation }) {
     <TitledSection Label={'Favorite Cities'}>
       {FavWeather != undefined ? (
         FavWeather.map((city) => {
-          return <CityListItem key={city.name} Weather={city}></CityListItem>
+          return <CityListItem key={city.name} Weather={city} Action={() => {navigation.navigate('City', {Weather: city})}}></CityListItem>
         })
       ) : (
         <Text>No Favorites Added</Text>
