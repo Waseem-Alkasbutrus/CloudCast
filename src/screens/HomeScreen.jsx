@@ -10,6 +10,8 @@ import FavoriteCitiesList from '../../assets/FavoriteCities'
 
 import { API_KEY } from '@env'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { LinearGradient } from 'expo-linear-gradient'
+import ScreenWrapper from '../components/ScreenWrapper'
 
 export default function HomeScreen({ navigation }) {
   const [GPSweather, setGPSWeather] = useState()
@@ -65,17 +67,10 @@ export default function HomeScreen({ navigation }) {
   )
 
   return (
-    <SafeAreaView style={style.homeContainer}>
+    <ScreenWrapper colors={['#FF7B7B', '#E35F9F']}>
       <CityDetailedItem Weather={GPSweather}></CityDetailedItem>
 
       {citylistItems}
-    </SafeAreaView>
+    </ScreenWrapper>
   )
 }
-
-const style = StyleSheet.create({
-  homeContainer: {
-    backgroundColor: '#F7F7F7',
-    flexGrow: 1,
-  },
-})
