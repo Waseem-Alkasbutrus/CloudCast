@@ -104,13 +104,12 @@ const style = StyleSheet.create({
   },
 
   highLowTempsWrapper: {
-
     display: 'flex',
     flexDirection: 'column',
 
-    marginRight: 4,
+    height: 120,
 
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'space-around',
   },
 

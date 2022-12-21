@@ -53,6 +53,7 @@ const getStyle = (Size, Weight) => {
       fontSize: Size,
       fontWeight: Weight,
       color: '#FBFBFB',
+      lineHeight: Size * 1.1,
 
       paddingHorizontal: 2,
     },

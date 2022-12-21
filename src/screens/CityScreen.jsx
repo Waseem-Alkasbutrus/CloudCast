@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import CityDetailedItem from '../components/CityDetailedItem'
+import ScreenWrapper from '../components/ScreenWrapper'
 import TitledSection from '../components/TitledSection'
 
 export default function CityScreen({ navigation, route }) {
@@ -11,7 +12,7 @@ export default function CityScreen({ navigation, route }) {
   }, [])
 
   return (
-    <SafeAreaView style={styles.cityContainer}>
+    <ScreenWrapper>
       <CityDetailedItem Weather={route.params.Weather}></CityDetailedItem>
 
       <View style={weekly.section}>
@@ -29,7 +30,7 @@ export default function CityScreen({ navigation, route }) {
       <TitledSection Label={'Hourly Forecast'}>
         <Text>Forecast each hour I guess</Text>
       </TitledSection>
-    </SafeAreaView>
+    </ScreenWrapper>
   )
 }
 

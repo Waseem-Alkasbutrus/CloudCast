@@ -68,7 +68,9 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <ScreenWrapper>
-      <CityDetailedItem Weather={GPSweather}></CityDetailedItem>
+      <CityDetailedItem Weather={GPSweather} Action={() => {
+                navigation.navigate('City', { Weather: GPSweather })
+              }}></CityDetailedItem>
 
       {citylistItems}
     </ScreenWrapper>
