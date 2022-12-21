@@ -19,16 +19,18 @@ export default function CityListItem({
       <View style={styles.statContainer}>
         <Stat
           Icon={require('../../assets/icons/Thermometer.png')}
-          size={20}
-          Stat={Weather.main.temp + ' f'}
+          Size={20}
+          Stat={Math.round(Weather.main.temp)}
+          Unit="f"
         />
 
         <View style={styles.divider} />
 
         <Stat
           Icon={require('../../assets/icons/Rain-Shower.png')}
-          size={20}
-          Stat={'20 %'}
+          Size={20}
+          Stat={'20'}
+          Unit="%"
         />
       </View>
     </Pressable>
