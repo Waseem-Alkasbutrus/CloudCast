@@ -12,19 +12,18 @@ export default function Button({ Label, Action }) {
 const styles = StyleSheet.create({
   button: {
     display: 'flex',
-    
+
     alignItems: 'center',
     padding: 8,
     marginVertical: 4,
 
-    borderWidth: 2,
-    borderColor: "#FF9E2C",
     borderRadius: 10,
+
+    backgroundColor: '#39393920',
   },
   label: {
-    color: "#FF9E2C",
-
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 18,
+    fontWeight: '500',
+    color: '#FBFBFB',
   },
 })

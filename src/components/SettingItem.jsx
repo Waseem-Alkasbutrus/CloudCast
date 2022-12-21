@@ -36,18 +36,20 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     justifyContent: 'space-between',
 
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#39393910',
     borderRadius: 10,
   },
 
   settingName: {
     fontSize: 16,
     fontWeight: '400',
+    color: '#FBFBFB',
   },
 
   settingDescription: {
     fontSize: 12,
     fontWeight: '350',
+    color: '#FBFBFB',
   },
 
   infoContainer: {
@@ -58,7 +60,7 @@ const styles = StyleSheet.create({
   },
 
   icon: {
-    height: 32,
-    width: 32,
+    height: 24,
+    width: 24,
   },
 })
