@@ -15,7 +15,6 @@ export default function TitledSection({children, Label}) {
 const styles = StyleSheet.create({
     homeContainer: {
       padding: 8,
-      backgroundColor: '#F7F7F7',
     },
   
     contentContainer: {
@@ -24,8 +23,9 @@ const styles = StyleSheet.create({
     },
   
     heading: {
-      fontSize: 20,
-      fontWeight: '500',
+      fontSize: 16,
+      fontWeight: '400',
+      color: '#FBFBFB',
 
       marginVertical: 8,
     },

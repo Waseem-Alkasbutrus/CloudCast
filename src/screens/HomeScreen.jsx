@@ -67,7 +67,7 @@ export default function HomeScreen({ navigation }) {
   )
 
   return (
-    <ScreenWrapper colors={['#FF7B7B', '#E35F9F']}>
+    <ScreenWrapper>
       <CityDetailedItem Weather={GPSweather}></CityDetailedItem>
 
       {citylistItems}

@@ -45,18 +45,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
 
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#39393920',
     borderRadius: 10,
+
+    // shadowColor: '#000',
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 3,
+    // },
+    // shadowOpacity: 0.1,
+    // shadowRadius: 5,
+
+    // elevation: 6,
   },
 
   cityName: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '400',
+    color: '#FBFBFB',
   },
 
   countryName: {
-    fontSize: 14,
-    fontWeight: '350',
+    fontSize: 12,
+    fontWeight: '300',
+    color: '#FBFBFB',
   },
 
   namesContainer: {
@@ -73,7 +85,7 @@ const styles = StyleSheet.create({
   },
 
   divider: {
-    borderColor: '#000000',
+    borderColor: '#FBFBFB',
     borderWidth: 1,
     marginHorizontal: 8,
     height: '32%',

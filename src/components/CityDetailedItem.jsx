@@ -91,7 +91,7 @@ const style = StyleSheet.create({
 
     margin: 8,
 
-    backgroundColor: '#ffffff',
+    backgroundColor: '#39393920',
     borderRadius: 10,
   },
 
@@ -118,10 +118,11 @@ const style = StyleSheet.create({
   cardTitle: {
     fontSize: 20,
     fontWeight: '500',
+    color: '#FBFBFB',
   },
 
   divider: {
-    borderColor: '#000000',
+    borderColor: '#FBFBFB',
     borderWidth: 0.2,
     marginHorizontal: 8,
     height: '32%',
