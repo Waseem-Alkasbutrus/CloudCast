@@ -69,9 +69,11 @@ const weekly = StyleSheet.create({
     fontSize: 20,
     fontWeight: '500',
     marginBottom: 6,
+
+    textTransform: 'uppercase'
   },
   temp: {
-    fontSize: 16,
+    fontSize: 18,
   },
 })
 

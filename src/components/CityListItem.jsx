@@ -20,7 +20,7 @@ export default function CityListItem({
       <View style={styles.statContainer}>
         <Stat
           Icon={require('../../assets/icons/Thermometer.png')}
-          Size={20}
+          Size={22}
           Stat={Math.round(Weather.main.temp)}
           Unit="f"
         />
@@ -29,7 +29,7 @@ export default function CityListItem({
 
         <Stat
           Icon={require('../../assets/icons/Rain-Shower.png')}
-          Size={20}
+          Size={22}
           Stat={'20'}
           Unit="%"
         />
@@ -53,13 +53,13 @@ const styles = StyleSheet.create({
   },
 
   cityName: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '400',
     color: '#FBFBFB',
   },
 
   countryName: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '300',
     color: '#FBFBFB',
   },

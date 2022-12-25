@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     },
   
     heading: {
-      fontSize: 16,
+      fontSize: 18,
       fontWeight: '400',
       color: '#FBFBFB',
     },

@@ -42,13 +42,13 @@ const styles = StyleSheet.create({
   },
 
   settingName: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '400',
     color: '#FBFBFB',
   },
 
   settingDescription: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '350',
     color: '#FBFBFB',
   },
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
 
   icon: {
-    height: 24,
-    width: 24,
+    height: 28,
+    width: 28,
   },
 })

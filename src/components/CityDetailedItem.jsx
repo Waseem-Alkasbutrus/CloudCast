@@ -39,7 +39,7 @@ export default function CityDetailedItem({
       <View style={style.flexRow}>
         <Stat
           Icon={require('../../assets/icons/Wind.png')}
-          Size={16}
+          Size={18}
           Stat={Weather.wind.speed}
           Unit='mph'
         />
@@ -48,7 +48,7 @@ export default function CityDetailedItem({
 
         <Stat
           Icon={require('../../assets/icons/Rain-Shower.png')}
-          Size={16}
+          Size={18}
           Stat={'10'}
           Unit='%'
         />
@@ -57,7 +57,7 @@ export default function CityDetailedItem({
 
         <Stat
           Icon={require('../../assets/icons/Wind.png')}
-          Size={16}
+          Size={18}
           Stat={Weather.wind.speed}
           Unit='mph'
         />
@@ -66,7 +66,7 @@ export default function CityDetailedItem({
 
         <Stat
           Icon={require('../../assets/icons/Humidity.png')}
-          Size={16}
+          Size={18}
           Stat={Weather.main.humidity}
           Unit='%'
         />
@@ -115,7 +115,7 @@ const style = StyleSheet.create({
   },
 
   cardTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: '500',
     color: '#FBFBFB',
   },

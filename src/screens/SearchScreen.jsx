@@ -13,7 +13,7 @@ export default function SearchScreen() {
         <TextInput
           style={styles.searchInput}
           placeholder="Search for a city..."
-          placeholderTextColor={'#FBFBFB50'}
+          placeholderTextColor={'#FBFBFB80'}
         ></TextInput>
 
         <Pressable
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     color: '#FBFBFB',
-    fontSize: 16,
+    fontSize: 18,
 
     flexGrow: 1,
   },
