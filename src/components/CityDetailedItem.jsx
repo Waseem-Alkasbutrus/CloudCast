@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet, Pressable } from 'react-native'
+import Font from './Font'
 
 import Stat from './IconStat'
 
@@ -17,7 +18,7 @@ export default function CityDetailedItem({
 }) {
   return (
     <Pressable onPress={Action} style={style.cardView}>
-      <Text style={style.cardTitle}>{Weather.name}</Text>
+      <Font style={style.cardTitle}>{Weather.name}</Font>
 
       <View style={style.flexRow}>
         <View style={style.temp}>

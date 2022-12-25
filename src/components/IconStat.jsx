@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Image, Text, StyleSheet } from 'react-native'
+import Font from './Font'
 
 export default function Stat({
   Icon = null,
@@ -21,8 +22,8 @@ export default function Stat({
       {IconImg}
       
       <View style={styles.textWrapper}>
-        <Text style={styles.stat}>{Stat}</Text>
-        <Text style={styles.unit}>{Unit}</Text>
+        <Font style={styles.stat}>{Stat}</Font>
+        <Font style={styles.unit}>{Unit}</Font>
       </View>
     </View>
   )

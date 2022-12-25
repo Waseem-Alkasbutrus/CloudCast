@@ -1,5 +1,6 @@
 import React from 'react'
 import { Image, View, Text, StyleSheet, Pressable } from 'react-native'
+import Font from './Font'
 
 export function OpenDialogue({
   SettingName,
@@ -14,8 +15,8 @@ export function OpenDialogue({
       <View style={styles.flexRow}>
         <Image style={styles.icon} source={Icon} />
         <View style={[styles.infoContainer, styles.infoContainer]}>
-          <Text style={styles.settingName}>{SettingName}</Text>
-          <Text style={styles.settingDescription}>{Description}</Text>
+          <Font style={styles.settingName}>{SettingName}</Font>
+          <Font style={styles.settingDescription}>{Description}</Font>
         </View>
       </View>
 

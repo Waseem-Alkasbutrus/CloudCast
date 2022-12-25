@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet, Pressable } from 'react-native'
+import Font from './Font'
 
 import Stat from './IconStat'
 
@@ -12,8 +13,8 @@ export default function CityListItem({
   return (
     <Pressable onPress={Action} style={styles.cityItemContainer}>
       <View style={styles.namesContainer}>
-        <Text style={styles.cityName}>{Weather.name}</Text>
-        <Text style={styles.countryName}>{Weather.sys.country}</Text>
+        <Font style={styles.cityName}>{Weather.name}</Font>
+        <Font style={styles.countryName}>{Weather.sys.country}</Font>
       </View>
 
       <View style={styles.statContainer}>
@@ -49,16 +50,6 @@ const styles = StyleSheet.create({
 
     backgroundColor: '#39393920',
     borderRadius: 10,
-
-    // shadowColor: '#000',
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 3,
-    // },
-    // shadowOpacity: 0.1,
-    // shadowRadius: 5,
-
-    // elevation: 6,
   },
 
   cityName: {

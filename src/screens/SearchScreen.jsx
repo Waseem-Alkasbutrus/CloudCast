@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, Pressable, StyleSheet, Text, View, Image } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import {} from 'react-native-safe-area-context'
+import Font from '../components/Font'
 import ScreenWrapper from '../components/ScreenWrapper'
 import TitledSection from '../components/TitledSection.jsx'
 

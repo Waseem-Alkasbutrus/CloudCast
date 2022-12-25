@@ -7,6 +7,7 @@ import SearchScreen from '../screens/SearchScreen'
 import CityScreenStack from './CityScreenStack'
 import { View, Image, Text, StyleSheet } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
+import Font from '../components/Font'
 
 const Tab = createBottomTabNavigator()
 
@@ -27,9 +28,9 @@ function CustomTab(icon, label, focused) {
         source={icon}
         style={focused ? tabStyles.focusedIcon : tabStyles.unfocusedIcon}
       ></Image>
-      <Text style={focused ? tabStyles.focusedLabel : tabStyles.unfocusedLabel}>
+      <Font style={focused ? tabStyles.focusedLabel : tabStyles.unfocusedLabel}>
         {label}
-      </Text>
+      </Font>
     </LinearGradient>
   )
 }

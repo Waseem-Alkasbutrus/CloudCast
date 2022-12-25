@@ -1,10 +1,11 @@
 import React from 'react'
 import { Text, Pressable, StyleSheet } from 'react-native'
+import Font from './Font'
 
 export default function Button({ Label, Action }) {
   return (
     <Pressable onPress={Action} style={styles.button}>
-      <Text style={styles.label}>{Label}</Text>
+      <Font style={styles.label}>{Label}</Font>
     </Pressable>
   )
 }

@@ -12,6 +12,7 @@ import { API_KEY } from '@env'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { LinearGradient } from 'expo-linear-gradient'
 import ScreenWrapper from '../components/ScreenWrapper'
+import Font from '../components/Font'
 
 export default function HomeScreen({ navigation }) {
   const [GPSweather, setGPSWeather] = useState()
@@ -61,7 +62,7 @@ export default function HomeScreen({ navigation }) {
           )
         })
       ) : (
-        <Text>No Favorites Added</Text>
+        <Font>No Favorites Added</Font>
       )}
     </TitledSection>
   )
