@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     justifyContent: 'space-between',
 
-    backgroundColor: '#39393910',
+    backgroundColor: '#39393916',
     borderRadius: 10,
   },
 
