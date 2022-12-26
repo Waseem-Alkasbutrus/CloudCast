@@ -6,7 +6,7 @@ export default function TitledSection({children, Label}) {
     return (
         <View style={styles.homeContainer}>
             <Font style={styles.heading}>{Label}</Font>
-            <ScrollView style={styles.contentContainer}>
+            <ScrollView showsVerticalScrollIndicator={false} style={styles.contentContainer}>
                 {children}
             </ScrollView>
         </View>
