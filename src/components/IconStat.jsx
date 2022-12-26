@@ -5,7 +5,7 @@ import Font from './Font'
 export default function Stat({
   Icon = null,
   Stat,
-  Unit="NOT SPECIFIED",
+  Unit,
   Size = 16,
   Weight = '380',
 }) {
@@ -60,7 +60,7 @@ const getStyle = (Size, Weight) => {
     },
 
     unit: {
-      fontSize: Size / 1.5,
+      fontSize: Size * 0.68,
       fontWeight: Weight,
       color: '#FBFBFB',
       paddingHorizontal: 2,
