@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
 
 import CityDetailedItem from '../components/CityDetailedItem'
 import ScreenWrapper from '../components/ScreenWrapper'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, View, Text, StyleSheet, Pressable } from 'react-native'
+import { Image, View, StyleSheet, Pressable } from 'react-native'
 import Font from './Font'
 
 export function OpenDialogue({

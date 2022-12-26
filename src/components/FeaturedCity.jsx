@@ -1,4 +1,3 @@
-import react from 'react'
 import { View, Image, StyleSheet } from 'react-native'
 import Font from './Font'
 import IconStat from './IconStat'

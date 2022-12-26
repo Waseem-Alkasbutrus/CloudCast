@@ -1,6 +1,5 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
 
 import CityListItem from '../components/CityListItem'
 import CityDetailedItem from '../components/CityDetailedItem'
@@ -9,8 +8,6 @@ import TitledSection from '../components/TitledSection'
 import FavoriteCitiesList from '../../assets/FavoriteCities'
 
 import { API_KEY } from '@env'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { LinearGradient } from 'expo-linear-gradient'
 import ScreenWrapper from '../components/ScreenWrapper'
 import Font from '../components/Font'
 

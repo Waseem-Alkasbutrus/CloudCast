@@ -1,11 +1,9 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { Ionicons } from '@expo/vector-icons'
-
 import HomeScreen from '../screens/HomeScreen'
 import SettingsScreen from '../screens/SettingsScreen'
 import SearchScreen from '../screens/SearchScreen'
 import CityScreenStack from './CityScreenStack'
-import { View, Image, Text, StyleSheet } from 'react-native'
+import { Image, StyleSheet } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import Font from '../components/Font'
 

@@ -1,9 +1,8 @@
 import React from 'react'
-import { View, StyleSheet, Alert } from 'react-native'
+import { StyleSheet, Alert } from 'react-native'
 
 import TitledSection from '../components/TitledSection'
 import { OpenDialogue } from '../components/SettingItem'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import Button from '../components/Button'
 import ScreenWrapper from '../components/ScreenWrapper'
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, Pressable, StyleSheet } from 'react-native'
+import { Pressable, StyleSheet } from 'react-native'
 import Font from './Font'
 
 export default function Button({ Label, Action }) {
