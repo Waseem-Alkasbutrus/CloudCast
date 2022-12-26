@@ -5,7 +5,6 @@ import { useFonts } from 'expo-font'
 import { useCallback } from 'react'
 import * as SplashScreen from 'expo-splash-screen'
 import { View } from 'react-native'
-import Font from './src/components/Font'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -23,8 +22,6 @@ export default function App() {
   if (!fontsLoaded) {
     return null
   }
-
-  console.log(fontsLoaded)
 
   return (
     <NavigationContainer>
