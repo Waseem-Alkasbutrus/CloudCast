@@ -64,11 +64,18 @@ export default function HomeScreen({ navigation }) {
     </TitledSection>
   )
 
+  if (!GPSweather) {
+    return <ScreenWrapper></ScreenWrapper>
+  }
+
   return (
     <ScreenWrapper>
-      <CityDetailedItem Weather={GPSweather} Action={() => {
-                navigation.navigate('City', { Weather: GPSweather })
-              }}></CityDetailedItem>
+      <CityDetailedItem
+        Weather={GPSweather}
+        Action={() => {
+          navigation.navigate('City', { Weather: GPSweather })
+        }}
+      ></CityDetailedItem>
 
       {citylistItems}
     </ScreenWrapper>
