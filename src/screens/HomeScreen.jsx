@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 
-import CityListItem from '../components/CityListItem'
+import { CityListItem } from '../components/CityListItem'
 import CityDetailedItem from '../components/CityDetailedItem'
 import TitledSection from '../components/TitledSection'
 

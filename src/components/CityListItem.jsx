@@ -4,8 +4,8 @@ import Font from './Font'
 
 import Stat from './IconStat'
 
-export default function CityListItem({
-  Weather,
+export function CityListItem({
+  Weather = undefined,
   Action = () => {
     console.log('press')
   },
@@ -33,6 +33,22 @@ export default function CityListItem({
           Stat={'20'}
           Unit="%"
         />
+      </View>
+    </Pressable>
+  )
+}
+
+export function CitySearchListItem({
+  City = undefined,
+  Action = () => {
+    console.log(City)
+  },
+}) {
+  return (
+    <Pressable onPress={Action} style={styles.cityItemContainer}>
+      <View style={styles.namesContainer}>
+        <Font style={styles.cityName}>{City.name}</Font>
+        <Font style={styles.countryName}>{City.state + ', ' + City.country}</Font>
       </View>
     </Pressable>
   )
