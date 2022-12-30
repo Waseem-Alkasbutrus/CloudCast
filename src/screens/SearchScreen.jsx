@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Pressable, StyleSheet, View, Image } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import FeaturedCity from '../components/FeaturedCity'
@@ -6,6 +6,8 @@ import ScreenWrapper from '../components/ScreenWrapper'
 import TitledSection from '../components/TitledSection.jsx'
 
 export default function SearchScreen() {
+  const [searchCity, setSearchCity] = useState()
+
   return (
     <ScreenWrapper>
       <View style={styles.searchBar}>
@@ -13,11 +15,14 @@ export default function SearchScreen() {
           style={styles.searchInput}
           placeholder="Search for a city..."
           placeholderTextColor={'#FBFBFB95'}
+          returnKeyType="search"
+          onChangeText={(newText) => setSearchCity(newText)}
+          onSubmitEditing={() => console.log(searchCity)}
         ></TextInput>
 
         <Pressable
           style={styles.searchButton}
-          onPress={() => console.log('Search')}
+          onPress={() => console.log(searchCity)}
         >
           <Image
             style={styles.searchIcon}
