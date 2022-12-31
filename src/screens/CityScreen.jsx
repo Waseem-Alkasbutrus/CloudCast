@@ -1,18 +1,28 @@
-import React, { useEffect } from 'react'
-import { StyleSheet, View, Text, ScrollView } from 'react-native'
+import React, { useEffect, useCallback, useMemo, useRef } from 'react'
+import { StyleSheet, View, Text, ScrollView, Image } from 'react-native'
 
 import CityDetailedItem from '../components/CityDetailedItem'
 import ScreenWrapper from '../components/ScreenWrapper'
 import TitledSection from '../components/TitledSection'
 
+import BottomSheet from '@gorhom/bottom-sheet'
+import Font from '../components/Font'
+import Stat from '../components/IconStat'
+
 export default function CityScreen({ navigation, route }) {
   useEffect(() => {
-    navigation.setOptions({title: route.params.Weather.name})
+    navigation.setOptions({ title: route.params.Weather.city.name })
   }, [])
+
+  // ref
+  const bottomSheetRef = useRef(null)
+
+  // variables
+  const snapPoints = useMemo(() => ['100%', '45%'], [])
 
   return (
     <ScreenWrapper>
-      <CityDetailedItem Weather={route.params.Weather}></CityDetailedItem>
+      <Details Weather={route.params.Weather}></Details>
 
       <View style={weekly.section}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -26,9 +36,16 @@ export default function CityScreen({ navigation, route }) {
         </ScrollView>
       </View>
 
-      <TitledSection Label={'Hourly Forecast'}>
-        <Text>Forecast each hour I guess</Text>
-      </TitledSection>
+      <BottomSheet
+        ref={bottomSheetRef}
+        index={1}
+        snapPoints={snapPoints}
+        backgroundStyle={styles.bottomSheet}
+      >
+        <TitledSection Label={'Hourly Forecast'}>
+          <Font>Forecast each hour I guess</Font>
+        </TitledSection>
+      </BottomSheet>
     </ScreenWrapper>
   )
 }
@@ -36,12 +53,129 @@ export default function CityScreen({ navigation, route }) {
 function WeeklyListItem() {
   return (
     <View style={weekly.card}>
-      <Text style={weekly.day}>Tue</Text>
-      <Text style={weekly.temp}>80 f</Text>
-      <Text style={weekly.temp}>70 f</Text>
+      <Font style={weekly.day}>Tue</Font>
+      <Image
+        style={weekly.icon}
+        source={require('../../assets/icons/Clear-Sky.png')}
+      ></Image>
+      <Stat Stat={80} Unit="f" Size={20}></Stat>
+      <Stat Stat={70} Unit="f" Size={20}></Stat>
     </View>
   )
 }
+
+function Details({ Weather }) {
+  return (
+    <View style={details.cardView}>
+      <View style={details.flexRow}>
+        <View style={details.temp}>
+          <Stat
+            Stat={Math.round(Weather.list[0].main.temp)}
+            Unit="f"
+            Size={120}
+            Weight={'420'}
+          />
+        </View>
+
+        <View style={[details.flexCol, details.highLowTempsWrapper]}>
+          <Stat
+            Size={32}
+            Stat={Math.round(Weather.list[0].main.temp_max)}
+            Unit="f"
+          />
+          <Stat
+            Size={32}
+            Stat={Math.round(Weather.list[0].main.temp_min)}
+            Unit="f"
+          />
+        </View>
+      </View>
+
+      <View style={details.desc}>
+        <Stat Stat={Weather.list[0].weather[0].description} Size={20}></Stat>
+      </View>
+
+      <View style={details.flexRow}>
+        <Stat
+          Icon={require('../../assets/icons/Rain-Shower.png')}
+          Size={18}
+          Stat={Weather.list[0].pop}
+          Unit="%"
+        />
+
+        <View style={details.divider} />
+
+        <Stat
+          Icon={require('../../assets/icons/Feels-Like.png')}
+          Size={18}
+          Stat={Math.round(Weather.list[0].main.feels_like)}
+          Unit="f"
+        />
+
+        <View style={details.divider} />
+
+        <Stat
+          Icon={require('../../assets/icons/Wind.png')}
+          Size={18}
+          Stat={Weather.list[0].wind.speed}
+          Unit="mph"
+        />
+
+        <View style={details.divider} />
+
+        <Stat
+          Icon={require('../../assets/icons/Humidity.png')}
+          Size={18}
+          Stat={Weather.list[0].main.humidity}
+          Unit="%"
+        />
+      </View>
+    </View>
+  )
+}
+
+const details = StyleSheet.create({
+  cardView: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+
+    paddingHorizontal: 8,
+    marginVertical: 16,
+  },
+
+  flexRow: {
+    display: 'flex',
+    flexDirection: 'row',
+
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+
+  temp: {
+    marginRight: 16,
+  },
+
+  highLowTempsWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+
+    height: 120,
+
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+
+  divider: {
+    borderColor: '#FBFBFB',
+    borderWidth: 0.2,
+    marginHorizontal: 8,
+    height: '32%',
+  },
+  desc: {
+    marginBottom: 8,
+  },
+})
 
 const weekly = StyleSheet.create({
   section: {
@@ -59,20 +193,22 @@ const weekly = StyleSheet.create({
     paddingVertical: 8,
     marginHorizontal: 4,
 
-    backgroundColor: 'white',
+    backgroundColor: '#21212110',
     borderRadius: 8,
 
     height: 'auto',
   },
   day: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: '500',
-    marginBottom: 6,
 
-    textTransform: 'uppercase'
+    color: '#FBFBFB',
+    textTransform: 'uppercase',
   },
-  temp: {
-    fontSize: 18,
+  icon: {
+    width: 28,
+    height: 28,
+    marginVertical: 8,
   },
 })
 
@@ -80,5 +216,8 @@ const styles = StyleSheet.create({
   cityContainer: {
     backgroundColor: '#F7F7F7',
     flexGrow: 1,
+  },
+  bottomSheet: {
+    backgroundColor: '#21212130',
   },
 })
