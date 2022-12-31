@@ -48,7 +48,7 @@ async function searchFor(city, setResults, navigation) {
           })
         } else {
           results = [
-            <Font style={styles.emptySearch}>no matching cities...</Font>,
+            <Font key="emptySearch" style={styles.emptySearch}>no matching cities...</Font>,
           ]
         }
 
