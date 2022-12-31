@@ -17,9 +17,9 @@ export default function HomeScreen({ navigation }) {
 
   useEffect(() => {
     fetch(
-      'https://api.openweathermap.org/data/2.5/weather?lat=32.779&lon=-96.809&appid=' +
+      'https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=32.779&lon=-96.809&appid=' +
         API_KEY +
-        '&units=imperial',
+        '&units=imperial&cnt=1',
     )
       .then((res) => res.json())
       .then((wthr) => setGPSWeather(wthr))
@@ -30,7 +30,7 @@ export default function HomeScreen({ navigation }) {
 
       weather.push(
         fetch(
-          'https://api.openweathermap.org/data/2.5/weather?lat=' +
+          'https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=' +
             city.lat +
             '&lon=' +
             city.long +
@@ -50,7 +50,7 @@ export default function HomeScreen({ navigation }) {
         FavWeather.map((city) => {
           return (
             <CityListItem
-              key={city.name}
+              key={city.city.name}
               Weather={city}
               Action={() => {
                 navigation.navigate('City', { Weather: city })

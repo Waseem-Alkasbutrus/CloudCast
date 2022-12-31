@@ -10,14 +10,15 @@ export default function CityDetailedItem({
     console.log(Weather)
   },
 }) {
+  
   return (
     <Pressable onPress={Action} style={style.cardView}>
-      <Font style={style.cardTitle}>{Weather.name}</Font>
+      <Font style={style.cardTitle}>{Weather.city.name}</Font>
 
       <View style={style.flexRow}>
         <View style={style.temp}>
           <Stat
-            Stat={Math.round(Weather.main.temp)}
+            Stat={Math.round(Weather.list[0].main.temp)}
             Unit="f"
             Size={120}
             Weight={'420'}
@@ -25,34 +26,34 @@ export default function CityDetailedItem({
         </View>
 
         <View style={[style.flexCol, style.highLowTempsWrapper]}>
-          <Stat Size={32} Stat={Math.round(Weather.main.temp_max)} Unit="f" />
-          <Stat Size={32} Stat={Math.round(Weather.main.temp_min)} Unit="f" />
+          <Stat Size={32} Stat={Math.round(Weather.list[0].main.temp_max)} Unit="f" />
+          <Stat Size={32} Stat={Math.round(Weather.list[0].main.temp_min)} Unit="f" />
         </View>
       </View>
 
       <View style={style.flexRow}>
         <Stat
-          Icon={require('../../assets/icons/Wind.png')}
-          Size={18}
-          Stat={Weather.wind.speed}
-          Unit='mph'
-        />
-
-        <View style={style.divider} />
-
-        <Stat
           Icon={require('../../assets/icons/Rain-Shower.png')}
           Size={18}
-          Stat={'10'}
+          Stat={Weather.list[0].pop}
           Unit='%'
         />
 
         <View style={style.divider} />
 
         <Stat
+          Icon={require('../../assets/icons/Feels-Like.png')}
+          Size={18}
+          Stat={Math.round(Weather.list[0].main.feels_like)}
+          Unit='f'
+        />
+
+        <View style={style.divider} />
+
+        <Stat
           Icon={require('../../assets/icons/Wind.png')}
           Size={18}
-          Stat={Weather.wind.speed}
+          Stat={Weather.list[0].wind.speed}
           Unit='mph'
         />
 
@@ -61,7 +62,7 @@ export default function CityDetailedItem({
         <Stat
           Icon={require('../../assets/icons/Humidity.png')}
           Size={18}
-          Stat={Weather.main.humidity}
+          Stat={Weather.list[0].main.humidity}
           Unit='%'
         />
       </View>

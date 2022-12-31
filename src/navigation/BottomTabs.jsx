@@ -16,6 +16,10 @@ function Home() {
   return <CityScreenStack MainScreen={HomeScreen}></CityScreenStack>
 }
 
+function Search() {
+  return <CityScreenStack MainScreen={SearchScreen}></CityScreenStack>
+}
+
 function CustomTab(icon, label, focused) {
   return (
     <LinearGradient
@@ -98,7 +102,7 @@ export default function BottomTabs() {
       />
       <Tab.Screen
         name="Search"
-        component={SearchScreen}
+        component={Search}
         options={{
           tabBarIcon: (tabInfo) => {
             return CustomTab(

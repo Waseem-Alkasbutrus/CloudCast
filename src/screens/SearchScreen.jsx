@@ -9,7 +9,7 @@ import { API_KEY } from '@env'
 import Font from '../components/Font'
 import { CitySearchListItem } from '../components/CityListItem'
 
-async function searchFor(city, setResults) {
+async function searchFor(city, setResults, navigation) {
   await fetch(
     'http://api.openweathermap.org/geo/1.0/direct?q=' +
       city +
@@ -25,8 +25,24 @@ async function searchFor(city, setResults) {
           results = res.map((city) => {
             return (
               <CitySearchListItem
-                key={city.lat * city.long}
+                key={city.lat * city.lon}
                 City={city}
+                Action={() => {
+                  console.log(city)
+                  fetch(
+                    'https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=' +
+                      city.lat +
+                      '&lon=' +
+                      city.lon +
+                      '&appid=' +
+                      API_KEY +
+                      '&units=imperial',
+                  )
+                    .then((res) => res.json())
+                    .then((res) => {
+                      navigation.navigate('City', { Weather: res })
+                    })
+                }}
               ></CitySearchListItem>
             )
           })
@@ -43,17 +59,7 @@ async function searchFor(city, setResults) {
     })
 }
 
-function renderResults(results) {
-  let res
-  if (results.length > 0) {
-    res = <Font>{results[0].name + ' (' + results[0].state + ')'}</Font>
-  } else {
-    res = <Font>No cities found</Font>
-  }
-  ;<TitledSection Label={'Search Results'}>{res}</TitledSection>
-}
-
-export default function SearchScreen() {
+export default function SearchScreen({ navigation }) {
   const [searchCity, setSearchCity] = useState()
   const [searchResults, setSearchResults] = useState([])
 
@@ -67,7 +73,7 @@ export default function SearchScreen() {
           returnKeyType="search"
           onChangeText={(newText) => setSearchCity(newText)}
           onSubmitEditing={() => {
-            searchFor(searchCity, setSearchResults)
+            searchFor(searchCity, setSearchResults, navigation)
           }}
         ></TextInput>
 

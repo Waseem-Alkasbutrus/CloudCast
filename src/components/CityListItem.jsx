@@ -13,15 +13,15 @@ export function CityListItem({
   return (
     <Pressable onPress={Action} style={styles.cityItemContainer}>
       <View style={styles.namesContainer}>
-        <Font style={styles.cityName}>{Weather.name}</Font>
-        <Font style={styles.countryName}>{Weather.sys.country}</Font>
+        <Font style={styles.cityName}>{Weather.city.name}</Font>
+        <Font style={styles.countryName}>{Weather.city.country}</Font>
       </View>
 
       <View style={styles.statContainer}>
         <Stat
           Icon={require('../../assets/icons/Thermometer.png')}
           Size={22}
-          Stat={Math.round(Weather.main.temp)}
+          Stat={Math.round(Weather.list[0].main.temp)}
           Unit="f"
         />
 
@@ -30,7 +30,7 @@ export function CityListItem({
         <Stat
           Icon={require('../../assets/icons/Rain-Shower.png')}
           Size={22}
-          Stat={'20'}
+          Stat={Math.round(Weather.list[0].pop)}
           Unit="%"
         />
       </View>
