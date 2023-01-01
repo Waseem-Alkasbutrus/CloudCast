@@ -11,7 +11,7 @@ export default function CityScreenStack({ MainScreen }) {
       screenOptions={{
         headerMode: 'screen',
         headerTintColor: 'white',
-        headerStyle: { backgroundColor: '#00C2FF' },
+        headerStyle: { backgroundColor: '#FF7B7B' },
       }}
     >
       <Stack.Screen
