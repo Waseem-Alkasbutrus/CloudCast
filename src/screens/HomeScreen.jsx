@@ -11,18 +11,41 @@ import { API_KEY } from '@env'
 import ScreenWrapper from '../components/ScreenWrapper'
 import Font from '../components/Font'
 
+import * as Location from 'expo-location'
+
+async function getLocation(setGPSWeather) {
+  let { status } = await Location.requestForegroundPermissionsAsync()
+  if (status !== 'granted') {
+    setGPSWeather(undefined)
+    return
+  }
+
+  let location = await Location.getCurrentPositionAsync({})
+
+  getLocationWeather(setGPSWeather, location)
+}
+
+function getLocationWeather(setGPSWeather, location) {
+  console.log(location)
+  fetch(
+    'https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=' +
+      location.coords.latitude +
+      '&lon=' +
+      location.coords.longitude +
+      '&appid=' +
+      API_KEY +
+      '&units=imperial&cnt=1',
+  )
+    .then((res) => res.json())
+    .then((wthr) => setGPSWeather(wthr))
+}
+
 export default function HomeScreen({ navigation }) {
   const [GPSweather, setGPSWeather] = useState()
   const [FavWeather, setFavWeather] = useState([])
 
   useEffect(() => {
-    fetch(
-      'https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=32.779&lon=-96.809&appid=' +
-        API_KEY +
-        '&units=imperial&cnt=1',
-    )
-      .then((res) => res.json())
-      .then((wthr) => setGPSWeather(wthr))
+    getLocation(setGPSWeather)
 
     let weather = []
     for (let i = 0; i < FavoriteCitiesList.length; i++) {
@@ -64,19 +87,21 @@ export default function HomeScreen({ navigation }) {
     </TitledSection>
   )
 
-  if (!GPSweather) {
-    return <ScreenWrapper></ScreenWrapper>
-  }
-
-  return (
-    <ScreenWrapper>
+  let gps
+  if (GPSweather != undefined) {
+    gps = (
       <CityDetailedItem
         Weather={GPSweather}
         Action={() => {
           navigation.navigate('City', { Weather: GPSweather })
         }}
       ></CityDetailedItem>
+    )
+  }
 
+  return (
+    <ScreenWrapper>
+      {gps}
       {citylistItems}
     </ScreenWrapper>
   )
