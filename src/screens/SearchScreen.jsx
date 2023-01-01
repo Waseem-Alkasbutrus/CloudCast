@@ -28,7 +28,6 @@ async function searchFor(city, setResults, navigation) {
                 key={city.lat * city.lon}
                 City={city}
                 Action={() => {
-                  console.log(city)
                   fetch(
                     'https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=' +
                       city.lat +
