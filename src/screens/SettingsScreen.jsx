@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Alert } from 'react-native'
+import { StyleSheet, Alert, Linking } from 'react-native'
 
 import TitledSection from '../components/TitledSection'
 import { OpenDialogue } from '../components/SettingItem'
@@ -35,6 +35,7 @@ export default function SettingsScreen() {
           SettingName={'Location'}
           Description={'On'}
           Icon={require('../../assets/icons/Location.png')}
+          Action={() => {Linking.openSettings()}}
         />
       </TitledSection>
 
