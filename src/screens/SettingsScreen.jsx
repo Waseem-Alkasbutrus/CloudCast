@@ -4,7 +4,7 @@ import { StyleSheet, Alert, Linking } from 'react-native'
 import TitledSection from '../components/TitledSection'
 import { OpenDialogue } from '../components/SettingItem'
 import Button from '../components/Button'
-import ScreenWrapper from '../components/ScreenWrapper'
+import {SafeAreaScreenWrapper} from '../components/ScreenWrapper'
 
 buttonShouldDo = () => {
   console.log('button pressed')
@@ -29,7 +29,7 @@ const deleteSaves = () =>
 
 export default function SettingsScreen() {
   return (
-    <ScreenWrapper>
+    <SafeAreaScreenWrapper>
       <TitledSection Label={'Privacy'}>
         <OpenDialogue
           SettingName={'Location'}
@@ -60,7 +60,7 @@ export default function SettingsScreen() {
       <TitledSection Label={'Danger Zone'}>
         <Button Label={'Delete Saved Data'} Action={deleteSaves}></Button>
       </TitledSection>
-    </ScreenWrapper>
+    </SafeAreaScreenWrapper>
   )
 }
 

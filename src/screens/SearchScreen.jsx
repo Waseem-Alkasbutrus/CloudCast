@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Pressable, StyleSheet, View, Image } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import FeaturedCity from '../components/FeaturedCity'
-import ScreenWrapper from '../components/ScreenWrapper'
+import {SafeAreaScreenWrapper} from '../components/ScreenWrapper'
 import TitledSection from '../components/TitledSection.jsx'
 
 import { API_KEY } from '@env'
@@ -63,7 +63,7 @@ export default function SearchScreen({ navigation }) {
   const [searchResults, setSearchResults] = useState([])
 
   return (
-    <ScreenWrapper>
+    <SafeAreaScreenWrapper>
       <View style={styles.searchBar}>
         <TextInput
           style={styles.searchInput}
@@ -88,7 +88,7 @@ export default function SearchScreen({ navigation }) {
       </View>
 
       <TitledSection Label="Search Results">{searchResults}</TitledSection>
-    </ScreenWrapper>
+    </SafeAreaScreenWrapper>
   )
 }
 

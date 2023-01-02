@@ -8,7 +8,7 @@ import TitledSection from '../components/TitledSection'
 import FavoriteCitiesList from '../../assets/FavoriteCities'
 
 import { API_KEY } from '@env'
-import ScreenWrapper from '../components/ScreenWrapper'
+import { SafeAreaScreenWrapper } from '../components/ScreenWrapper'
 import Font from '../components/Font'
 
 import * as Location from 'expo-location'
@@ -99,9 +99,9 @@ export default function HomeScreen({ navigation }) {
   }
 
   return (
-    <ScreenWrapper>
+    <SafeAreaScreenWrapper>
       {gps}
       {citylistItems}
-    </ScreenWrapper>
+    </SafeAreaScreenWrapper>
   )
 }
