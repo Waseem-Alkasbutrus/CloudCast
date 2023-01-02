@@ -35,7 +35,7 @@ async function searchFor(city, setResults, navigation) {
                       city.lon +
                       '&appid=' +
                       API_KEY +
-                      '&units=imperial',
+                      '&units=imperial&cnt=13',
                   )
                     .then((res) => res.json())
                     .then((res) => {

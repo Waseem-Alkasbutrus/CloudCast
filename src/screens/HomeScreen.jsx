@@ -58,7 +58,7 @@ export default function HomeScreen({ navigation }) {
             city.long +
             '&appid=' +
             API_KEY +
-            '&units=imperial',
+            '&units=imperial&cnt=13',
         ).then((res) => res.json()),
       )
     }
