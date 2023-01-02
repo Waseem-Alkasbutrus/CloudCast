@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useEffect, useState } from 'react'
 
 import { CityListItem } from '../components/CityListItem'
@@ -11,7 +11,7 @@ import Font from '../components/Font'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Location from 'expo-location'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, RefreshControl, ScrollView } from 'react-native'
 
 async function getLocation(setGPSWeather) {
   let { status } = await Location.requestForegroundPermissionsAsync()
@@ -39,49 +39,63 @@ function getLocationWeather(setGPSWeather, location) {
     .then((wthr) => setGPSWeather(wthr))
 }
 
+function fetchBookmarkedWeather(setFavWeather) {
+  try {
+    AsyncStorage.getItem('Favorites')
+      .then((res) => JSON.parse(res))
+      .then((favs) => {
+        if (favs != undefined) {
+          let weather = []
+          for (let i = 0; i < favs.length; i++) {
+            let city = favs[i]
+
+            weather.push(
+              fetch(
+                'https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=' +
+                  city.lat +
+                  '&lon=' +
+                  city.lon +
+                  '&appid=' +
+                  API_KEY +
+                  '&units=imperial&cnt=13',
+              ).then((res) => res.json()),
+            )
+          }
+
+          Promise.all(weather).then((wthr) => setFavWeather(wthr))
+        } else {
+          setFavWeather(undefined)
+          console.log('no favorites')
+        }
+      })
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+async function fetchData(setGPSWeather, setFavWeather) {
+  await getLocation(setGPSWeather)
+  fetchBookmarkedWeather(setFavWeather)
+}
 export default function HomeScreen({ navigation }) {
   const [GPSweather, setGPSWeather] = useState()
   const [FavWeather, setFavWeather] = useState([])
+  const [refreshing, setRefreshing] = useState(false)
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true)
+    fetchData(setGPSWeather, setFavWeather).then(() => setRefreshing(false))
+  }, [])
+
+  console.log('Mounted Home')
 
   useEffect(() => {
-    getLocation(setGPSWeather)
-
-    try {
-      AsyncStorage.getItem('Favorites')
-        .then((res) => JSON.parse(res))
-        .then((favs) => { 
-          if (favs.length != undefined) {
-            let weather = []
-            for (let i = 0; i < favs.length; i++) {
-              let city = favs[i]
-              
-              weather.push(
-                fetch(
-                'https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=' +
-                city.lat +
-                '&lon=' +
-                city.lon +
-                '&appid=' +
-                API_KEY +
-                '&units=imperial&cnt=13',
-                ).then((res) => res.json()),
-                )
-              }
-              
-              Promise.all(weather).then((wthr) => setFavWeather(wthr))
-            } else {
-              setFavWeather(undefined)
-              console.log("no favorites")
-            }
-        })
-    } catch (e) {
-      console.log(e)
-    }
+    fetchData(setGPSWeather, setFavWeather)
   }, [])
 
   let citylistItems = (
     <TitledSection Label={'Favorite Cities'}>
-      {FavWeather.length > 0 ? (
+      {FavWeather != undefined ? (
         FavWeather.map((city) => {
           return (
             <CityListItem
@@ -113,17 +127,21 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <SafeAreaScreenWrapper>
+      <ScrollView refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
       {gps}
       {citylistItems}
+      </ScrollView>
     </SafeAreaScreenWrapper>
   )
 }
 
 const styles = StyleSheet.create({
-  noFavsText: { 
+  noFavsText: {
     fontSize: 20,
     color: '#FBFBFB',
     textAlign: 'center',
     marginTop: 24,
-  }
+  },
 })

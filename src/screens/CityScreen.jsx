@@ -71,7 +71,7 @@ async function removeFromFavorites(city, lon, lat) {
   }
 }
 
-async function isInFavorites(city, lon, lat) {
+async function isInFavorites(city, lon, lat, setBookmarked) {
   let currentCity = { city: city, lat: lat, lon: lon }
 
   try {
@@ -90,7 +90,7 @@ async function isInFavorites(city, lon, lat) {
 
       console.log(city, ' is bookmarked? ', filter.length != 0)
 
-      return filter.length != 0
+      setBookmarked(filter.length != 0)
     }
   } catch (e) {
     console.error('[ERROR: addToFavorites()]', e)
@@ -101,18 +101,21 @@ export default function CityScreen({ navigation, route }) {
   const [Bookmarked, setBookmarked] = useState()
 
   useEffect(() => {
-    navigation.setOptions({ title: route.params.Weather.city.name })
-    setBookmarked(
-      isInFavorites(
-        route.params.Weather.city.name,
-        route.params.Weather.city.coord.lon,
-        route.params.Weather.city.coord.lat,
-      )
+    isInFavorites(
+      route.params.Weather.city.name,
+      route.params.Weather.city.coord.lon,
+      route.params.Weather.city.coord.lat,
+      setBookmarked,
     )
+
+    navigation.setOptions({ title: route.params.Weather.city.name })
   }, [])
 
-  return (
-    <SafeAreaScreenWrapper>
+  let BookmarkButton
+
+  console.log(Bookmarked)
+  if (Bookmarked == true || Bookmarked == false) {
+    BookmarkButton = (
       <View style={favorite.container}>
         <Pressable
           style={favorite.button}
@@ -143,6 +146,12 @@ export default function CityScreen({ navigation, route }) {
           ></Image>
         </Pressable>
       </View>
+    )
+  }
+
+  return (
+    <SafeAreaScreenWrapper>
+      {BookmarkButton}
 
       <Details Weather={route.params.Weather}></Details>
 
