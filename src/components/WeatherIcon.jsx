@@ -13,12 +13,13 @@ const images = {
 }
 
 export function getWeatherIconPath(Condition) {
-    return Condition.substring(0, 2)
+    console.log(Condition)
+    return images[Condition.substring(0, 2)]
 }
 
 export default function WeatherIcon({Condition, style}) {
     return (
-        <Image style={style} source={images[getWeatherIconPath(Condition)]}></Image>
+        <Image style={style} source={getWeatherIconPath(Condition)}></Image>
     )
 }
 
