@@ -95,7 +95,7 @@ export default function HomeScreen({ navigation }) {
 
   let citylistItems = (
     <TitledSection Label={'Favorite Cities'}>
-      {FavWeather != undefined ? (
+      {FavWeather != undefined && FavWeather.length > 0 ? (
         FavWeather.map((city) => {
           return (
             <CityListItem
@@ -127,11 +127,13 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <SafeAreaScreenWrapper>
-      <ScrollView refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }>
-      {gps}
-      {citylistItems}
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        {gps}
+        {citylistItems}
       </ScrollView>
     </SafeAreaScreenWrapper>
   )

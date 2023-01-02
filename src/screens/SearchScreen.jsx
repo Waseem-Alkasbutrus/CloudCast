@@ -51,7 +51,7 @@ async function searchFor(city, setResults, navigation) {
           ]
         }
 
-        setResults(results)
+        setResults(<TitledSection Label="Search Results">{results}</TitledSection>)
       } catch (err) {
         console.log(err.message)
       }
@@ -87,7 +87,7 @@ export default function SearchScreen({ navigation }) {
         </Pressable>
       </View>
 
-      <TitledSection Label="Search Results">{searchResults}</TitledSection>
+      {searchResults}
     </SafeAreaScreenWrapper>
   )
 }
