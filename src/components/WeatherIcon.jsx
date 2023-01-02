@@ -13,7 +13,6 @@ const images = {
 }
 
 export function getWeatherIconPath(Condition) {
-    console.log(Condition)
     return images[Condition.substring(0, 2)]
 }
 
