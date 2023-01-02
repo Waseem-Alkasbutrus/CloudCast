@@ -1,27 +1,183 @@
-import React, { useEffect } from 'react'
-import { StyleSheet, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Image, StyleSheet, View } from 'react-native'
 
-import { SafeAreaScreenWrapper, ScreenWrapper } from '../components/ScreenWrapper'
+import { SafeAreaScreenWrapper } from '../components/ScreenWrapper'
 
 import Stat from '../components/IconStat'
 import { HourlySection, WeeklySection } from '../components/ForecastItem'
 import { getWeatherIconPath } from '../components/WeatherIcon'
+import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
+
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import Font from '../components/Font'
+
+async function saveFavs(favs) {
+  try {
+    await AsyncStorage.setItem('Favorites', JSON.stringify(favs))
+    console.log(await AsyncStorage.getItem('Favorites'))
+  } catch (e) {
+    console.error('[ERROR: saveFavs()]', e)
+  }
+}
+
+async function addToFavorites(city, lon, lat) {
+  let currentCity = { city: city, lat: lat, lon: lon }
+
+  try {
+    let favs = await AsyncStorage.getItem('Favorites').then((res) =>
+      JSON.parse(res),
+    )
+
+    let filter
+    if (favs != undefined) {
+      filter = favs.filter(
+        (fav) =>
+          fav.city === currentCity.city &&
+          fav.lon === currentCity.lon &&
+          fav.lat === currentCity.lat,
+      )
+
+      if (filter.length == 0) {
+        favs.push(currentCity)
+        console.log('adding new city')
+
+        saveFavs(favs)
+      }
+    }
+  } catch (e) {
+    console.error('[ERROR: addToFavorites()]', e)
+  }
+}
+
+async function removeFromFavorites(city, lon, lat) {
+  let currentCity = { city: city, lat: lat, lon: lon }
+  try {
+    let favs = await AsyncStorage.getItem('Favorites').then((res) =>
+      JSON.parse(res),
+    )
+
+    if (favs !== null) {
+      let filter = favs.filter(
+        (fav) =>
+          fav.city != currentCity.city &&
+          fav.lon != currentCity.lon &&
+          fav.lat != currentCity.lat,
+      )
+
+      saveFavs(filter)
+    }
+  } catch (e) {
+    console.error('[ERROR: removeFromFavorites()]', e)
+  }
+}
+
+async function isInFavorites(city, lon, lat) {
+  let currentCity = { city: city, lat: lat, lon: lon }
+
+  try {
+    let favs = await AsyncStorage.getItem('Favorites').then((res) =>
+      JSON.parse(res),
+    )
+
+    let filter
+    if (favs != undefined) {
+      filter = favs.filter(
+        (fav) =>
+          fav.city === currentCity.city &&
+          fav.lon === currentCity.lon &&
+          fav.lat === currentCity.lat,
+      )
+
+      console.log(city, ' is bookmarked? ', filter.length != 0)
+
+      return filter.length != 0
+    }
+  } catch (e) {
+    console.error('[ERROR: addToFavorites()]', e)
+  }
+}
 
 export default function CityScreen({ navigation, route }) {
+  const [Bookmarked, setBookmarked] = useState()
+
   useEffect(() => {
     navigation.setOptions({ title: route.params.Weather.city.name })
+    setBookmarked(
+      isInFavorites(
+        route.params.Weather.city.name,
+        route.params.Weather.city.coord.lon,
+        route.params.Weather.city.coord.lat,
+      )
+    )
   }, [])
 
   return (
     <SafeAreaScreenWrapper>
+      <View style={favorite.container}>
+        <Pressable
+          style={favorite.button}
+          onPress={() => {
+            if (!Bookmarked) {
+              addToFavorites(
+                route.params.Weather.city.name,
+                route.params.Weather.city.coord.lon,
+                route.params.Weather.city.coord.lat,
+              )
+            } else {
+              removeFromFavorites(
+                route.params.Weather.city.name,
+                route.params.Weather.city.coord.lon,
+                route.params.Weather.city.coord.lat,
+              )
+            }
+            setBookmarked(!Bookmarked)
+          }}
+        >
+          <Image
+            style={favorite.icon}
+            source={
+              Bookmarked == true
+                ? require('../../assets/icons/Bookmark-Filled.png')
+                : require('../../assets/icons/Bookmark-Outline.png')
+            }
+          ></Image>
+        </Pressable>
+      </View>
+
       <Details Weather={route.params.Weather}></Details>
 
-      <WeeklySection Lat={route.params.Weather.city.coord.lat} Lon={route.params.Weather.city.coord.lon}></WeeklySection>
+      <WeeklySection
+        Lat={route.params.Weather.city.coord.lat}
+        Lon={route.params.Weather.city.coord.lon}
+      ></WeeklySection>
 
       <HourlySection Weather={route.params.Weather}></HourlySection>
     </SafeAreaScreenWrapper>
   )
 }
+
+const favorite = StyleSheet.create({
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  button: {
+    position: 'absolute',
+    right: 16,
+    top: 8,
+    width: 40,
+    height: 40,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 16,
+    zIndex: 1,
+  },
+  icon: {
+    height: 48,
+    width: 48,
+  },
+})
 
 function Details({ Weather }) {
   return (
@@ -51,7 +207,11 @@ function Details({ Weather }) {
       </View>
 
       <View style={details.desc}>
-        <Stat Icon={getWeatherIconPath(Weather.list[0].weather[0].icon)} Stat={Weather.list[0].weather[0].description} Size={20}></Stat>
+        <Stat
+          Icon={getWeatherIconPath(Weather.list[0].weather[0].icon)}
+          Stat={Weather.list[0].weather[0].description}
+          Size={20}
+        ></Stat>
       </View>
 
       <View style={details.flexRow}>
@@ -101,7 +261,7 @@ const details = StyleSheet.create({
 
     paddingHorizontal: 8,
     marginBottom: 16,
-    marginTop: 62
+    marginTop: 62,
   },
 
   flexRow: {
