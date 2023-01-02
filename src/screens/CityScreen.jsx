@@ -5,6 +5,7 @@ import { ScreenWrapper } from '../components/ScreenWrapper'
 
 import Stat from '../components/IconStat'
 import { HourlySection, WeeklySection } from '../components/ForecastItem'
+import { getWeatherIconPath } from '../components/WeatherIcon'
 
 export default function CityScreen({ navigation, route }) {
   useEffect(() => {
@@ -50,7 +51,7 @@ function Details({ Weather }) {
       </View>
 
       <View style={details.desc}>
-        <Stat Stat={Weather.list[0].weather[0].description} Size={20}></Stat>
+        <Stat Icon={getWeatherIconPath(Weather.list[0].weather[0].icon)} Stat={Weather.list[0].weather[0].description} Size={20}></Stat>
       </View>
 
       <View style={details.flexRow}>

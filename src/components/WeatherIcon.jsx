@@ -12,10 +12,13 @@ const images = {
     '50': require('../../assets/icons/weather/50.png'),
 }
 
+export function getWeatherIconPath(Condition) {
+    return Condition.substring(0, 2)
+}
+
 export default function WeatherIcon({Condition, style}) {
-    let id = Condition.substring(0, 2)
     return (
-        <Image style={style} source={images[id]}></Image>
+        <Image style={style} source={images[getWeatherIconPath(Condition)]}></Image>
     )
 }
 
