@@ -5,13 +5,13 @@ import { CityListItem } from '../components/CityListItem'
 import CityDetailedItem from '../components/CityDetailedItem'
 import TitledSection from '../components/TitledSection'
 
-import FavoriteCitiesList from '../../assets/FavoriteCities'
-
 import { API_KEY } from '@env'
 import { SafeAreaScreenWrapper } from '../components/ScreenWrapper'
 import Font from '../components/Font'
 
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Location from 'expo-location'
+import { StyleSheet } from 'react-native'
 
 async function getLocation(setGPSWeather) {
   let { status } = await Location.requestForegroundPermissionsAsync()
@@ -46,29 +46,42 @@ export default function HomeScreen({ navigation }) {
   useEffect(() => {
     getLocation(setGPSWeather)
 
-    let weather = []
-    for (let i = 0; i < FavoriteCitiesList.length; i++) {
-      let city = FavoriteCitiesList[i]
-
-      weather.push(
-        fetch(
-          'https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=' +
-            city.lat +
-            '&lon=' +
-            city.long +
-            '&appid=' +
-            API_KEY +
-            '&units=imperial&cnt=13',
-        ).then((res) => res.json()),
-      )
+    try {
+      AsyncStorage.getItem('Favorites')
+        .then((res) => JSON.parse(res))
+        .then((favs) => { 
+          if (favs.length != undefined) {
+            let weather = []
+            for (let i = 0; i < favs.length; i++) {
+              let city = favs[i]
+              
+              weather.push(
+                fetch(
+                'https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=' +
+                city.lat +
+                '&lon=' +
+                city.lon +
+                '&appid=' +
+                API_KEY +
+                '&units=imperial&cnt=13',
+                ).then((res) => res.json()),
+                )
+              }
+              
+              Promise.all(weather).then((wthr) => setFavWeather(wthr))
+            } else {
+              setFavWeather(undefined)
+              console.log("no favorites")
+            }
+        })
+    } catch (e) {
+      console.log(e)
     }
-
-    Promise.all(weather).then((wthr) => setFavWeather(wthr))
   }, [])
 
   let citylistItems = (
     <TitledSection Label={'Favorite Cities'}>
-      {FavWeather != undefined ? (
+      {FavWeather.length > 0 ? (
         FavWeather.map((city) => {
           return (
             <CityListItem
@@ -81,7 +94,7 @@ export default function HomeScreen({ navigation }) {
           )
         })
       ) : (
-        <Font>No Favorites Added</Font>
+        <Font style={styles.noFavsText}>No favorites added...</Font>
       )}
     </TitledSection>
   )
@@ -105,3 +118,12 @@ export default function HomeScreen({ navigation }) {
     </SafeAreaScreenWrapper>
   )
 }
+
+const styles = StyleSheet.create({
+  noFavsText: { 
+    fontSize: 20,
+    color: '#FBFBFB',
+    textAlign: 'center',
+    marginTop: 24,
+  }
+})
