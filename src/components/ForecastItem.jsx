@@ -143,12 +143,18 @@ export function WeeklySection({ Lon, Lat }) {
   }, [])
 
   let weeklyForecast
-  
+
   if (!Weather) {
     return <View></View>
   } else {
     weeklyForecast = Weather.list.map((weather, index) => {
-      return <WeeklyListItem key={weather.dt} Weather={weather} Day={index}></WeeklyListItem>
+      return (
+        <WeeklyListItem
+          key={weather.dt}
+          Weather={weather}
+          Day={index}
+        ></WeeklyListItem>
+      )
     })
   }
 
@@ -168,7 +174,7 @@ function getDay(dayIndex) {
   return day
 }
 
-const weekdays = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 function WeeklyListItem({ Weather, Day }) {
   let weekday = getDay(Day)
