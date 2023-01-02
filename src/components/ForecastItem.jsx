@@ -1,7 +1,9 @@
-import react from 'react'
+import react, { useEffect, useState } from 'react'
 import { View, Image, StyleSheet, ScrollView } from 'react-native'
 import Stat from './IconStat'
 import Font from './Font'
+
+import { API_KEY } from '@env'
 
 export function HourlySection({ Weather }) {
   // console.log(Weather)
@@ -35,7 +37,7 @@ export function HourlySection({ Weather }) {
   )
 }
 
-function convert(dtTxt) {
+function getHour(dtTxt) {
   const dt = new Date(dtTxt.replace(' ', 'T'))
   const hr = dt.getHours()
 
@@ -43,7 +45,7 @@ function convert(dtTxt) {
 }
 
 function HourlyForecastItem({ Hour }) {
-  let hour = convert(Hour.dt_txt)
+  let hour = getHour(Hour.dt_txt)
   let identifier = hour < 12 ? 'am' : 'pm'
 
   return (
@@ -124,32 +126,62 @@ const hourly = StyleSheet.create({
   },
 })
 
-export function WeeklySection({ Weather }) {
+export function WeeklySection({ Lon, Lat }) {
+  const [Weather, setWeather] = useState()
+
+  useEffect(() => {
+    fetch(
+      'https://api.openweathermap.org/data/2.5/forecast/daily?lat=' +
+        Lat +
+        '&lon=' +
+        Lon +
+        '&cnt=8&units=imperial&appid=' +
+        API_KEY,
+    )
+      .then((res) => res.json())
+      .then((res) => setWeather(res))
+  }, [])
+
+  let weeklyForecast
+  
+  if (!Weather) {
+    return <View></View>
+  } else {
+    weeklyForecast = Weather.list.map((weather, index) => {
+      return <WeeklyListItem key={weather.dt} Weather={weather} Day={index}></WeeklyListItem>
+    })
+  }
+
   return (
     <View style={weekly.section}>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-        <WeeklyListItem></WeeklyListItem>
-        <WeeklyListItem></WeeklyListItem>
-        <WeeklyListItem></WeeklyListItem>
-        <WeeklyListItem></WeeklyListItem>
-        <WeeklyListItem></WeeklyListItem>
-        <WeeklyListItem></WeeklyListItem>
-        <WeeklyListItem></WeeklyListItem>
+        {weeklyForecast}
       </ScrollView>
     </View>
   )
 }
 
-function WeeklyListItem() {
+function getDay(dayIndex) {
+  const dt = new Date()
+  const day = dt.getDay() + dayIndex
+
+  return day
+}
+
+const weekdays = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+function WeeklyListItem({ Weather, Day }) {
+  let weekday = getDay(Day)
+
   return (
     <View style={weekly.card}>
-      <Font style={weekly.day}>Tue</Font>
+      <Font style={weekly.day}>{weekdays[weekday % 7]}</Font>
       <Image
         style={weekly.icon}
         source={require('../../assets/icons/Clear-Sky.png')}
       ></Image>
-      <Stat Stat={80} Unit="f" Size={18}></Stat>
-      <Stat Stat={70} Unit="f" Size={18}></Stat>
+      <Stat Stat={Math.round(Weather.temp.max)} Unit="f" Size={18}></Stat>
+      <Stat Stat={Math.round(Weather.temp.min)} Unit="f" Size={18}></Stat>
     </View>
   )
 }

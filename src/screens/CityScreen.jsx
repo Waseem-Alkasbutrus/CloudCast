@@ -15,7 +15,7 @@ export default function CityScreen({ navigation, route }) {
     <ScreenWrapper>
       <Details Weather={route.params.Weather}></Details>
 
-      <WeeklySection></WeeklySection>
+      <WeeklySection Lat={route.params.Weather.city.coord.lat} Lon={route.params.Weather.city.coord.lon}></WeeklySection>
 
       <HourlySection Weather={route.params.Weather}></HourlySection>
     </ScreenWrapper>
