@@ -1,38 +1,15 @@
-import React, { useEffect, useCallback, useMemo, useRef } from 'react'
-import { StyleSheet, View, ScrollView, Image } from 'react-native'
+import React, { useEffect } from 'react'
+import { StyleSheet, View } from 'react-native'
 
 import { ScreenWrapper } from '../components/ScreenWrapper'
 
-import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet'
-import Font from '../components/Font'
 import Stat from '../components/IconStat'
-import {
-  HourlyForecastHeader,
-  HourlyForecastItem,
-} from '../components/CityListItem'
 import { HourelySection, WeeklySection } from '../components/ForecastItem'
 
 export default function CityScreen({ navigation, route }) {
   useEffect(() => {
     navigation.setOptions({ title: route.params.Weather.city.name })
   }, [])
-
-  // ref
-  const bottomSheetRef = useRef(null)
-
-  // variables
-  const snapPoints = useMemo(() => ['100%', '45%'], [])
-
-  const renderBackdrop = useCallback(
-    (props) => (
-      <BottomSheetBackdrop
-        {...props}
-        disappearsOnIndex={1}
-        appearsOnIndex={0}
-      />
-    ),
-    [],
-  )
 
   return (
     <ScreenWrapper>
