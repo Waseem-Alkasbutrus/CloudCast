@@ -4,6 +4,7 @@ import Stat from './IconStat'
 import Font from './Font'
 
 import { API_KEY } from '@env'
+import WeatherIcon from './WeatherIcon'
 
 export function HourlySection({ Weather }) {
   // console.log(Weather)
@@ -15,19 +16,19 @@ export function HourlySection({ Weather }) {
   return (
     <View style={hourly.hourlySection}>
       <View style={hourly.hourHeaderWrapper}>
-        <View style={hourly.stat}>
+        <View style={hourly.statCenter}>
           <Font style={hourly.headerLabel}>Time</Font>
         </View>
 
-        <View style={hourly.stat}></View>
+        <View style={hourly.statCenter}></View>
 
-        <View style={hourly.stat}>
+        <View style={hourly.statCenter}>
           <Font style={hourly.headerLabel}>Wind</Font>
         </View>
-        <View style={hourly.stat}>
+        <View style={hourly.statCenter}>
           <Font style={hourly.headerLabel}>Temp</Font>
         </View>
-        <View style={hourly.stat}>
+        <View style={hourly.statCenter}>
           <Font style={hourly.headerLabel}>Rain</Font>
         </View>
       </View>
@@ -50,7 +51,7 @@ function HourlyForecastItem({ Hour }) {
 
   return (
     <View style={hourly.hourWrapper}>
-      <View style={hourly.stat}>
+      <View style={hourly.statLeft}>
         <Stat
           Stat={hour % 12 === 0 ? 12 : hour % 12}
           Unit={identifier}
@@ -58,22 +59,19 @@ function HourlyForecastItem({ Hour }) {
         ></Stat>
       </View>
 
-      <View style={hourly.stat}>
-        <Image
-          style={hourly.icon}
-          source={require('../../assets/icons/weather/01.png')}
-        ></Image>
+      <View style={hourly.statCenter}>
+        <WeatherIcon style={hourly.icon} Condition={Hour.weather[0].icon}></WeatherIcon>
       </View>
 
-      <View style={hourly.stat}>
+      <View style={hourly.statRight}>
         <Stat Stat={Hour.wind.speed.toFixed(1)} Unit={'mph'} Size={20}></Stat>
       </View>
 
-      <View style={hourly.stat}>
+      <View style={hourly.statRight}>
         <Stat Stat={Math.round(Hour.main.temp)} Unit={'f'} Size={20}></Stat>
       </View>
 
-      <View style={hourly.stat}>
+      <View style={hourly.statRight}>
         <Stat Stat={Hour.pop * 100} Unit={'%'} Size={20}></Stat>
       </View>
     </View>
@@ -94,10 +92,11 @@ const hourly = StyleSheet.create({
   hourWrapper: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
     borderBottomColor: '#FBFBFB15',
     borderBottomWidth: 1,
-    marginBottom: 4,
+    paddingVertical: 4,
   },
   icon: {
     width: 28,
@@ -119,11 +118,21 @@ const hourly = StyleSheet.create({
     marginHorizontal: 4,
     minWidth: 40,
   },
-  stat: {
+  statLeft: {
+    minWidth: 64,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
+  statRight : {
+    minWidth: 64,
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+  statCenter : {
     minWidth: 64,
     justifyContent: 'center',
     alignItems: 'center',
-  },
+  }
 })
 
 export function WeeklySection({ Lon, Lat }) {
@@ -182,10 +191,9 @@ function WeeklyListItem({ Weather, Day }) {
   return (
     <View style={weekly.card}>
       <Font style={weekly.day}>{weekdays[weekday % 7]}</Font>
-      <Image
-        style={weekly.icon}
-        source={require('../../assets/icons/Clear-Sky.png')}
-      ></Image>
+
+      <WeatherIcon Condition={Weather.weather[0].icon} style={weekly.icon}></WeatherIcon>
+      
       <Stat Stat={Math.round(Weather.temp.max)} Unit="f" Size={18}></Stat>
       <Stat Stat={Math.round(Weather.temp.min)} Unit="f" Size={18}></Stat>
     </View>
