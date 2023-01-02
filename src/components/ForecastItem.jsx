@@ -60,7 +60,10 @@ function HourlyForecastItem({ Hour }) {
       </View>
 
       <View style={hourly.statCenter}>
-        <WeatherIcon style={hourly.icon} Condition={Hour.weather[0].icon}></WeatherIcon>
+        <WeatherIcon
+          style={hourly.icon}
+          Condition={Hour.weather[0].icon}
+        ></WeatherIcon>
       </View>
 
       <View style={hourly.statRight}>
@@ -123,16 +126,16 @@ const hourly = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
-  statRight : {
+  statRight: {
     minWidth: 64,
     justifyContent: 'center',
     alignItems: 'flex-end',
   },
-  statCenter : {
+  statCenter: {
     minWidth: 64,
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
 })
 
 export function WeeklySection({ Lon, Lat }) {
@@ -192,8 +195,11 @@ function WeeklyListItem({ Weather, Day }) {
     <View style={weekly.card}>
       <Font style={weekly.day}>{weekdays[weekday % 7]}</Font>
 
-      <WeatherIcon Condition={Weather.weather[0].icon} style={weekly.icon}></WeatherIcon>
-      
+      <WeatherIcon
+        Condition={Weather.weather[0].icon}
+        style={weekly.icon}
+      ></WeatherIcon>
+
       <Stat Stat={Math.round(Weather.temp.max)} Unit="f" Size={18}></Stat>
       <Stat Stat={Math.round(Weather.temp.min)} Unit="f" Size={18}></Stat>
     </View>
