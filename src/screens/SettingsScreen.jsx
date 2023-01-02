@@ -6,21 +6,27 @@ import { OpenDialogue } from '../components/SettingItem'
 import Button from '../components/Button'
 import {SafeAreaScreenWrapper} from '../components/ScreenWrapper'
 
-buttonShouldDo = () => {
-  console.log('button pressed')
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
+async function deleteSaves() {
+  try {
+    await AsyncStorage.setItem('Favorites', JSON.stringify([]))
+    console.log(await AsyncStorage.getItem('Favorites'))
+  } catch (e) {
+    console.log('[ERROR]', e.message)
+  }
 }
 
-const deleteSaves = () =>
+const deleteSavesDialogue = () =>
   Alert.alert(
     'Are you sure?',
     'If you delete saves, we will not be able to recover them anymore',
     [
       {
         text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
-      { text: 'Delete Saves', onPress: () => console.log('Items Deleted') },
+      { text: 'Delete Favorites', onPress: () => deleteSaves() },
     ],
     {
       cancelable: true,
@@ -58,7 +64,7 @@ export default function SettingsScreen() {
       </TitledSection>
 
       <TitledSection Label={'Danger Zone'}>
-        <Button Label={'Delete Saved Data'} Action={deleteSaves}></Button>
+        <Button Label={'Remove All Favorites'} Action={deleteSavesDialogue}></Button>
       </TitledSection>
     </SafeAreaScreenWrapper>
   )
