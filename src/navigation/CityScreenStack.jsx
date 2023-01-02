@@ -19,7 +19,7 @@ const header = StyleSheet.create({
   },
   button: {
     backgroundColor: '#21212120',
-    borderRadius: 360,
+    borderRadius: 16,
     marginVertical: 8,
     marginLeft: 16,
     paddingHorizontal: 8,
@@ -40,7 +40,6 @@ function CustomHeaderTitle(props) {
 }
 
 function CustomHeaderBackButton(props) {
-  console.log(props)
   return (
     <Pressable style={header.button} onPress={props.onPress}>
       <Image
