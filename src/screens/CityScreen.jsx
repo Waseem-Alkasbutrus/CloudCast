@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { StyleSheet, View } from 'react-native'
 
-import { ScreenWrapper } from '../components/ScreenWrapper'
+import { SafeAreaScreenWrapper, ScreenWrapper } from '../components/ScreenWrapper'
 
 import Stat from '../components/IconStat'
 import { HourlySection, WeeklySection } from '../components/ForecastItem'
@@ -13,13 +13,13 @@ export default function CityScreen({ navigation, route }) {
   }, [])
 
   return (
-    <ScreenWrapper>
+    <SafeAreaScreenWrapper>
       <Details Weather={route.params.Weather}></Details>
 
       <WeeklySection Lat={route.params.Weather.city.coord.lat} Lon={route.params.Weather.city.coord.lon}></WeeklySection>
 
       <HourlySection Weather={route.params.Weather}></HourlySection>
-    </ScreenWrapper>
+    </SafeAreaScreenWrapper>
   )
 }
 
@@ -100,7 +100,8 @@ const details = StyleSheet.create({
     alignItems: 'center',
 
     paddingHorizontal: 8,
-    marginVertical: 16,
+    marginBottom: 16,
+    marginTop: 62
   },
 
   flexRow: {
