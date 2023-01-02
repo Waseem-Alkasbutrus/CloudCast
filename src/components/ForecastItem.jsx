@@ -3,7 +3,7 @@ import { View, Image, StyleSheet, ScrollView } from 'react-native'
 import Stat from './IconStat'
 import Font from './Font'
 
-export function HourelySection({ Weather }) {
+export function HourlySection({ Weather }) {
   // console.log(Weather)
 
   let hourlyForecast = Weather.list.map((entry) => {

@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native'
 import { ScreenWrapper } from '../components/ScreenWrapper'
 
 import Stat from '../components/IconStat'
-import { HourelySection, WeeklySection } from '../components/ForecastItem'
+import { HourelySection as HourlySection, WeeklySection } from '../components/ForecastItem'
 
 export default function CityScreen({ navigation, route }) {
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function CityScreen({ navigation, route }) {
 
       <WeeklySection></WeeklySection>
 
-      <HourelySection Weather={route.params.Weather}></HourelySection>
+      <HourlySection Weather={route.params.Weather}></HourlySection>
     </ScreenWrapper>
   )
 }
