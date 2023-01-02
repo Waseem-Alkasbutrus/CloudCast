@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, Pressable } from 'react-native'
+import { View, StyleSheet, Pressable, Image } from 'react-native'
 import Font from './Font'
 
 import Stat from './IconStat'
@@ -48,7 +48,9 @@ export function CitySearchListItem({
     <Pressable onPress={Action} style={styles.cityItemContainer}>
       <View style={styles.namesContainer}>
         <Font style={styles.cityName}>{City.name}</Font>
-        <Font style={styles.countryName}>{City.state + ', ' + City.country}</Font>
+        <Font style={styles.countryName}>
+          {City.state + ', ' + City.country}
+        </Font>
       </View>
     </Pressable>
   )

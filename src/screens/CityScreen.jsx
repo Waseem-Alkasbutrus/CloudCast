@@ -1,13 +1,16 @@
 import React, { useEffect, useCallback, useMemo, useRef } from 'react'
-import { StyleSheet, View, Text, ScrollView, Image } from 'react-native'
+import { StyleSheet, View, ScrollView, Image } from 'react-native'
 
-import CityDetailedItem from '../components/CityDetailedItem'
-import ScreenWrapper from '../components/ScreenWrapper'
-import TitledSection from '../components/TitledSection'
+import { ScreenWrapper } from '../components/ScreenWrapper'
 
-import BottomSheet from '@gorhom/bottom-sheet'
+import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet'
 import Font from '../components/Font'
 import Stat from '../components/IconStat'
+import {
+  HourlyForecastHeader,
+  HourlyForecastItem,
+} from '../components/CityListItem'
+import { HourelySection, WeeklySection } from '../components/ForecastItem'
 
 export default function CityScreen({ navigation, route }) {
   useEffect(() => {
@@ -20,47 +23,25 @@ export default function CityScreen({ navigation, route }) {
   // variables
   const snapPoints = useMemo(() => ['100%', '45%'], [])
 
+  const renderBackdrop = useCallback(
+    (props) => (
+      <BottomSheetBackdrop
+        {...props}
+        disappearsOnIndex={1}
+        appearsOnIndex={0}
+      />
+    ),
+    [],
+  )
+
   return (
     <ScreenWrapper>
       <Details Weather={route.params.Weather}></Details>
 
-      <View style={weekly.section}>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          <WeeklyListItem></WeeklyListItem>
-          <WeeklyListItem></WeeklyListItem>
-          <WeeklyListItem></WeeklyListItem>
-          <WeeklyListItem></WeeklyListItem>
-          <WeeklyListItem></WeeklyListItem>
-          <WeeklyListItem></WeeklyListItem>
-          <WeeklyListItem></WeeklyListItem>
-        </ScrollView>
-      </View>
+      <WeeklySection></WeeklySection>
 
-      <BottomSheet
-        ref={bottomSheetRef}
-        index={1}
-        snapPoints={snapPoints}
-        backgroundStyle={styles.bottomSheet}
-      >
-        <TitledSection Label={'Hourly Forecast'}>
-          <Font>Forecast each hour I guess</Font>
-        </TitledSection>
-      </BottomSheet>
+      <HourelySection Weather={route.params.Weather}></HourelySection>
     </ScreenWrapper>
-  )
-}
-
-function WeeklyListItem() {
-  return (
-    <View style={weekly.card}>
-      <Font style={weekly.day}>Tue</Font>
-      <Image
-        style={weekly.icon}
-        source={require('../../assets/icons/Clear-Sky.png')}
-      ></Image>
-      <Stat Stat={80} Unit="f" Size={20}></Stat>
-      <Stat Stat={70} Unit="f" Size={20}></Stat>
-    </View>
   )
 }
 
@@ -174,50 +155,5 @@ const details = StyleSheet.create({
   },
   desc: {
     marginBottom: 8,
-  },
-})
-
-const weekly = StyleSheet.create({
-  section: {
-    display: 'flex',
-    gap: 8,
-    flexDirection: 'row',
-    height: 'auto',
-  },
-  card: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    marginHorizontal: 4,
-
-    backgroundColor: '#21212110',
-    borderRadius: 8,
-
-    height: 'auto',
-  },
-  day: {
-    fontSize: 22,
-    fontWeight: '500',
-
-    color: '#FBFBFB',
-    textTransform: 'uppercase',
-  },
-  icon: {
-    width: 28,
-    height: 28,
-    marginVertical: 8,
-  },
-})
-
-const styles = StyleSheet.create({
-  cityContainer: {
-    backgroundColor: '#F7F7F7',
-    flexGrow: 1,
-  },
-  bottomSheet: {
-    backgroundColor: '#21212130',
   },
 })
