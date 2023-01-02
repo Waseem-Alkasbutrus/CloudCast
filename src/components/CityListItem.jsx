@@ -30,7 +30,7 @@ export function CityListItem({
         <Stat
           Icon={require('../../assets/icons/Rain-Shower.png')}
           Size={22}
-          Stat={Math.round(Weather.list[0].pop)}
+          Stat={Weather.list[0].pop * 100}
           Unit="%"
         />
       </View>

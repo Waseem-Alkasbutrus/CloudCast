@@ -35,7 +35,7 @@ export default function CityDetailedItem({
         <Stat
           Icon={require('../../assets/icons/Rain-Shower.png')}
           Size={18}
-          Stat={Weather.list[0].pop}
+          Stat={Weather.list[0].pop * 100}
           Unit='%'
         />
 
@@ -53,7 +53,7 @@ export default function CityDetailedItem({
         <Stat
           Icon={require('../../assets/icons/Wind.png')}
           Size={18}
-          Stat={Weather.list[0].wind.speed}
+          Stat={Weather.list[0].wind.speed.toFixed(1)}
           Unit='mph'
         />
 
