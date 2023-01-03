@@ -4,14 +4,21 @@ import { StyleSheet, Alert, Linking } from 'react-native'
 import TitledSection from '../components/TitledSection'
 import { OpenDialogue } from '../components/SettingItem'
 import Button from '../components/Button'
-import {SafeAreaScreenWrapper} from '../components/ScreenWrapper'
+import { SafeAreaScreenWrapper } from '../components/ScreenWrapper'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import Toast from 'react-native-toast-message'
+import { CustomToast } from '../components/CustomToast'
 
 async function deleteSaves() {
   try {
     await AsyncStorage.setItem('Favorites', JSON.stringify([]))
     console.log(await AsyncStorage.getItem('Favorites'))
+
+    Toast.show({
+      type: 'custom',
+      text1: 'Removed all favorites',
+    })
   } catch (e) {
     console.log('[ERROR]', e.message)
   }
@@ -41,7 +48,9 @@ export default function SettingsScreen() {
           SettingName={'Location'}
           Description={'On'}
           Icon={require('../../assets/icons/Location.png')}
-          Action={() => {Linking.openSettings()}}
+          Action={() => {
+            Linking.openSettings()
+          }}
         />
       </TitledSection>
 
@@ -54,8 +63,17 @@ export default function SettingsScreen() {
       </TitledSection>
 
       <TitledSection Label={'Danger Zone'}>
-        <Button Label={'Remove All Favorites'} Action={deleteSavesDialogue}></Button>
+        <Button
+          Label={'Remove All Favorites'}
+          Action={deleteSavesDialogue}
+        ></Button>
       </TitledSection>
+      <Toast
+        position="bottom"
+        bottomOffset={80}
+        visibilityTime={2000}
+        config={CustomToast}
+      />
     </SafeAreaScreenWrapper>
   )
 }

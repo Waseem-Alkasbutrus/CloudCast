@@ -10,6 +10,8 @@ import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Font from '../components/Font'
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { CustomToast } from '../components/CustomToast'
 
 async function saveFavs(favs) {
   try {
@@ -42,6 +44,10 @@ async function addToFavorites(city, lon, lat) {
         console.log('adding new city')
 
         saveFavs(favs)
+        Toast.show({
+          type: 'custom',
+          text1: 'Added ' + city + ' to favorites',
+        })
       }
     }
   } catch (e) {
@@ -65,6 +71,10 @@ async function removeFromFavorites(city, lon, lat) {
       )
 
       saveFavs(filter)
+      Toast.show({
+        type: 'custom',
+        text1: 'Removed ' + city + ' from favorites',
+      })
     }
   } catch (e) {
     console.error('[ERROR: removeFromFavorites()]', e)
@@ -161,6 +171,13 @@ export default function CityScreen({ navigation, route }) {
       ></WeeklySection>
 
       <HourlySection Weather={route.params.Weather}></HourlySection>
+
+      <Toast
+        position="bottom"
+        bottomOffset={80}
+        visibilityTime={2000}
+        config={CustomToast}
+      />
     </SafeAreaScreenWrapper>
   )
 }
