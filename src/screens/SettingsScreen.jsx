@@ -47,19 +47,9 @@ export default function SettingsScreen() {
 
       <TitledSection Label={'Units'}>
         <OpenDialogue
-          SettingName={'Temperature'}
-          Description={'Fahrenheit'}
+          SettingName={'Units'}
+          Description={'Imperial'}
           Icon={require('../../assets/icons/Thermometer.png')}
-        />
-        <OpenDialogue
-          SettingName={'Length'}
-          Description={'Miles'}
-          Icon={require('../../assets/icons/Ruler.png')}
-        />
-        <OpenDialogue
-          SettingName={'Pressure'}
-          Description={'Atm'}
-          Icon={require('../../assets/icons/Pressure.png')}
         />
       </TitledSection>
 
