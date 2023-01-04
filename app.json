@@ -23,11 +23,17 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "backgroundColor": "#f26e8c"
+      },
+      "package": "com.waseem3.CloudCast"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9078c36f-f484-4ffa-bdd3-d6be1e53e2a7"
+      }
     }
   }
 }
