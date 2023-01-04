@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Image, StyleSheet, View } from 'react-native'
+import { ActivityIndicator, Image, StyleSheet, View } from 'react-native'
 
 import { SafeAreaScreenWrapper } from '../components/ScreenWrapper'
 
@@ -13,10 +13,11 @@ import Font from '../components/Font'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import { CustomToast } from '../components/CustomToast'
 
+import { API_KEY } from '@env'
+
 async function saveFavs(favs) {
   try {
     await AsyncStorage.setItem('Favorites', JSON.stringify(favs))
-    console.log(await AsyncStorage.getItem('Favorites'))
   } catch (e) {
     console.error('[ERROR: saveFavs()]', e)
   }
@@ -41,7 +42,6 @@ async function addToFavorites(city, lon, lat) {
 
       if (filter.length == 0) {
         favs.push(currentCity)
-        console.log('adding new city')
 
         saveFavs(favs)
         Toast.show({
@@ -98,8 +98,6 @@ async function isInFavorites(city, lon, lat, setBookmarked) {
           fav.lat === currentCity.lat,
       )
 
-      console.log(city, ' is bookmarked? ', filter.length != 0)
-
       setBookmarked(filter.length != 0)
     }
   } catch (e) {
@@ -109,21 +107,45 @@ async function isInFavorites(city, lon, lat, setBookmarked) {
 
 export default function CityScreen({ navigation, route }) {
   const [Bookmarked, setBookmarked] = useState()
+  const [WeeklyWeather, setWeeklyWeather] = useState()
+  const [HourlyWeather, setHourlyWeather] = useState()
 
   useEffect(() => {
     isInFavorites(
-      route.params.Weather.city.name,
-      route.params.Weather.city.coord.lon,
-      route.params.Weather.city.coord.lat,
+      route.params.CityName,
+      route.params.Lon,
+      route.params.Lat,
       setBookmarked,
     )
 
-    navigation.setOptions({ title: route.params.Weather.city.name })
+    navigation.setOptions({ title: route.params.CityName })
+
+    fetch(
+      'https://api.openweathermap.org/data/2.5/forecast/daily?lat=' +
+        route.params.Lat +
+        '&lon=' +
+        route.params.Lon +
+        '&cnt=8&units=imperial&appid=' +
+        API_KEY,
+    )
+      .then((res) => res.json())
+      .then((res) => setWeeklyWeather(res))
+
+    fetch(
+      'https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=' +
+        route.params.Lat +
+        '&lon=' +
+        route.params.Lon +
+        '&appid=' +
+        API_KEY +
+        '&units=imperial&cnt=13',
+    )
+      .then((res) => res.json())
+      .then((res) => setHourlyWeather(res))
   }, [])
 
   let BookmarkButton
 
-  console.log(Bookmarked)
   if (Bookmarked == true || Bookmarked == false) {
     BookmarkButton = (
       <View style={favorite.container}>
@@ -132,15 +154,15 @@ export default function CityScreen({ navigation, route }) {
           onPress={() => {
             if (!Bookmarked) {
               addToFavorites(
-                route.params.Weather.city.name,
-                route.params.Weather.city.coord.lon,
-                route.params.Weather.city.coord.lat,
+                route.params.CityName,
+                route.params.Lon,
+                route.params.Lat,
               )
             } else {
               removeFromFavorites(
-                route.params.Weather.city.name,
-                route.params.Weather.city.coord.lon,
-                route.params.Weather.city.coord.lat,
+                route.params.CityName,
+                route.params.Lon,
+                route.params.Lat,
               )
             }
             setBookmarked(!Bookmarked)
@@ -159,27 +181,34 @@ export default function CityScreen({ navigation, route }) {
     )
   }
 
-  return (
-    <SafeAreaScreenWrapper>
-      {BookmarkButton}
+  if (!HourlyWeather || !WeeklyWeather) {
+    return (
+      <SafeAreaScreenWrapper>
+        <View style={{display: 'flex', flexGrow: 1, justifyContent: 'center', alignContent: 'center'}}>
+          <ActivityIndicator size={'large'} color={'#FBFBFB'}></ActivityIndicator>
+        </View>
+      </SafeAreaScreenWrapper>
+    )
+  } else {
+    return (
+      <SafeAreaScreenWrapper>
+        {BookmarkButton}
 
-      <Details Weather={route.params.Weather}></Details>
+        <Details Weather={HourlyWeather.list[0]}></Details>
 
-      <WeeklySection
-        Lat={route.params.Weather.city.coord.lat}
-        Lon={route.params.Weather.city.coord.lon}
-      ></WeeklySection>
+        <WeeklySection Weather={WeeklyWeather}></WeeklySection>
 
-      <HourlySection Weather={route.params.Weather}></HourlySection>
+        <HourlySection Weather={HourlyWeather}></HourlySection>
 
-      <Toast
-        position="bottom"
-        bottomOffset={80}
-        visibilityTime={2000}
-        config={CustomToast}
-      />
-    </SafeAreaScreenWrapper>
-  )
+        <Toast
+          position="bottom"
+          bottomOffset={80}
+          visibilityTime={2000}
+          config={CustomToast}
+        />
+      </SafeAreaScreenWrapper>
+    )
+  }
 }
 
 const favorite = StyleSheet.create({
@@ -211,7 +240,7 @@ function Details({ Weather }) {
       <View style={details.flexRow}>
         <View style={details.temp}>
           <Stat
-            Stat={Math.round(Weather.list[0].main.temp)}
+            Stat={Math.round(Weather.main.temp)}
             Unit="f"
             Size={120}
             Weight={'420'}
@@ -221,12 +250,12 @@ function Details({ Weather }) {
         <View style={[details.flexCol, details.highLowTempsWrapper]}>
           <Stat
             Size={32}
-            Stat={Math.round(Weather.list[0].main.temp_max)}
+            Stat={Math.round(Weather.main.temp_max)}
             Unit="f"
           />
           <Stat
             Size={32}
-            Stat={Math.round(Weather.list[0].main.temp_min)}
+            Stat={Math.round(Weather.main.temp_min)}
             Unit="f"
           />
         </View>
@@ -234,8 +263,8 @@ function Details({ Weather }) {
 
       <View style={details.desc}>
         <Stat
-          Icon={getWeatherIconPath(Weather.list[0].weather[0].icon)}
-          Stat={Weather.list[0].weather[0].description}
+          Icon={getWeatherIconPath(Weather.weather[0].icon)}
+          Stat={Weather.weather[0].description}
           Size={20}
         ></Stat>
       </View>
@@ -244,7 +273,7 @@ function Details({ Weather }) {
         <Stat
           Icon={require('../../assets/icons/Rain-Shower.png')}
           Size={18}
-          Stat={(Weather.list[0].pop * 100).toFixed(0)}
+          Stat={(Weather.pop * 100).toFixed(0)}
           Unit="%"
         />
 
@@ -253,7 +282,7 @@ function Details({ Weather }) {
         <Stat
           Icon={require('../../assets/icons/Feels-Like.png')}
           Size={18}
-          Stat={Math.round(Weather.list[0].main.feels_like)}
+          Stat={Math.round(Weather.main.feels_like)}
           Unit="f"
         />
 
@@ -262,7 +291,7 @@ function Details({ Weather }) {
         <Stat
           Icon={require('../../assets/icons/Wind.png')}
           Size={18}
-          Stat={Weather.list[0].wind.speed}
+          Stat={Weather.wind.speed}
           Unit="mph"
         />
 
@@ -271,7 +300,7 @@ function Details({ Weather }) {
         <Stat
           Icon={require('../../assets/icons/Humidity.png')}
           Size={18}
-          Stat={Weather.list[0].main.humidity}
+          Stat={Weather.main.humidity}
           Unit="%"
         />
       </View>

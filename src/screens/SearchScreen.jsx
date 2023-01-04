@@ -28,19 +28,7 @@ async function searchFor(city, setResults, navigation) {
                 key={city.lat * city.lon}
                 City={city}
                 Action={() => {
-                  fetch(
-                    'https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=' +
-                      city.lat +
-                      '&lon=' +
-                      city.lon +
-                      '&appid=' +
-                      API_KEY +
-                      '&units=imperial&cnt=13',
-                  )
-                    .then((res) => res.json())
-                    .then((res) => {
-                      navigation.navigate('City', { Weather: res })
-                    })
+                    navigation.navigate('City', { CityName: city.name, Lon: city.long, Lat: city.lat })
                 }}
               ></CitySearchListItem>
             )

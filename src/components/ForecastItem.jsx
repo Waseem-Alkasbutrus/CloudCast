@@ -3,12 +3,9 @@ import { View, Image, StyleSheet, ScrollView } from 'react-native'
 import Stat from './IconStat'
 import Font from './Font'
 
-import { API_KEY } from '@env'
 import WeatherIcon from './WeatherIcon'
 
 export function HourlySection({ Weather }) {
-  // console.log(Weather)
-
   let hourlyForecast = Weather.list.map((entry) => {
     return <HourlyForecastItem key={entry.dt} Hour={entry}></HourlyForecastItem>
   })
@@ -138,21 +135,21 @@ const hourly = StyleSheet.create({
   },
 })
 
-export function WeeklySection({ Lon, Lat }) {
-  const [Weather, setWeather] = useState()
+export function WeeklySection({ Weather }) {
+  // const [Weather, setWeather] = useState()
 
-  useEffect(() => {
-    fetch(
-      'https://api.openweathermap.org/data/2.5/forecast/daily?lat=' +
-        Lat +
-        '&lon=' +
-        Lon +
-        '&cnt=8&units=imperial&appid=' +
-        API_KEY,
-    )
-      .then((res) => res.json())
-      .then((res) => setWeather(res))
-  }, [])
+  // useEffect(() => {
+  //   fetch(
+  //     'https://api.openweathermap.org/data/2.5/forecast/daily?lat=' +
+  //       Lat +
+  //       '&lon=' +
+  //       Lon +
+  //       '&cnt=8&units=imperial&appid=' +
+  //       API_KEY,
+  //   )
+  //     .then((res) => res.json())
+  //     .then((res) => setWeather(res))
+  // }, [])
 
   let weeklyForecast
 

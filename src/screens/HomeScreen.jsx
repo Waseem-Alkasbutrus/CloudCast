@@ -57,7 +57,7 @@ async function fetchBookmarkedWeather(setFavWeather) {
                   city.lon +
                   '&appid=' +
                   API_KEY +
-                  '&units=imperial&cnt=13',
+                  '&units=imperial&cnt=1',
               ).then((res) => res.json()),
             )
           }
@@ -95,13 +95,13 @@ export default function HomeScreen({ navigation }) {
   let citylistItems = (
     <TitledSection Label={'Favorite Cities'}>
       {FavWeather != undefined && FavWeather.length > 0 ? (
-        FavWeather.map((city) => {
+        FavWeather.map((cityWeather) => {
           return (
             <CityListItem
-              key={city.city.name}
-              Weather={city}
+              key={cityWeather.city.name}
+              Weather={cityWeather}
               Action={() => {
-                navigation.navigate('City', { Weather: city })
+                navigation.navigate('City', { CityName: cityWeather.city.name, Lon: cityWeather.city.coord.lon, Lat: cityWeather.city.coord.lat })
               }}
             ></CityListItem>
           )
@@ -118,7 +118,7 @@ export default function HomeScreen({ navigation }) {
       <CityDetailedItem
         Weather={GPSweather}
         Action={() => {
-          navigation.navigate('City', { Weather: GPSweather })
+          navigation.navigate('City', { CityName: GPSweather.city.name, Lon: GPSweather.city.coord.lon, Lat: GPSweather.city.coord.lat })
         }}
       ></CityDetailedItem>
     )
