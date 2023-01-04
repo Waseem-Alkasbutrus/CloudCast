@@ -128,7 +128,7 @@ export default function HomeScreen({ navigation }) {
     <SafeAreaScreenWrapper>
       <ScrollView
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          <RefreshControl tintColor={'#FF7B7B'} progressBackgroundColor={'#A04B71BF'} colors={['#FBFBFB']} refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
         {gps}
