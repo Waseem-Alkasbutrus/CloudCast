@@ -77,6 +77,7 @@ async function fetchData(setGPSWeather, setFavWeather) {
   await getLocation(setGPSWeather)
   fetchBookmarkedWeather(setFavWeather)
 }
+
 export default function HomeScreen({ navigation }) {
   const [GPSweather, setGPSWeather] = useState()
   const [FavWeather, setFavWeather] = useState([])
@@ -84,9 +85,9 @@ export default function HomeScreen({ navigation }) {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true)
-    fetchBookmarkedWeather(setFavWeather).then(() => setRefreshing(false)) 
+    fetchBookmarkedWeather(setFavWeather).then(() => setRefreshing(false))
   }, [])
-  
+
   useEffect(() => {
     fetchData(setGPSWeather, setFavWeather)
   }, [])
