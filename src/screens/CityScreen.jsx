@@ -35,9 +35,8 @@ async function addToFavorites(city, lon, lat) {
     if (favs != undefined) {
       filter = favs.filter(
         (fav) =>
-          fav.city === currentCity.city &&
-          fav.lon === currentCity.lon &&
-          fav.lat === currentCity.lat,
+          fav.lon.toFixed(4) === currentCity.lon.toFixed(4) &&
+          fav.lat.toFixed(4) === currentCity.lat.toFixed(4),
       )
 
       if (filter.length == 0) {
@@ -65,9 +64,8 @@ async function removeFromFavorites(city, lon, lat) {
     if (favs !== null) {
       let filter = favs.filter(
         (fav) =>
-          fav.city != currentCity.city &&
-          fav.lon != currentCity.lon &&
-          fav.lat != currentCity.lat,
+          fav.lon.toFixed(4) != currentCity.lon.toFixed(4) &&
+          fav.lat.toFixed(4) != currentCity.lat.toFixed(4),
       )
 
       saveFavs(filter)
@@ -93,9 +91,8 @@ async function isInFavorites(city, lon, lat, setBookmarked) {
     if (favs != undefined) {
       filter = favs.filter(
         (fav) =>
-          fav.city === currentCity.city &&
-          fav.lon === currentCity.lon &&
-          fav.lat === currentCity.lat,
+          fav.lon.toFixed(4) === currentCity.lon.toFixed(4) &&
+          fav.lat.toFixed(4) === currentCity.lat.toFixed(4),
       )
 
       setBookmarked(filter.length != 0)
