@@ -244,7 +244,7 @@ function Details({ Weather }) {
         <Stat
           Icon={require('../../assets/icons/Rain-Shower.png')}
           Size={18}
-          Stat={Weather.list[0].pop * 100}
+          Stat={(Weather.list[0].pop * 100).toFixed(0)}
           Unit="%"
         />
 

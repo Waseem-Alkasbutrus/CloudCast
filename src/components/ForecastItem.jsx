@@ -75,7 +75,7 @@ function HourlyForecastItem({ Hour }) {
       </View>
 
       <View style={hourly.statRight}>
-        <Stat Stat={Hour.pop * 100} Unit={'%'} Size={20}></Stat>
+        <Stat Stat={(Hour.pop * 100).toFixed(0)} Unit={'%'} Size={20}></Stat>
       </View>
     </View>
   )
