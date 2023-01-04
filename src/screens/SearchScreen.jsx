@@ -78,7 +78,7 @@ export default function SearchScreen({ navigation }) {
 
         <Pressable
           style={styles.searchButton}
-          onPress={() => console.log(searchCity)}
+          onPress={() => searchFor(searchCity, setSearchResults, navigation)}
         >
           <Image
             style={styles.searchIcon}
