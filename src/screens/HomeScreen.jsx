@@ -39,7 +39,7 @@ function getLocationWeather(setGPSWeather, location) {
     .then((wthr) => setGPSWeather(wthr))
 }
 
-function fetchBookmarkedWeather(setFavWeather) {
+async function fetchBookmarkedWeather(setFavWeather) {
   try {
     AsyncStorage.getItem('Favorites')
       .then((res) => JSON.parse(res))
@@ -64,12 +64,12 @@ function fetchBookmarkedWeather(setFavWeather) {
 
           Promise.all(weather).then((wthr) => setFavWeather(wthr))
         } else {
+          AsyncStorage.setItem('Favorites', JSON.stringify([]))
           setFavWeather(undefined)
-          console.log('no favorites')
         }
       })
   } catch (e) {
-    console.log(e)
+    console.err(e)
   }
 }
 
@@ -84,11 +84,9 @@ export default function HomeScreen({ navigation }) {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true)
-    fetchData(setGPSWeather, setFavWeather).then(() => setRefreshing(false))
+    fetchBookmarkedWeather(setFavWeather).then(() => setRefreshing(false)) 
   }, [])
-
-  console.log('Mounted Home')
-
+  
   useEffect(() => {
     fetchData(setGPSWeather, setFavWeather)
   }, [])
