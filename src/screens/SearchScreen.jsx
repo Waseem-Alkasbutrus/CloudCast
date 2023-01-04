@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Pressable, StyleSheet, View, Image } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import FeaturedCity from '../components/FeaturedCity'
-import {SafeAreaScreenWrapper} from '../components/ScreenWrapper'
+import { SafeAreaScreenWrapper } from '../components/ScreenWrapper'
 import TitledSection from '../components/TitledSection.jsx'
 
 import { API_KEY } from '@env'
@@ -28,18 +28,26 @@ async function searchFor(city, setResults, navigation) {
                 key={city.lat * city.lon}
                 City={city}
                 Action={() => {
-                    navigation.navigate('City', { CityName: city.name, Lon: city.long, Lat: city.lat })
+                  navigation.navigate('City', {
+                    CityName: city.name,
+                    Lon: city.lon,
+                    Lat: city.lat,
+                  })
                 }}
               ></CitySearchListItem>
             )
           })
         } else {
           results = [
-            <Font key="emptySearch" style={styles.emptySearch}>no matching cities...</Font>,
+            <Font key="emptySearch" style={styles.emptySearch}>
+              no matching cities...
+            </Font>,
           ]
         }
 
-        setResults(<TitledSection Label="Search Results">{results}</TitledSection>)
+        setResults(
+          <TitledSection Label="Search Results">{results}</TitledSection>,
+        )
       } catch (err) {
         console.log(err.message)
       }
@@ -54,6 +62,7 @@ export default function SearchScreen({ navigation }) {
     <SafeAreaScreenWrapper>
       <View style={styles.searchBar}>
         <TextInput
+          autoFocus={true}
           style={styles.searchInput}
           placeholder="Search for a city..."
           placeholderTextColor={'#FBFBFB95'}
