@@ -181,6 +181,7 @@ export default function CityScreen({ navigation, route }) {
   if (!HourlyWeather || !WeeklyWeather) {
     return (
       <SafeAreaScreenWrapper>
+        {BookmarkButton}
         <View style={{display: 'flex', flexGrow: 1, justifyContent: 'center', alignContent: 'center'}}>
           <ActivityIndicator size={'large'} color={'#FBFBFB'}></ActivityIndicator>
         </View>
