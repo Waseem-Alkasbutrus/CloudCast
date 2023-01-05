@@ -1,5 +1,8 @@
-import { createStackNavigator } from '@react-navigation/stack'
-import { Button, Image, StyleSheet, View } from 'react-native'
+import {
+  CardStyleInterpolators,
+  createStackNavigator,
+} from '@react-navigation/stack'
+import { Button, Easing, Image, StyleSheet, View } from 'react-native'
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
 import Font from '../components/Font'
 
@@ -50,6 +53,23 @@ function CustomHeaderBackButton(props) {
   )
 }
 
+const animConfig = {
+  open: {
+    animation: 'timing',
+    config: {
+      duration: 500,
+      easing: Easing.in(Easing.bounce),
+    },
+  },
+  close: {
+    animation: 'timing',
+    config: {
+      duration: 150,
+      easing: Easing.inOut(Easing.linear),
+    },
+  },
+}
+
 export default function CityScreenStack({ MainScreen }) {
   return (
     <Stack.Navigator
@@ -58,6 +78,13 @@ export default function CityScreenStack({ MainScreen }) {
         headerMode: 'screen',
         headerTintColor: 'white',
         headerStyle: { backgroundColor: '#FF7B7B' },
+        gestureEnabled: true,
+        gestureDirection: 'horizontal',
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        transitionSpec: {
+          open: animConfig.open,
+          close: animConfig.close,
+        },
       }}
     >
       <Stack.Screen
