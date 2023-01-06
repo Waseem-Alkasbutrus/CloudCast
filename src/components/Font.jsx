@@ -1,11 +1,12 @@
 import { Text, StyleSheet } from 'react-native'
+import { Colors } from './GlobalVars'
 
 export default function Font({ children, style }) {
-  return <Text style={[style, fontFam.spaceGrotesk]}>{children}</Text>
-}
+  let color = Colors._z.text
 
-const fontFam=StyleSheet.create({
-    spaceGrotesk: {
-        fontFamily: 'SpaceGrotesk'
-    }
-})
+  return (
+    <Text style={[style, { color: color, fontFamily: 'SpaceGrotesk' }]}>
+      {children}
+    </Text>
+  )
+}
