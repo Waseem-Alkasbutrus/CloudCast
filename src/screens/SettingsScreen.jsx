@@ -73,11 +73,16 @@ export default function SettingsScreen() {
         />
       </TitledSection>
 
-      <TitledSection Label={'Units'}>
+      <TitledSection Label={'Customization'}>
         <OpenDialogue
           SettingName={'Units'}
           Description={'Imperial'}
-          Icon={require('../../assets/icons/Thermometer.png')}
+          Icon={require('../../assets/icons/Ruler.png')}
+        />
+        <OpenDialogue
+          SettingName={'Theme'}
+          Description={'Light'}
+          Icon={require('../../assets/icons/Theme.png')}
         />
       </TitledSection>
 
@@ -87,6 +92,7 @@ export default function SettingsScreen() {
           Action={deleteSavesDialogue}
         ></Button>
       </TitledSection>
+
       <Toast
         position="bottom"
         bottomOffset={80}
