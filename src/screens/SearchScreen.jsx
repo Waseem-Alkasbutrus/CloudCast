@@ -8,6 +8,7 @@ import TitledSection from '../components/TitledSection.jsx'
 import { API_KEY } from '@env'
 import Font from '../components/Font'
 import { CitySearchListItem } from '../components/CityListItem'
+import { Colors } from '../components/GlobalVars'
 
 async function searchFor(city, setResults, navigation) {
   await fetch(
@@ -58,6 +59,9 @@ export default function SearchScreen({ navigation }) {
   const [searchCity, setSearchCity] = useState()
   const [searchResults, setSearchResults] = useState([])
 
+  let colors = Colors._z
+  let styles = getStyle(colors)
+
   return (
     <SafeAreaScreenWrapper>
       <View style={styles.searchBar}>
@@ -65,7 +69,7 @@ export default function SearchScreen({ navigation }) {
           autoFocus={true}
           style={styles.searchInput}
           placeholder="Search for a city..."
-          placeholderTextColor={'#FBFBFB95'}
+          placeholderTextColor={colors.text + '80'}
           returnKeyType="search"
           onChangeText={(newText) => setSearchCity(newText)}
           onSubmitEditing={() => {
@@ -89,40 +93,41 @@ export default function SearchScreen({ navigation }) {
   )
 }
 
-const styles = StyleSheet.create({
-  searchBar: {
-    display: 'flex',
-    flexDirection: 'row',
+function getStyle(colors) {
+  return StyleSheet.create({
+    searchBar: {
+      display: 'flex',
+      flexDirection: 'row',
 
-    marginVertical: 4,
-    marginHorizontal: 16,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
+      marginVertical: 4,
+      marginHorizontal: 16,
+      paddingHorizontal: 8,
+      paddingVertical: 4,
 
-    borderRadius: 8,
-    backgroundColor: '#21212120',
-  },
-  searchInput: {
-    color: '#FBFBFB',
-    fontSize: 18,
-
-    flexGrow: 1,
-  },
-  searchButton: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 4,
-  },
-  searchIcon: {
-    flexGrow: 1,
-    width: 24,
-    height: 24,
-  },
-  emptySearch: {
-    fontSize: 20,
-    color: '#FBFBFB',
-    textAlign: 'center',
-    marginTop: 24,
-  },
-})
+      borderRadius: 8,
+      backgroundColor: colors.button,
+    },
+    searchInput: {
+      fontSize: 18,
+      color: colors.text,
+      flexGrow: 1,
+      fontFamily: 'SpaceGrotesk'
+    },
+    searchButton: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 4,
+    },
+    searchIcon: {
+      flexGrow: 1,
+      width: 24,
+      height: 24,
+    },
+    emptySearch: {
+      fontSize: 20,
+      textAlign: 'center',
+      marginTop: 24,
+    },
+  })
+}

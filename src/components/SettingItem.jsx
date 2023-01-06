@@ -1,6 +1,7 @@
 import React from 'react'
 import { Image, View, StyleSheet, Pressable } from 'react-native'
 import Font from './Font'
+import { Colors } from './GlobalVars'
 
 export function OpenDialogue({
   SettingName,
@@ -10,8 +11,13 @@ export function OpenDialogue({
     console.log('pressed setting')
   },
 }) {
+
+  let styles = getStyle(Colors._z)
   return (
-    <Pressable onPress={Action} style={[styles.SettingItemContainer, styles.flexRow]}>
+    <Pressable
+      onPress={Action}
+      style={[styles.SettingItemContainer, styles.flexRow]}
+    >
       <View style={styles.flexRow}>
         <Image style={styles.icon} source={Icon} />
         <View style={[styles.infoContainer, styles.infoContainer]}>
@@ -20,48 +26,51 @@ export function OpenDialogue({
         </View>
       </View>
 
-      <Image style={[styles.icon, {transform: [{ rotate: "-90deg" }]}]} source={require('../../assets/icons/Expand-Down-Arrow.png')} />
+      <Image
+        style={[styles.icon, { transform: [{ rotate: '-90deg' }] }]}
+        source={require('../../assets/icons/Expand-Down-Arrow.png')}
+      />
     </Pressable>
   )
 }
 
-const styles = StyleSheet.create({
-  flexRow: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
+function getStyle(colors) {
+  return StyleSheet.create({
+    flexRow: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
 
-  SettingItemContainer: {
-    padding: 8,
-    marginVertical: 4,
-    justifyContent: 'space-between',
+    SettingItemContainer: {
+      padding: 8,
+      marginVertical: 4,
+      justifyContent: 'space-between',
 
-    backgroundColor: '#39393916',
-    borderRadius: 10,
-  },
+      backgroundColor: colors.pressable,
+      borderRadius: 10,
+    },
 
-  settingName: {
-    fontSize: 18,
-    fontWeight: '400',
-    color: '#FBFBFB',
-  },
+    settingName: {
+      fontSize: 18,
+      fontWeight: '400',
+    },
 
-  settingDescription: {
-    fontSize: 14,
-    fontWeight: '350',
-    color: '#FBFBFB',
-  },
+    settingDescription: {
+      fontSize: 14,
+      fontWeight: '350',
+    },
 
-  infoContainer: {
-    display: 'flex',
-    flexDirection: 'column',
+    infoContainer: {
+      display: 'flex',
+      flexDirection: 'column',
 
-    marginLeft: 8,
-  },
+      marginLeft: 8,
+    },
 
-  icon: {
-    height: 28,
-    width: 28,
-  },
-})
+    icon: {
+      height: 28,
+      width: 28,
+    },
+  })
+}

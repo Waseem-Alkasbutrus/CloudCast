@@ -5,7 +5,7 @@ export default function Font({ children, style }) {
   let color = Colors._z.text
 
   return (
-    <Text style={[style, { color: color, fontFamily: 'SpaceGrotesk' }]}>
+    <Text style={[{ color: color, fontFamily: 'SpaceGrotesk' }, style]}>
       {children}
     </Text>
   )

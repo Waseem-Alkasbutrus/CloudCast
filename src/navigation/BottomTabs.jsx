@@ -6,11 +6,9 @@ import CityScreenStack from './CityScreenStack'
 import { Image, StyleSheet } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import Font from '../components/Font'
+import { Colors } from '../components/GlobalVars'
 
 const Tab = createBottomTabNavigator()
-
-const active = '#FBFBFB'
-const inactive = '#FBFBFB50'
 
 function Home() {
   return <CityScreenStack MainScreen={HomeScreen}></CityScreenStack>
@@ -21,16 +19,19 @@ function Search() {
 }
 
 function CustomTab(icon, label, focused) {
+  let colors = Colors._z
+  let transparentText = colors.text + '80'
+
   return (
     <LinearGradient
-      colors={focused ? ['#FF7B7B', '#E35F9F'] : ['#00000000', '#00000000']}
+      colors={focused ? colors.gradient : ['#00000000', '#00000000']}
       style={tabStyles.tabWrapper}
     >
       <Image
         source={icon}
         style={focused ? tabStyles.focusedIcon : tabStyles.unfocusedIcon}
       ></Image>
-      <Font style={focused ? tabStyles.focusedLabel : tabStyles.unfocusedLabel}>
+      <Font style={focused? [tabStyles.label, {color: colors.text}] : [tabStyles.label, {color: transparentText}]}>
         {label}
       </Font>
     </LinearGradient>
@@ -59,16 +60,10 @@ const tabStyles = StyleSheet.create({
     opacity: 0.5,
     alignSelf: 'center'
   },
-  focusedLabel: {
+  label: {
     fontSize: 12,
     fontWeight: '400',
-    color: active,
-  },
-  unfocusedLabel: {
-    fontSize: 12,
-    fontWeight: '400',
-    color: inactive,
-  },
+  }
 })
 
 export default function BottomTabs() {
@@ -79,7 +74,7 @@ export default function BottomTabs() {
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {
-          backgroundColor: '#A04B71',
+          backgroundColor: Colors._z.navbar,
           position: 'absolute',
           borderTopWidth: 0,
           height: 72,

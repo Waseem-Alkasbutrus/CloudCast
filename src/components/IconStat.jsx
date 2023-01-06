@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Image, Text, StyleSheet } from 'react-native'
 import Font from './Font'
+import { Colors } from './GlobalVars'
 
 export default function Stat({
   Icon = null,
@@ -9,7 +10,7 @@ export default function Stat({
   Size = 16,
   Weight = '380',
 }) {
-  const styles = getStyle(Size, Weight)
+  const styles = getStyle(Size, Weight, Colors._z)
 
   let IconImg
 
@@ -29,7 +30,7 @@ export default function Stat({
   )
 }
 
-const getStyle = (Size, Weight) => {
+const getStyle = (Size, Weight, colors) => {
   return StyleSheet.create({
     viewContainer: {
       display: 'flex',
@@ -42,6 +43,7 @@ const getStyle = (Size, Weight) => {
     icon: {
       height: Size + 2,
       width: Size + 2,
+      overlayColor: colors.text,
     },
 
     textWrapper: {
@@ -53,7 +55,6 @@ const getStyle = (Size, Weight) => {
     stat: {
       fontSize: Size,
       fontWeight: Weight,
-      color: '#FBFBFB',
       lineHeight: Size * 1.1,
 
       paddingHorizontal: 2,
@@ -62,7 +63,6 @@ const getStyle = (Size, Weight) => {
     unit: {
       fontSize: Size * 0.68,
       fontWeight: Weight,
-      color: '#FBFBFB',
       paddingHorizontal: 2,
     },
   })

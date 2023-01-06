@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, StyleSheet, Pressable, Image } from 'react-native'
 import Font from './Font'
+import { Colors } from './GlobalVars'
 
 import Stat from './IconStat'
 
@@ -10,6 +11,9 @@ export function CityListItem({
     console.log('press')
   },
 }) {
+
+  let styles = getStyle(Colors._z)
+
   return (
     <Pressable onPress={Action} style={styles.cityItemContainer}>
       <View style={styles.namesContainer}>
@@ -44,6 +48,8 @@ export function CitySearchListItem({
     console.log(City)
   },
 }) {
+  let styles = getStyle(Colors._z)
+
   return (
     <Pressable onPress={Action} style={styles.cityItemContainer}>
       <View style={styles.namesContainer}>
@@ -56,49 +62,49 @@ export function CitySearchListItem({
   )
 }
 
-const styles = StyleSheet.create({
-  cityItemContainer: {
-    display: 'flex',
-    flexDirection: 'row',
+function getStyle(colors) {
+  return StyleSheet.create({
+    cityItemContainer: {
+      display: 'flex',
+      flexDirection: 'row',
 
-    padding: 8,
-    marginVertical: 4,
-    alignItems: 'center',
-    justifyContent: 'space-between',
+      padding: 8,
+      marginVertical: 4,
+      alignItems: 'center',
+      justifyContent: 'space-between',
 
-    backgroundColor: '#39393916',
-    borderRadius: 10,
-  },
+      backgroundColor: colors.pressable,
+      borderRadius: 10,
+    },
 
-  cityName: {
-    fontSize: 18,
-    fontWeight: '400',
-    color: '#FBFBFB',
-  },
+    cityName: {
+      fontSize: 18,
+      fontWeight: '400',
+    },
 
-  countryName: {
-    fontSize: 14,
-    fontWeight: '300',
-    color: '#FBFBFB',
-  },
+    countryName: {
+      fontSize: 14,
+      fontWeight: '300',
+    },
 
-  namesContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
+    namesContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
 
-  statContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    statContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
 
-    justifyContent: 'space-between',
-  },
+      justifyContent: 'space-between',
+    },
 
-  divider: {
-    borderColor: '#FBFBFB',
-    borderWidth: 1,
-    marginHorizontal: 8,
-    height: '32%',
-  },
-})
+    divider: {
+      borderColor: colors.text,
+      borderWidth: 1,
+      marginHorizontal: 10,
+      height: '32%',
+    },
+  })
+}
