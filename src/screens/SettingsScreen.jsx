@@ -86,7 +86,7 @@ export default function SettingsScreen() {
         />
       </TitledSection>
 
-      <TitledSection Label={'Danger Zone'}>
+      <TitledSection Label={'Reset Data'}>
         <Button
           Label={'Remove All Favorites'}
           Action={deleteSavesDialogue}
@@ -102,11 +102,3 @@ export default function SettingsScreen() {
     </SafeAreaScreenWrapper>
   )
 }
-
-const styles = StyleSheet.create({
-  settingsContainer: {
-    backgroundColor: '#39393920',
-    borderRadius: 10,
-    flexGrow: 1,
-  },
-})
