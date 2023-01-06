@@ -340,9 +340,7 @@ const details = StyleSheet.create({
   },
 
   divider: {
-    borderColor: '#FBFBFB',
-    borderWidth: 0.2,
-    marginHorizontal: 8,
+    marginHorizontal: 10,
     height: '32%',
   },
   desc: {

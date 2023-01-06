@@ -20,7 +20,7 @@ export default function CityDetailedItem({
           <Stat
             Stat={Math.round(Weather.list[0].main.temp)}
             Unit="f"
-            Size={120}
+            Size={135}
             Weight={'420'}
           />
         </View>
@@ -97,16 +97,21 @@ const style = StyleSheet.create({
 
   temp: {
     marginRight: 16,
+    flexGrow: 1,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    marginBottom: -16,
   },
 
   highLowTempsWrapper: {
     display: 'flex',
     flexDirection: 'column',
 
-    height: 120,
+    flexGrow: 1,
+    height: 100,
 
-    alignItems: 'center',
-    justifyContent: 'space-around',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
   },
 
   cardTitle: {
@@ -116,9 +121,7 @@ const style = StyleSheet.create({
   },
 
   divider: {
-    borderColor: '#FBFBFB',
-    borderWidth: 0.2,
-    marginHorizontal: 8,
+    marginHorizontal: 10,
     height: '32%',
   },
 })
