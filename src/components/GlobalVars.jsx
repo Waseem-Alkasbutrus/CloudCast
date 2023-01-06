@@ -1,16 +1,17 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 async function getColors() {
+  let scheme = await AsyncStorage.getItem('ColorScheme')
+  
   if (scheme == undefined) {
-    scheme = 'Dark'
+    scheme = 'Light'
     await AsyncStorage.setItem('ColorScheme', scheme)
   }
-  let scheme = await AsyncStorage.getItem('ColorScheme')
 
   const DarkTheme = {
-    gradient: ['#594DA0', '#330976'],
-    pressable: '#39393916',
-    button: '#39393920',
+    gradient: ['#483B99', '#3D1186'],
+    pressable: '#B78AFF09',
+    button: '#B78AFF12',
     text: '#DCDFFF',
     navbar: '#2E135A',
   }
@@ -18,7 +19,7 @@ async function getColors() {
   const LightTheme = {
     gradient: ['#FF7B7B', '#E35F9F'],
     pressable: '#39393916',
-    button: '#39393920',
+    button: '#39393930',
     text: '#FBFBFB',
     navbar: '#A04B71',
   }
