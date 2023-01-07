@@ -2,10 +2,8 @@ import { useState } from 'react'
 import { Image, Pressable, StyleSheet, View } from 'react-native'
 import Font from './Font'
 import { Colors } from './GlobalVars'
-import TitledSection from './TitledSection'
-import Stat from './IconStat'
 
-export default function RadioField({ Label, Options }) {
+export default function RadioField({ Options }) {
   const [ActiveButton, setActiveButton] = useState(0)
 
   if (Options.length < 2) {
