@@ -25,7 +25,7 @@ export default function RadioField({ Label, Options }) {
   })
 
   return (
-    <View>
+    <View style={{marginBottom: 8}}>
       {RadioButtons}
     </View>
   )
