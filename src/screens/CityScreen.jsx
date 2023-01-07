@@ -213,6 +213,13 @@ export default function CityScreen({ navigation, route }) {
             color={'#FBFBFB'}
           ></ActivityIndicator>
         </View>
+        
+        <Toast
+          position="bottom"
+          bottomOffset={80}
+          visibilityTime={2000}
+          config={CustomToast}
+        />
       </SafeAreaScreenWrapper>
     )
   } else {
