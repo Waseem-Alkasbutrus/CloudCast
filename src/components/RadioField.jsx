@@ -1,17 +1,31 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Image, Pressable, StyleSheet, View } from 'react-native'
 import Button from './Button'
 import Font from './Font'
 import { Colors, saveVar } from './GlobalVars'
 
-export default function RadioField({ Options, HideModal, AsyncKey }) {
+async function getCurrentValue(options, asyncKey, setActiveButton) {
+  let currentSetting = await AsyncStorage.getItem(asyncKey)
+  let currentKey = options.indexOf(currentSetting)
+
+  if (currentKey === -1) {
+    console.err(currentSetting, ' is not one of the passed options')
+  }
+
+  setActiveButton(currentKey)
+}
+
+export default function RadioField({ Options, HideModal, AsyncKey, setDescription }) {
   const [ActiveButton, setActiveButton] = useState(0)
+
+  useEffect(() => {
+    getCurrentValue(Options, AsyncKey, setActiveButton)
+  }, [])
 
   if (Options.length < 2) {
     console.error('')
   }
-
 
   let RadioButtons = Options.map((option, index) => {
     return (
@@ -32,6 +46,7 @@ export default function RadioField({ Options, HideModal, AsyncKey }) {
         Label="Select"
         Action={() => {
           saveVar(AsyncKey, Options[ActiveButton])
+          setDescription(Options[ActiveButton])
           HideModal(false)
         }}
       ></Button>

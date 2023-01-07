@@ -62,15 +62,23 @@ async function checkUnitSystem(setUnitSystem) {
   setUnitSystem(units[0].toUpperCase() + units.substring(1))
 }
 
+async function checkColorScheme(setColorScheme) {
+  let color = await AsyncStorage.getItem('ColorScheme')
+  console.log(color)
+  setColorScheme(color[0].toUpperCase() + color.substring(1))
+}
+
 export default function SettingsScreen() {
   const [LocationStatus, setLocationStatus] = useState()
   const [UnitSystem, setUnitSystem] = useState()
   const [ModalVisiblity, setModalVisibility] = useState(false)
   const [ModalContent, setModalContent] = useState()
+  const [ColorScheme, setColorScheme] = useState()
 
   useEffect(() => {
     checkLocation(setLocationStatus)
     checkUnitSystem(setUnitSystem)
+    checkColorScheme(setColorScheme)
   }, [])
 
   let colors = Colors._z
@@ -116,6 +124,7 @@ export default function SettingsScreen() {
                 Options={['imperial', 'metric']}
                 HideModal={setModalVisibility}
                 AsyncKey="Units"
+                setDescription={setUnitSystem}
               ></RadioField>,
             )
             setModalVisibility(true)
@@ -123,7 +132,7 @@ export default function SettingsScreen() {
         />
         <OpenDialogue
           SettingName={'Theme'}
-          Description={'Light'}
+          Description={ColorScheme}
           Icon={require('../../assets/icons/Theme.png')}
           Action={() => {
             setModalContent(
@@ -131,6 +140,7 @@ export default function SettingsScreen() {
                 Options={['Light', 'Dark']}
                 HideModal={setModalVisibility}
                 AsyncKey="ColorScheme"
+                setDescription={setColorScheme}
               ></RadioField>,
             )
             setModalVisibility(true)
