@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Alert, Linking } from 'react-native'
+import {
+  StyleSheet,
+  Alert,
+  Linking,
+  Modal,
+  View,
+  Pressable,
+} from 'react-native'
 
 import TitledSection from '../components/TitledSection'
 import { OpenDialogue } from '../components/SettingItem'
@@ -10,6 +17,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import Toast from 'react-native-toast-message'
 import { CustomToast } from '../components/CustomToast'
 import * as Location from 'expo-location'
+import Font from '../components/Font'
+import { Colors } from '../components/GlobalVars'
+import RadioField from '../components/RadioField'
+import { LinearGradient } from 'expo-linear-gradient'
 
 async function deleteSaves() {
   try {
@@ -43,11 +54,11 @@ function deleteSavesDialogue() {
 }
 
 async function checkLocation(setLocationStatus) {
-  let {status} = await Location.requestForegroundPermissionsAsync()
+  let { status } = await Location.requestForegroundPermissionsAsync()
 
   let codes = {
-    'granted' : 'on',
-    'denied' : 'off'
+    granted: 'on',
+    denied: 'off',
   }
 
   setLocationStatus(codes[status])
@@ -55,13 +66,44 @@ async function checkLocation(setLocationStatus) {
 
 export default function SettingsScreen() {
   const [LocationStatus, setLocationStatus] = useState()
-  
+  const [ModalVisiblity, setModalVisibility] = useState(false)
+  const [ModalContent, setModalContent] = useState()
+
   useEffect(() => {
     checkLocation(setLocationStatus)
   }, [])
 
+  let colors = Colors._z
+  let styles = getStyle(colors)
+
   return (
     <SafeAreaScreenWrapper>
+      <Modal
+        statusBarTranslucent={true}
+        visible={ModalVisiblity}
+        transparent={true}
+        animationType={'slide'}
+        onRequestClose={() => {
+          setModalVisibility(false)
+        }}
+      >
+        <View
+          style={styles.modal}
+        >
+          <LinearGradient
+            colors={colors.gradient}
+            style={styles.dialogue}
+          >
+            {ModalContent}
+            <Button
+            style={styles.selectButton}
+              Label="Select"
+              Action={() => setModalVisibility(false)}
+            ></Button>
+          </LinearGradient>
+        </View>
+      </Modal>
+
       <TitledSection Label={'Privacy'}>
         <OpenDialogue
           SettingName={'Location'}
@@ -78,11 +120,29 @@ export default function SettingsScreen() {
           SettingName={'Units'}
           Description={'Imperial'}
           Icon={require('../../assets/icons/Ruler.png')}
+          Action={() => {
+            setModalContent(
+              <RadioField
+                Label="Units"
+                Options={['Imperial', 'Celsius']}
+              ></RadioField>,
+            )
+            setModalVisibility(true)
+          }}
         />
         <OpenDialogue
           SettingName={'Theme'}
           Description={'Light'}
           Icon={require('../../assets/icons/Theme.png')}
+          Action={() => {
+            setModalContent(
+              <RadioField
+              Label="Theme"
+              Options={['Light', 'Dark']}
+              ></RadioField>,
+              )
+              setModalVisibility(true)
+            }}
         />
       </TitledSection>
 
@@ -101,4 +161,25 @@ export default function SettingsScreen() {
       />
     </SafeAreaScreenWrapper>
   )
+}
+
+function getStyle(colors) {
+  return StyleSheet.create({
+    modal: {
+      flexGrow: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#39393970',
+    },
+    dialogue : {
+      minWidth: 320,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'stretch',
+      justifyContent: 'center',
+      paddingHorizontal: 12,
+      paddingVertical: 8,
+      borderRadius: 16
+    }
+  })
 }
