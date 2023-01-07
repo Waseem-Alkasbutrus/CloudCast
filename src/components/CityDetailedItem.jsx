@@ -7,6 +7,7 @@ import Stat from './IconStat'
 
 export default function CityDetailedItem({
   Weather,
+  UnitSystem,
   Action = () => {
     console.log(Weather)
   },
@@ -21,7 +22,7 @@ export default function CityDetailedItem({
         <View style={style.temp}>
           <Stat
             Stat={Math.round(Weather.list[0].main.temp)}
-            Unit="f"
+            Unit={UnitSystem.temp}
             Size={135}
             Weight={'420'}
           />
@@ -31,12 +32,12 @@ export default function CityDetailedItem({
           <Stat
             Size={32}
             Stat={Math.round(Weather.list[0].main.temp_max)}
-            Unit="f"
+            Unit={UnitSystem.temp}
           />
           <Stat
             Size={32}
             Stat={Math.round(Weather.list[0].main.temp_min)}
-            Unit="f"
+            Unit={UnitSystem.temp}
           />
         </View>
       </View>
@@ -55,7 +56,7 @@ export default function CityDetailedItem({
           Icon={require('../../assets/icons/Feels-Like.png')}
           Size={18}
           Stat={Math.round(Weather.list[0].main.feels_like)}
-          Unit="f"
+          Unit={UnitSystem.temp}
         />
 
         <View style={style.divider} />
@@ -64,7 +65,7 @@ export default function CityDetailedItem({
           Icon={require('../../assets/icons/Wind.png')}
           Size={18}
           Stat={Weather.list[0].wind.speed.toFixed(1)}
-          Unit="mph"
+          Unit={UnitSystem.speed}
         />
 
         <View style={style.divider} />

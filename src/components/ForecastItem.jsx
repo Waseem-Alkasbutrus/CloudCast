@@ -6,9 +6,9 @@ import Font from './Font'
 import WeatherIcon from './WeatherIcon'
 import { Colors } from './GlobalVars'
 
-export function HourlySection({ Weather }) {
+export function HourlySection({ Weather, UnitSystem }) {
   let hourlyForecast = Weather.list.map((entry) => {
-    return <HourlyForecastItem key={entry.dt} Hour={entry}></HourlyForecastItem>
+    return <HourlyForecastItem key={entry.dt} Hour={entry} UnitSystem={UnitSystem}></HourlyForecastItem>
   })
 
   let hourly = getHourlyStyle(Colors._z)
@@ -45,7 +45,7 @@ function getHour(dtTxt) {
   return hr
 }
 
-function HourlyForecastItem({ Hour }) {
+function HourlyForecastItem({ Hour, UnitSystem }) {
   let hour = getHour(Hour.dt_txt)
   let identifier = hour < 12 ? 'am' : 'pm'
 
@@ -69,11 +69,11 @@ function HourlyForecastItem({ Hour }) {
       </View>
 
       <View style={hourly.statRight}>
-        <Stat Stat={Hour.wind.speed.toFixed(1)} Unit={'mph'} Size={20}></Stat>
+        <Stat Stat={Hour.wind.speed.toFixed(1)} Unit={UnitSystem.speed} Size={20}></Stat>
       </View>
 
       <View style={hourly.statRight}>
-        <Stat Stat={Math.round(Hour.main.temp)} Unit={'f'} Size={20}></Stat>
+        <Stat Stat={Math.round(Hour.main.temp)} Unit={UnitSystem.temp} Size={20}></Stat>
       </View>
 
       <View style={hourly.statRight}>
@@ -141,7 +141,7 @@ function getHourlyStyle(colors) {
   })
 }
 
-export function WeeklySection({ Weather }) {
+export function WeeklySection({ Weather, UnitSystem }) {
   let weekly = getWeeklyStyle(Colors._z)
   
   let weeklyForecast
@@ -154,6 +154,7 @@ export function WeeklySection({ Weather }) {
           key={weather.dt}
           Weather={weather}
           Day={index}
+          UnitSystem={UnitSystem}
         ></WeeklyListItem>
       )
     })
@@ -177,7 +178,7 @@ function getDay(dayIndex) {
 
 const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
-function WeeklyListItem({ Weather, Day }) {
+function WeeklyListItem({ Weather, Day, UnitSystem }) {
   let weekday = getDay(Day)
 
   let weekly = getWeeklyStyle(Colors._z)
@@ -191,8 +192,8 @@ function WeeklyListItem({ Weather, Day }) {
         style={weekly.icon}
       ></WeatherIcon>
 
-      <Stat Stat={Math.round(Weather.temp.max)} Unit="f" Size={18}></Stat>
-      <Stat Stat={Math.round(Weather.temp.min)} Unit="f" Size={18}></Stat>
+      <Stat Stat={Math.round(Weather.temp.max)} Unit={UnitSystem.temp} Size={18}></Stat>
+      <Stat Stat={Math.round(Weather.temp.min)} Unit={UnitSystem.temp} Size={18}></Stat>
     </View>
   )
 }

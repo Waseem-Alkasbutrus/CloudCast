@@ -7,6 +7,7 @@ import Stat from './IconStat'
 
 export function CityListItem({
   Weather = undefined,
+  UnitSystem,
   Action = () => {
     console.log('press')
   },
@@ -26,7 +27,7 @@ export function CityListItem({
           Icon={require('../../assets/icons/Thermometer.png')}
           Size={22}
           Stat={Math.round(Weather.list[0].main.temp)}
-          Unit="f"
+          Unit={UnitSystem.temp}
         />
 
         <View style={styles.divider} />

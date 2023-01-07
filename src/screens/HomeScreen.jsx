@@ -12,7 +12,7 @@ import Font from '../components/Font'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Location from 'expo-location'
 import { StyleSheet, RefreshControl, ScrollView } from 'react-native'
-import { Colors } from '../components/GlobalVars'
+import { Colors, getUnitSystem } from '../components/GlobalVars'
 import { useFocusEffect } from '@react-navigation/native'
 
 async function getLocation(setGPSWeather) {
@@ -24,10 +24,12 @@ async function getLocation(setGPSWeather) {
 
   let location = await Location.getCurrentPositionAsync({})
 
-  getLocationWeather(setGPSWeather, location)
+  await getLocationWeather(setGPSWeather, location)
 }
 
-function getLocationWeather(setGPSWeather, location) {
+async function getLocationWeather(setGPSWeather, location) {
+  let units = (await getUnitSystem()).units
+  console.log("fetching: ", units)
   fetch(
     'https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=' +
       location.coords.latitude +
@@ -35,13 +37,17 @@ function getLocationWeather(setGPSWeather, location) {
       location.coords.longitude +
       '&appid=' +
       API_KEY +
-      '&units=imperial&cnt=1',
+      '&units=' +
+      units +
+      '&cnt=1',
   )
     .then((res) => res.json())
     .then((wthr) => setGPSWeather(wthr))
 }
 
 async function fetchBookmarkedWeather(setFavWeather) {
+  let units = (await getUnitSystem()).units
+
   try {
     AsyncStorage.getItem('Favorites')
       .then((res) => JSON.parse(res))
@@ -59,7 +65,9 @@ async function fetchBookmarkedWeather(setFavWeather) {
                   city.lon +
                   '&appid=' +
                   API_KEY +
-                  '&units=imperial&cnt=1',
+                  '&units=' +
+                  units +
+                  '&cnt=1',
               ).then((res) => res.json()),
             )
           }
@@ -81,22 +89,22 @@ async function fetchData(setGPSWeather, setFavWeather) {
 }
 
 export default function HomeScreen({ navigation }) {
+  const [UnitSystem, setUnitSystem] = useState()
   const [GPSweather, setGPSWeather] = useState()
   const [FavWeather, setFavWeather] = useState([])
   const [refreshing, setRefreshing] = useState(false)
 
   const onRefresh = useCallback(() => {
     setRefreshing(true)
-    fetchBookmarkedWeather(setFavWeather).then(() => setRefreshing(false))
+    fetchData(setGPSWeather, setFavWeather).then(() => setRefreshing(false))
   }, [])
 
-  useEffect(() => {
-    fetchData(setGPSWeather, setFavWeather)
-  }, [])
-
-  useFocusEffect(useCallback(() => {
-    fetchBookmarkedWeather(setFavWeather)
-  }, []))
+  useFocusEffect(
+    useCallback(() => {
+      getUnitSystem().then(sys => setUnitSystem(sys))
+      fetchData(setGPSWeather, setFavWeather)
+    }, []),
+  )
 
   let citylistItems = (
     <TitledSection Label={'Favorite Cities'}>
@@ -106,8 +114,13 @@ export default function HomeScreen({ navigation }) {
             <CityListItem
               key={cityWeather.city.name}
               Weather={cityWeather}
+              UnitSystem={UnitSystem}
               Action={() => {
-                navigation.navigate('City', { CityName: cityWeather.city.name, Lon: cityWeather.city.coord.lon, Lat: cityWeather.city.coord.lat })
+                navigation.navigate('City', {
+                  CityName: cityWeather.city.name,
+                  Lon: cityWeather.city.coord.lon,
+                  Lat: cityWeather.city.coord.lat,
+                })
               }}
             ></CityListItem>
           )
@@ -123,8 +136,13 @@ export default function HomeScreen({ navigation }) {
     gps = (
       <CityDetailedItem
         Weather={GPSweather}
+        UnitSystem={UnitSystem}
         Action={() => {
-          navigation.navigate('City', { CityName: GPSweather.city.name, Lon: GPSweather.city.coord.lon, Lat: GPSweather.city.coord.lat })
+          navigation.navigate('City', {
+            CityName: GPSweather.city.name,
+            Lon: GPSweather.city.coord.lon,
+            Lat: GPSweather.city.coord.lat,
+          })
         }}
       ></CityDetailedItem>
     )
@@ -136,7 +154,13 @@ export default function HomeScreen({ navigation }) {
     <SafeAreaScreenWrapper>
       <ScrollView
         refreshControl={
-          <RefreshControl tintColor={colors.gradient[0]} progressBackgroundColor={colors.text} colors={colors.gradient} refreshing={refreshing} onRefresh={onRefresh} />
+          <RefreshControl
+            tintColor={colors.gradient[0]}
+            progressBackgroundColor={colors.text}
+            colors={colors.gradient}
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
         }
       >
         {gps}

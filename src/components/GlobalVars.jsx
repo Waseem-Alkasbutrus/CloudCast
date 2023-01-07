@@ -40,7 +40,7 @@ async function getColors() {
 
 export const Colors = getColors()
 
-async function getUnitSystem() {
+export async function getUnitSystem() {
   let units = await AsyncStorage.getItem('Units')
 
   if (units == undefined) {
@@ -68,4 +68,11 @@ async function getUnitSystem() {
   return unitSystem
 }
 
-export const UnitSystem = getUnitSystem()
+export function saveVar(key, newValue) {
+  try {
+    AsyncStorage.setItem(key, newValue)
+    console.log("New ", key, ": ", newValue)
+  } catch (e) {
+    console.err(e)
+  }
+}

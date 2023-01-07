@@ -14,6 +14,7 @@ import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import { CustomToast } from '../components/CustomToast'
 
 import { API_KEY } from '@env'
+import { getUnitSystem } from '../components/GlobalVars'
 
 async function saveFavs(favs) {
   try {
@@ -102,8 +103,41 @@ async function isInFavorites(city, lon, lat, setBookmarked) {
   }
 }
 
+async function fetchWeather(coords, setWeeklyWeather, setHourlyWeather, setUnitSystem) {
+  let unitSystem = await getUnitSystem()
+  setUnitSystem(unitSystem)
+
+  fetch(
+    'https://api.openweathermap.org/data/2.5/forecast/daily?lat=' +
+      coords.lat +
+      '&lon=' +
+      coords.lon +
+      '&cnt=8&units=' +
+      unitSystem.units +
+      '&appid=' +
+      API_KEY,
+  )
+    .then((res) => res.json())
+    .then((res) => setWeeklyWeather(res))
+
+  fetch(
+    'https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=' +
+      coords.lat +
+      '&lon=' +
+      coords.lon +
+      '&appid=' +
+      API_KEY +
+      '&units=' +
+      unitSystem.units +
+      '&cnt=13',
+  )
+    .then((res) => res.json())
+    .then((res) => setHourlyWeather(res))
+}
+
 export default function CityScreen({ navigation, route }) {
   const [Bookmarked, setBookmarked] = useState()
+  const [UnitSystem, setUnitSystem] = useState()
   const [WeeklyWeather, setWeeklyWeather] = useState()
   const [HourlyWeather, setHourlyWeather] = useState()
 
@@ -117,28 +151,12 @@ export default function CityScreen({ navigation, route }) {
 
     navigation.setOptions({ title: route.params.CityName })
 
-    fetch(
-      'https://api.openweathermap.org/data/2.5/forecast/daily?lat=' +
-        route.params.Lat +
-        '&lon=' +
-        route.params.Lon +
-        '&cnt=8&units=imperial&appid=' +
-        API_KEY,
+    fetchWeather(
+      { lon: route.params.Lon, lat: route.params.Lat },
+      setWeeklyWeather,
+      setHourlyWeather,
+      setUnitSystem,
     )
-      .then((res) => res.json())
-      .then((res) => setWeeklyWeather(res))
-
-    fetch(
-      'https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=' +
-        route.params.Lat +
-        '&lon=' +
-        route.params.Lon +
-        '&appid=' +
-        API_KEY +
-        '&units=imperial&cnt=13',
-    )
-      .then((res) => res.json())
-      .then((res) => setHourlyWeather(res))
   }, [])
 
   let BookmarkButton
@@ -182,8 +200,18 @@ export default function CityScreen({ navigation, route }) {
     return (
       <SafeAreaScreenWrapper>
         {BookmarkButton}
-        <View style={{display: 'flex', flexGrow: 1, justifyContent: 'center', alignContent: 'center'}}>
-          <ActivityIndicator size={'large'} color={'#FBFBFB'}></ActivityIndicator>
+        <View
+          style={{
+            display: 'flex',
+            flexGrow: 1,
+            justifyContent: 'center',
+            alignContent: 'center',
+          }}
+        >
+          <ActivityIndicator
+            size={'large'}
+            color={'#FBFBFB'}
+          ></ActivityIndicator>
         </View>
       </SafeAreaScreenWrapper>
     )
@@ -192,11 +220,11 @@ export default function CityScreen({ navigation, route }) {
       <SafeAreaScreenWrapper>
         {BookmarkButton}
 
-        <Details Weather={HourlyWeather.list[0]}></Details>
+        <Details Weather={HourlyWeather.list[0]} UnitSystem={UnitSystem}></Details>
 
-        <WeeklySection Weather={WeeklyWeather}></WeeklySection>
+        <WeeklySection Weather={WeeklyWeather} UnitSystem={UnitSystem}></WeeklySection>
 
-        <HourlySection Weather={HourlyWeather}></HourlySection>
+        <HourlySection Weather={HourlyWeather} UnitSystem={UnitSystem}></HourlySection>
 
         <Toast
           position="bottom"
@@ -232,30 +260,22 @@ const favorite = StyleSheet.create({
   },
 })
 
-function Details({ Weather }) {
+function Details({ Weather, UnitSystem }) {
   return (
     <View style={details.cardView}>
       <View style={details.flexRow}>
         <View style={details.temp}>
           <Stat
             Stat={Math.round(Weather.main.temp)}
-            Unit="f"
+            Unit={UnitSystem.temp}
             Size={120}
             Weight={'420'}
           />
         </View>
 
         <View style={[details.flexCol, details.highLowTempsWrapper]}>
-          <Stat
-            Size={32}
-            Stat={Math.round(Weather.main.temp_max)}
-            Unit="f"
-          />
-          <Stat
-            Size={32}
-            Stat={Math.round(Weather.main.temp_min)}
-            Unit="f"
-          />
+          <Stat Size={32} Stat={Math.round(Weather.main.temp_max)} Unit={UnitSystem.temp} />
+          <Stat Size={32} Stat={Math.round(Weather.main.temp_min)} Unit={UnitSystem.temp} />
         </View>
       </View>
 
@@ -281,7 +301,7 @@ function Details({ Weather }) {
           Icon={require('../../assets/icons/Feels-Like.png')}
           Size={18}
           Stat={Math.round(Weather.main.feels_like)}
-          Unit="f"
+          Unit={UnitSystem.temp}
         />
 
         <View style={details.divider} />
@@ -290,7 +310,7 @@ function Details({ Weather }) {
           Icon={require('../../assets/icons/Wind.png')}
           Size={18}
           Stat={Weather.wind.speed}
-          Unit="mph"
+          Unit={UnitSystem.speed}
         />
 
         <View style={details.divider} />

@@ -56,13 +56,21 @@ async function checkLocation(setLocationStatus) {
   setLocationStatus(codes[status])
 }
 
+async function checkUnitSystem(setUnitSystem) {
+  let units = await AsyncStorage.getItem('Units')
+  console.log(units)
+  setUnitSystem(units[0].toUpperCase() + units.substring(1))
+}
+
 export default function SettingsScreen() {
   const [LocationStatus, setLocationStatus] = useState()
+  const [UnitSystem, setUnitSystem] = useState()
   const [ModalVisiblity, setModalVisibility] = useState(false)
   const [ModalContent, setModalContent] = useState()
 
   useEffect(() => {
     checkLocation(setLocationStatus)
+    checkUnitSystem(setUnitSystem)
   }, [])
 
   let colors = Colors._z
@@ -100,12 +108,12 @@ export default function SettingsScreen() {
       <TitledSection Label={'Customization'}>
         <OpenDialogue
           SettingName={'Units'}
-          Description={'Imperial'}
+          Description={UnitSystem}
           Icon={require('../../assets/icons/Ruler.png')}
           Action={() => {
             setModalContent(
               <RadioField
-                Options={['Imperial', 'Metric']}
+                Options={['imperial', 'metric']}
                 HideModal={setModalVisibility}
                 AsyncKey="Units"
               ></RadioField>,

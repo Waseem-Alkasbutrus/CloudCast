@@ -3,16 +3,7 @@ import { useState } from 'react'
 import { Image, Pressable, StyleSheet, View } from 'react-native'
 import Button from './Button'
 import Font from './Font'
-import { Colors } from './GlobalVars'
-
-async function submitChanges(key, newValue) {
-  try {
-    await AsyncStorage.setItem(key, newValue)
-    console.log("New ", key, ": ", newValue)
-  } catch (e) {
-    console.err(e)
-  }
-}
+import { Colors, saveVar } from './GlobalVars'
 
 export default function RadioField({ Options, HideModal, AsyncKey }) {
   const [ActiveButton, setActiveButton] = useState(0)
@@ -26,7 +17,7 @@ export default function RadioField({ Options, HideModal, AsyncKey }) {
     return (
       <RadioButton
         key={index}
-        Label={option}
+        Label={option[0].toUpperCase() + option.substring(1)}
         Index={index}
         setActive={setActiveButton}
         IsActive={ActiveButton === index}
@@ -40,7 +31,7 @@ export default function RadioField({ Options, HideModal, AsyncKey }) {
       <Button
         Label="Select"
         Action={() => {
-          submitChanges(AsyncKey, Options[ActiveButton])
+          saveVar(AsyncKey, Options[ActiveButton])
           HideModal(false)
         }}
       ></Button>
