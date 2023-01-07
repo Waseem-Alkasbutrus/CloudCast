@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  StyleSheet,
-  Alert,
-  Linking,
-  Modal,
-  View,
-} from 'react-native'
+import { StyleSheet, Alert, Linking, Modal, View } from 'react-native'
 
 import TitledSection from '../components/TitledSection'
 import { OpenDialogue } from '../components/SettingItem'
@@ -88,11 +82,6 @@ export default function SettingsScreen() {
         <View style={styles.modal}>
           <LinearGradient colors={colors.gradient} style={styles.dialogue}>
             {ModalContent}
-            <Button
-              style={styles.selectButton}
-              Label="Select"
-              Action={() => setModalVisibility(false)}
-            ></Button>
           </LinearGradient>
         </View>
       </Modal>
@@ -116,8 +105,9 @@ export default function SettingsScreen() {
           Action={() => {
             setModalContent(
               <RadioField
-                Label="Units"
                 Options={['Imperial', 'Metric']}
+                HideModal={setModalVisibility}
+                AsyncKey="Units"
               ></RadioField>,
             )
             setModalVisibility(true)
@@ -130,8 +120,9 @@ export default function SettingsScreen() {
           Action={() => {
             setModalContent(
               <RadioField
-                Label="Theme"
                 Options={['Light', 'Dark']}
+                HideModal={setModalVisibility}
+                AsyncKey="ColorScheme"
               ></RadioField>,
             )
             setModalVisibility(true)
