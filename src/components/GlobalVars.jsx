@@ -11,8 +11,10 @@ async function getColors() {
   const DarkTheme = {
     gradient: ['#483B99', '#3D1186'],
     pressable: '#B78AFF09',
-    button: '#B78AFF12',
+    button: '#B78AFF20',
     text: '#DCDFFF',
+    text30: '#DCDFFF30',
+    text10: '#DCDFFF10',
     navbar: '#2E135A',
   }
 
@@ -21,6 +23,8 @@ async function getColors() {
     pressable: '#39393916',
     button: '#39393930',
     text: '#FBFBFB',
+    text30: '#FBFBFB30',
+    text10: '#FBFBFB10',
     navbar: '#A04B71',
   }
 
