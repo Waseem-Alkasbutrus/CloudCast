@@ -8,9 +8,7 @@ import Stat from './IconStat'
 export function CityListItem({
   Weather = undefined,
   UnitSystem,
-  Action = () => {
-    console.log('press')
-  },
+  Action
 }) {
 
   let styles = getStyle(Colors._z)
@@ -45,9 +43,7 @@ export function CityListItem({
 
 export function CitySearchListItem({
   City = undefined,
-  Action = () => {
-    console.log(City)
-  },
+  Action
 }) {
   let styles = getStyle(Colors._z)
 

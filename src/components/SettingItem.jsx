@@ -7,9 +7,7 @@ export function OpenDialogue({
   SettingName,
   Description,
   Icon,
-  Action = () => {
-    console.log('pressed setting')
-  },
+  Action,
 }) {
 
   let styles = getStyle(Colors._z)

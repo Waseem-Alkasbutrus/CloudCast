@@ -17,7 +17,6 @@ import { LinearGradient } from 'expo-linear-gradient'
 async function deleteSaves() {
   try {
     await AsyncStorage.setItem('Favorites', JSON.stringify([]))
-    console.log(await AsyncStorage.getItem('Favorites'))
 
     Toast.show({
       type: 'custom',
@@ -71,13 +70,11 @@ async function checkLocation(setLocationStatus) {
 
 async function checkUnitSystem(setUnitSystem) {
   let units = await AsyncStorage.getItem('Units')
-  console.log(units)
   setUnitSystem(units[0].toUpperCase() + units.substring(1))
 }
 
 async function checkColorScheme(setColorScheme) {
   let color = await AsyncStorage.getItem('ColorScheme')
-  console.log(color)
   setColorScheme(color[0].toUpperCase() + color.substring(1))
 }
 

@@ -29,7 +29,6 @@ async function getLocation(setGPSWeather) {
 
 async function getLocationWeather(setGPSWeather, location) {
   let units = (await getUnitSystem()).units
-  console.log("fetching: ", units)
   fetch(
     'https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=' +
       location.coords.latitude +

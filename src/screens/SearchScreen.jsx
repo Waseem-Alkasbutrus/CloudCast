@@ -49,8 +49,8 @@ async function searchFor(city, setResults, navigation) {
         setResults(
           <TitledSection Label="Search Results">{results}</TitledSection>,
         )
-      } catch (err) {
-        console.log(err.message)
+      } catch (e) {
+        console.error(e)
       }
     })
 }

@@ -71,7 +71,6 @@ export async function getUnitSystem() {
 export function saveVar(key, newValue) {
   try {
     AsyncStorage.setItem(key, newValue)
-    console.log("New ", key, ": ", newValue)
   } catch (e) {
     console.err(e)
   }

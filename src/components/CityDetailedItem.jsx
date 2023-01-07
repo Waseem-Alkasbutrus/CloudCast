@@ -8,9 +8,7 @@ import Stat from './IconStat'
 export default function CityDetailedItem({
   Weather,
   UnitSystem,
-  Action = () => {
-    console.log(Weather)
-  },
+  Action
 }) {
   let style = getStyle(Colors._z)
 
