@@ -24,25 +24,38 @@ async function deleteSaves() {
       text1: 'Removed all favorites',
     })
   } catch (e) {
-    console.log('[ERROR]', e.message)
+    console.error('[ERROR]', e.message)
   }
 }
 
-function deleteSavesDialogue() {
-  Alert.alert(
-    'Are you sure?',
-    'If you delete saves, we will not be able to recover them anymore',
-    [
+async function resetToDefaults(setters) {
+  try {
+    await AsyncStorage.setItem('Units', 'imperial')
+    await AsyncStorage.setItem('ColorScheme', 'Light')
+
+    setters.map((setter) => setter.func(setter.param))
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+function getDeleteDialogue(resetFunction, parameters) {
+  return function deleteSavesDialogue() {
+    Alert.alert(
+      'Are you sure?',
+      'You will not be able to restore changes after resetting them',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        { text: 'Reset Data', onPress: () => resetFunction(parameters) },
+      ],
       {
-        text: 'Cancel',
-        style: 'cancel',
+        cancelable: true,
       },
-      { text: 'Delete Favorites', onPress: () => deleteSaves() },
-    ],
-    {
-      cancelable: true,
-    },
-  )
+    )
+  }
 }
 
 async function checkLocation(setLocationStatus) {
@@ -150,8 +163,15 @@ export default function SettingsScreen() {
 
       <TitledSection Label={'Reset Data'}>
         <Button
-          Label={'Remove All Favorites'}
-          Action={deleteSavesDialogue}
+          Label={'RESET FAVORITES'}
+          Action={getDeleteDialogue(deleteSaves, [])}
+        ></Button>
+        <Button
+          Label={'RESET TO DEFAULT SETTINGS'}
+          Action={getDeleteDialogue(resetToDefaults, [
+            { func: setColorScheme, param: 'Light' },
+            { func: setUnitSystem, param: 'imperial' },
+          ])}
         ></Button>
       </TitledSection>
 
