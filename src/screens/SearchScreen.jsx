@@ -40,7 +40,7 @@ async function searchFor(city, setResults, navigation) {
           })
         } else {
           results = [
-            <Font key="emptySearch" style={styles.emptySearch}>
+            <Font key="emptySearch" style={getStyle(Colors._z).emptySearch}>
               no matching cities...
             </Font>,
           ]
