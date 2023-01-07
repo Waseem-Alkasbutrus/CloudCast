@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Location from 'expo-location'
 import { StyleSheet, RefreshControl, ScrollView } from 'react-native'
 import { Colors } from '../components/GlobalVars'
+import { useFocusEffect } from '@react-navigation/native'
 
 async function getLocation(setGPSWeather) {
   let { status } = await Location.requestForegroundPermissionsAsync()
@@ -92,6 +93,10 @@ export default function HomeScreen({ navigation }) {
   useEffect(() => {
     fetchData(setGPSWeather, setFavWeather)
   }, [])
+
+  useFocusEffect(useCallback(() => {
+    fetchBookmarkedWeather(setFavWeather)
+  }, []))
 
   let citylistItems = (
     <TitledSection Label={'Favorite Cities'}>
