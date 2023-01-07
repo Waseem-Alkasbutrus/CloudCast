@@ -61,7 +61,7 @@ const tabStyles = StyleSheet.create({
     alignSelf: 'center'
   },
   label: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '400',
   }
 })

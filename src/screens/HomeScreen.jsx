@@ -12,6 +12,7 @@ import Font from '../components/Font'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Location from 'expo-location'
 import { StyleSheet, RefreshControl, ScrollView } from 'react-native'
+import { Colors } from '../components/GlobalVars'
 
 async function getLocation(setGPSWeather) {
   let { status } = await Location.requestForegroundPermissionsAsync()
@@ -124,11 +125,13 @@ export default function HomeScreen({ navigation }) {
     )
   }
 
+  let colors = Colors._z
+
   return (
     <SafeAreaScreenWrapper>
       <ScrollView
         refreshControl={
-          <RefreshControl tintColor={'#FF7B7B'} progressBackgroundColor={'#A04B71BF'} colors={['#FBFBFB']} refreshing={refreshing} onRefresh={onRefresh} />
+          <RefreshControl tintColor={colors.gradient[0]} progressBackgroundColor={colors.text} colors={colors.gradient} refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
         {gps}
@@ -141,7 +144,6 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   noFavsText: {
     fontSize: 20,
-    color: '#FBFBFB',
     textAlign: 'center',
     marginTop: 24,
   },

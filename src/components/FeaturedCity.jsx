@@ -55,6 +55,5 @@ const styles = StyleSheet.create({
   },
   city : {
     fontSize: 28,
-    color: '#FBFBFB',
   }
 })

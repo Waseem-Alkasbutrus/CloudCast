@@ -4,11 +4,14 @@ import Stat from './IconStat'
 import Font from './Font'
 
 import WeatherIcon from './WeatherIcon'
+import { Colors } from './GlobalVars'
 
 export function HourlySection({ Weather }) {
   let hourlyForecast = Weather.list.map((entry) => {
     return <HourlyForecastItem key={entry.dt} Hour={entry}></HourlyForecastItem>
   })
+
+  let hourly = getHourlyStyle(Colors._z)
 
   return (
     <View style={hourly.hourlySection}>
@@ -46,6 +49,8 @@ function HourlyForecastItem({ Hour }) {
   let hour = getHour(Hour.dt_txt)
   let identifier = hour < 12 ? 'am' : 'pm'
 
+  let hourly = getHourlyStyle(Colors._z)
+
   return (
     <View style={hourly.hourWrapper}>
       <View style={hourly.statLeft}>
@@ -78,81 +83,68 @@ function HourlyForecastItem({ Hour }) {
   )
 }
 
-const hourly = StyleSheet.create({
-  hourlySection: {
-    backgroundColor: '#21212110',
-    borderTopRightRadius: 16,
-    borderTopLeftRadius: 16,
-    paddingTop: 8,
-    paddingHorizontal: 8,
-    marginTop: 16,
-    paddingBottom: 72,
-    flex: 1,
-  },
-  hourWrapper: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    borderBottomColor: '#FBFBFB15',
-    borderBottomWidth: 1,
-    paddingVertical: 4,
-  },
-  icon: {
-    width: 28,
-    height: 28,
-  },
-  hourHeaderWrapper: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderBottomColor: '#FBFBFB35',
-    borderBottomWidth: 2,
-    paddingVertical: 4,
-    marginBottom: 8,
-  },
-  headerLabel: {
-    color: '#FBFBFB',
-    fontSize: 16,
-    textAlign: 'center',
-    marginHorizontal: 4,
-    minWidth: 40,
-  },
-  statLeft: {
-    minWidth: 64,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-  },
-  statRight: {
-    minWidth: 64,
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-  },
-  statCenter: {
-    minWidth: 64,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-})
+function getHourlyStyle(colors) {
+  return StyleSheet.create({
+    hourlySection: {
+      backgroundColor: colors.pressable,
+      borderTopRightRadius: 16,
+      borderTopLeftRadius: 16,
+      paddingTop: 8,
+      paddingHorizontal: 8,
+      marginTop: 16,
+      paddingBottom: 72,
+      flex: 1,
+    },
+    hourWrapper: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+      alignItems: 'center',
+      borderBottomColor: colors.text10,
+      borderBottomWidth: 1,
+      paddingVertical: 4,
+    },
+    icon: {
+      width: 28,
+      height: 28,
+    },
+    hourHeaderWrapper: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      borderBottomColor: colors.text30,
+      borderBottomWidth: 2,
+      paddingVertical: 4,
+      marginBottom: 8,
+    },
+    headerLabel: {
+      fontSize: 16,
+      textAlign: 'center',
+      marginHorizontal: 4,
+      minWidth: 40,
+    },
+    statLeft: {
+      minWidth: 64,
+      justifyContent: 'center',
+      alignItems: 'flex-start',
+    },
+    statRight: {
+      minWidth: 64,
+      justifyContent: 'center',
+      alignItems: 'flex-end',
+    },
+    statCenter: {
+      minWidth: 64,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  })
+}
 
 export function WeeklySection({ Weather }) {
-  // const [Weather, setWeather] = useState()
-
-  // useEffect(() => {
-  //   fetch(
-  //     'https://api.openweathermap.org/data/2.5/forecast/daily?lat=' +
-  //       Lat +
-  //       '&lon=' +
-  //       Lon +
-  //       '&cnt=8&units=imperial&appid=' +
-  //       API_KEY,
-  //   )
-  //     .then((res) => res.json())
-  //     .then((res) => setWeather(res))
-  // }, [])
-
+  let weekly = getWeeklyStyle(Colors._z)
+  
   let weeklyForecast
-
   if (!Weather) {
     return <View></View>
   } else {
@@ -188,6 +180,8 @@ const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 function WeeklyListItem({ Weather, Day }) {
   let weekday = getDay(Day)
 
+  let weekly = getWeeklyStyle(Colors._z)
+
   return (
     <View style={weekly.card}>
       <Font style={weekly.day}>{weekdays[weekday % 7]}</Font>
@@ -203,36 +197,36 @@ function WeeklyListItem({ Weather, Day }) {
   )
 }
 
-const weekly = StyleSheet.create({
-  section: {
-    display: 'flex',
-    flexDirection: 'row',
-    height: 'auto',
-  },
-  card: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    marginHorizontal: 4,
+function getWeeklyStyle(colors) {
+  return StyleSheet.create({
+    section: {
+      display: 'flex',
+      flexDirection: 'row',
+      height: 'auto',
+    },
+    card: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+      marginHorizontal: 4,
 
-    backgroundColor: '#21212110',
-    borderRadius: 8,
+      backgroundColor: colors.pressable,
+      borderRadius: 8,
 
-    height: 'auto',
-  },
-  day: {
-    fontSize: 20,
-    fontWeight: '500',
-
-    color: '#FBFBFB',
-    textTransform: 'uppercase',
-  },
-  icon: {
-    width: 28,
-    height: 28,
-    marginVertical: 8,
-  },
-})
+      height: 'auto',
+    },
+    day: {
+      fontSize: 20,
+      fontWeight: '500',
+      textTransform: 'uppercase',
+    },
+    icon: {
+      width: 28,
+      height: 28,
+      marginVertical: 8,
+    },
+  })
+}
