@@ -5,7 +5,6 @@ import {
   Linking,
   Modal,
   View,
-  Pressable,
 } from 'react-native'
 
 import TitledSection from '../components/TitledSection'
@@ -17,7 +16,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import Toast from 'react-native-toast-message'
 import { CustomToast } from '../components/CustomToast'
 import * as Location from 'expo-location'
-import Font from '../components/Font'
 import { Colors } from '../components/GlobalVars'
 import RadioField from '../components/RadioField'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -87,16 +85,11 @@ export default function SettingsScreen() {
           setModalVisibility(false)
         }}
       >
-        <View
-          style={styles.modal}
-        >
-          <LinearGradient
-            colors={colors.gradient}
-            style={styles.dialogue}
-          >
+        <View style={styles.modal}>
+          <LinearGradient colors={colors.gradient} style={styles.dialogue}>
             {ModalContent}
             <Button
-            style={styles.selectButton}
+              style={styles.selectButton}
               Label="Select"
               Action={() => setModalVisibility(false)}
             ></Button>
@@ -124,7 +117,7 @@ export default function SettingsScreen() {
             setModalContent(
               <RadioField
                 Label="Units"
-                Options={['Imperial', 'Celsius']}
+                Options={['Imperial', 'Metric']}
               ></RadioField>,
             )
             setModalVisibility(true)
@@ -137,12 +130,12 @@ export default function SettingsScreen() {
           Action={() => {
             setModalContent(
               <RadioField
-              Label="Theme"
-              Options={['Light', 'Dark']}
+                Label="Theme"
+                Options={['Light', 'Dark']}
               ></RadioField>,
-              )
-              setModalVisibility(true)
-            }}
+            )
+            setModalVisibility(true)
+          }}
         />
       </TitledSection>
 
@@ -169,9 +162,9 @@ function getStyle(colors) {
       flexGrow: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: '#39393970',
+      backgroundColor: colors.bg,
     },
-    dialogue : {
+    dialogue: {
       minWidth: 320,
       display: 'flex',
       flexDirection: 'column',
@@ -179,7 +172,7 @@ function getStyle(colors) {
       justifyContent: 'center',
       paddingHorizontal: 12,
       paddingVertical: 8,
-      borderRadius: 16
-    }
+      borderRadius: 16,
+    },
   })
 }

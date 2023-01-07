@@ -26,11 +26,6 @@ export default function RadioField({ Label, Options }) {
 
   return (
     <View>
-      <Stat
-        Icon={require('../../assets/icons/Ruler.png')}
-        Stat={Label}
-        Size={22}
-      ></Stat>
       {RadioButtons}
     </View>
   )
@@ -44,6 +39,7 @@ function RadioButton({ Label, setActive, Index, IsActive }) {
       onPress={() => {
         setActive(Index)
       }}
+      HitRect={8}
       style={styles.button}
     >
       <Font style={styles.label}>{Label}</Font>

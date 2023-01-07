@@ -16,6 +16,7 @@ async function getColors() {
     text30: '#DCDFFF30',
     text10: '#DCDFFF10',
     navbar: '#2E135A',
+    bg: '#39393970'
   }
 
   const LightTheme = {
@@ -26,6 +27,7 @@ async function getColors() {
     text30: '#FBFBFB30',
     text10: '#FBFBFB10',
     navbar: '#A04B71',
+    bg: '#39393970'
   }
 
   let colors = LightTheme
