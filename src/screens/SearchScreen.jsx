@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Pressable, StyleSheet, View, Image } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
-import FeaturedCity from '../components/FeaturedCity'
 import { SafeAreaScreenWrapper } from '../components/ScreenWrapper'
 import TitledSection from '../components/TitledSection.jsx'
 
