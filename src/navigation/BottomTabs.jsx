@@ -3,8 +3,7 @@ import HomeScreen from '../screens/HomeScreen'
 import SettingsScreen from '../screens/SettingsScreen'
 import SearchScreen from '../screens/SearchScreen'
 import CityScreenStack from './CityScreenStack'
-import { Image, StyleSheet } from 'react-native'
-import { LinearGradient } from 'expo-linear-gradient'
+import { Image, StyleSheet, View } from 'react-native'
 import Font from '../components/Font'
 import { Colors } from '../components/GlobalVars'
 
@@ -23,9 +22,8 @@ function CustomTab(icon, label, focused) {
   let transparentText = colors.text + '80'
 
   return (
-    <LinearGradient
-      colors={focused ? colors.gradient : ['#00000000', '#00000000']}
-      style={tabStyles.tabWrapper}
+    <View
+      style={focused? [tabStyles.tabWrapper, {backgroundColor: colors.activeTab}] : tabStyles.tabWrapper}
     >
       <Image
         source={icon}
@@ -34,7 +32,7 @@ function CustomTab(icon, label, focused) {
       <Font style={focused? [tabStyles.label, {color: colors.text}] : [tabStyles.label, {color: transparentText}]}>
         {label}
       </Font>
-    </LinearGradient>
+    </View>
   )
 }
 
@@ -47,6 +45,7 @@ const tabStyles = StyleSheet.create({
     paddingVertical: 4,
     paddingHorizontal: 16,
     borderRadius: 8,
+    backgroundColor: '#00000000'
   },
   focusedIcon: {
     height: 32,
