@@ -4,7 +4,8 @@ import BottomTabs from './src/navigation/BottomTabs'
 import { useFonts } from 'expo-font'
 import { useCallback } from 'react'
 import * as SplashScreen from 'expo-splash-screen'
-import { View } from 'react-native'
+import { StatusBar, View } from 'react-native'
+import { Colors } from './src/components/GlobalVars'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -25,7 +26,12 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <View style={{flex: 1}} onLayout={onLayoutRootView}>
+      <StatusBar
+        animated={true}
+        backgroundColor={Colors._z.gradient[0]}
+        barStyle={'light-content'}
+      />
+      <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
         <BottomTabs></BottomTabs>
       </View>
     </NavigationContainer>
