@@ -10,24 +10,26 @@ async function getColors() {
 
   const DarkTheme = {
     gradient: ['#483B99', '#3D1186'],
-    pressable: '#B78AFF09',
+    pressable: '#B78AFF0F',
     button: '#B78AFF20',
     text: '#DCDFFF',
     text30: '#DCDFFF30',
     text10: '#DCDFFF10',
     navbar: '#2E135A',
-    bg: '#39393970'
+    activeTab: '#B78AFF33',
+    bg: '#21212170',
   }
 
   const LightTheme = {
-    gradient: ['#FF7B7B', '#E35F9F'],
-    pressable: '#39393916',
-    button: '#39393930',
+    gradient: ['#BC7EE1', '#9E5DDE'],
+    pressable: '#FD9BFF15',
+    button: '#FD9BFF25',
     text: '#FBFBFB',
     text30: '#FBFBFB30',
     text10: '#FBFBFB10',
-    navbar: '#A04B71',
-    bg: '#39393970'
+    navbar: '#854DC2',
+    activeTab: '#9D5DCE',
+    bg: '#21212170',
   }
 
   let colors = LightTheme
