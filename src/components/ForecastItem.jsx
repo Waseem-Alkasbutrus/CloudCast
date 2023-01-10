@@ -74,8 +74,6 @@ function HourlyForecastItem({ Hour, UnitSystem }) {
 
   let hourly = getHourlyStyle(Colors._z)
 
-  console.log(TimeVariables)
-
   return (
     <View style={hourly.hourWrapper}>
       <View style={hourly.statLeft}>
