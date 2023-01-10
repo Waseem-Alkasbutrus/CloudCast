@@ -134,7 +134,7 @@ export default function SettingsScreen() {
       <OpenDialogue
           SettingName={'Theme'}
           Description={ColorScheme}
-          Icon={require('../../assets/icons/Theme.png')}
+          Icon={require('../../assets/icons/Moon.png')}
           Action={() => {
             setModalContent(
               <RadioField
