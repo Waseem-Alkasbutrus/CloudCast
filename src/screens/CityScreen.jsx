@@ -268,7 +268,7 @@ function getFavoriteStyle(colors) {
     button: {
       position: 'absolute',
       right: 16,
-      top: 8,
+      top: 4,
       width: 40,
       height: 40,
       display: 'flex',
@@ -278,8 +278,8 @@ function getFavoriteStyle(colors) {
       zIndex: 1,
     },
     icon: {
-      height: 48,
-      width: 48,
+      height: 40,
+      width: 40,
       tintColor: colors.text
     },
   })
