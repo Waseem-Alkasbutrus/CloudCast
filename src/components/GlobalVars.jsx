@@ -70,6 +70,17 @@ export async function getUnitSystem() {
   return unitSystem
 }
 
+export async function getTimeFormat() {
+  let timeFormat = await AsyncStorage.getItem('TimeFormat')
+
+  if (timeFormat == undefined) {
+    timeFormat = "12-Hour"
+    await AsyncStorage.setItem('TimeFormat', timeFormat)
+  }
+
+  return timeFormat
+}
+
 export function saveVar(key, newValue) {
   try {
     AsyncStorage.setItem(key, newValue)

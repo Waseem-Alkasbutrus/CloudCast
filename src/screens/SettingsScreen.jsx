@@ -78,17 +78,24 @@ async function checkColorScheme(setColorScheme) {
   setColorScheme(color[0].toUpperCase() + color.substring(1))
 }
 
+async function checkTimeFormat(setTimeFromat) {
+  let time = await AsyncStorage.getItem('TimeFormat')
+  setTimeFromat(time[0].toUpperCase() + time.substring(1))
+}
+
 export default function SettingsScreen() {
-  const [LocationStatus, setLocationStatus] = useState()
-  const [UnitSystem, setUnitSystem] = useState()
   const [ModalVisiblity, setModalVisibility] = useState(false)
   const [ModalContent, setModalContent] = useState()
+  const [LocationStatus, setLocationStatus] = useState()
   const [ColorScheme, setColorScheme] = useState()
+  const [UnitSystem, setUnitSystem] = useState()
+  const [TimeFormat, setTimeFromat] = useState()
 
   useEffect(() => {
     checkLocation(setLocationStatus)
-    checkUnitSystem(setUnitSystem)
     checkColorScheme(setColorScheme)
+    checkUnitSystem(setUnitSystem)
+    checkTimeFormat(setTimeFromat)
   }, [])
 
   let colors = Colors._z
@@ -124,6 +131,23 @@ export default function SettingsScreen() {
       </TitledSection>
 
       <TitledSection Label={'Customization'}>
+      <OpenDialogue
+          SettingName={'Theme'}
+          Description={ColorScheme}
+          Icon={require('../../assets/icons/Theme.png')}
+          Action={() => {
+            setModalContent(
+              <RadioField
+                Options={['Light', 'Dark']}
+                HideModal={setModalVisibility}
+                AsyncKey="ColorScheme"
+                setDescription={setColorScheme}
+              ></RadioField>,
+            )
+            setModalVisibility(true)
+          }}
+        />
+
         <OpenDialogue
           SettingName={'Units'}
           Description={UnitSystem}
@@ -140,17 +164,18 @@ export default function SettingsScreen() {
             setModalVisibility(true)
           }}
         />
+        
         <OpenDialogue
-          SettingName={'Theme'}
-          Description={ColorScheme}
-          Icon={require('../../assets/icons/Theme.png')}
+          SettingName={'Time Format'}
+          Description={TimeFormat}
+          Icon={require('../../assets/icons/Clock.png')}
           Action={() => {
             setModalContent(
               <RadioField
-                Options={['Light', 'Dark']}
+                Options={['12-Hour', '24-Hour']}
                 HideModal={setModalVisibility}
-                AsyncKey="ColorScheme"
-                setDescription={setColorScheme}
+                AsyncKey="TimeFormat"
+                setDescription={setTimeFromat}
               ></RadioField>,
             )
             setModalVisibility(true)

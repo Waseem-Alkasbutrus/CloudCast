@@ -4,11 +4,17 @@ import Stat from './IconStat'
 import Font from './Font'
 
 import WeatherIcon from './WeatherIcon'
-import { Colors } from './GlobalVars'
+import { Colors, getTimeFormat } from './GlobalVars'
 
 export function HourlySection({ Weather, UnitSystem }) {
   let hourlyForecast = Weather.list.map((entry) => {
-    return <HourlyForecastItem key={entry.dt} Hour={entry} UnitSystem={UnitSystem}></HourlyForecastItem>
+    return (
+      <HourlyForecastItem
+        key={entry.dt}
+        Hour={entry}
+        UnitSystem={UnitSystem}
+      ></HourlyForecastItem>
+    )
   })
 
   let hourly = getHourlyStyle(Colors._z)
@@ -16,7 +22,7 @@ export function HourlySection({ Weather, UnitSystem }) {
   return (
     <View style={hourly.hourlySection}>
       <View style={hourly.hourHeaderWrapper}>
-        <View style={hourly.statCenter}>
+        <View style={hourly.statLeft}>
           <Font style={hourly.headerLabel}>Time</Font>
         </View>
 
@@ -45,18 +51,41 @@ function getHour(dtTxt) {
   return hr
 }
 
+async function getFormattedHours(dtTxt, setTimeVariables) {
+  let hour = getHour(dtTxt)
+  let identifier
+
+  await getTimeFormat().then((format) => {
+    if (format === '12-Hour') {
+      hour = hour % 12 === 0 ? 12 : hour % 12
+      identifier = hour < 12 ? 'am' : 'pm'
+    }
+
+    setTimeVariables({ hour: hour, identifier: identifier })
+  })
+}
+
 function HourlyForecastItem({ Hour, UnitSystem }) {
-  let hour = getHour(Hour.dt_txt)
-  let identifier = hour < 12 ? 'am' : 'pm'
+  const [TimeVariables, setTimeVariables] = useState()
+
+  useEffect(() => {
+    getFormattedHours(Hour.dt_txt, setTimeVariables)
+  }, [])
 
   let hourly = getHourlyStyle(Colors._z)
+
+  console.log(TimeVariables)
 
   return (
     <View style={hourly.hourWrapper}>
       <View style={hourly.statLeft}>
         <Stat
-          Stat={hour % 12 === 0 ? 12 : hour % 12}
-          Unit={identifier}
+          Stat={
+            TimeVariables != undefined
+              ? TimeVariables.hour
+              : getHour(Hour.dt_txt)
+          }
+          Unit={TimeVariables != undefined ? TimeVariables.identifier : null}
           Size={22}
         ></Stat>
       </View>
@@ -69,11 +98,19 @@ function HourlyForecastItem({ Hour, UnitSystem }) {
       </View>
 
       <View style={hourly.statRight}>
-        <Stat Stat={Hour.wind.speed.toFixed(1)} Unit={UnitSystem.speed} Size={20}></Stat>
+        <Stat
+          Stat={Hour.wind.speed.toFixed(1)}
+          Unit={UnitSystem.speed}
+          Size={20}
+        ></Stat>
       </View>
 
       <View style={hourly.statRight}>
-        <Stat Stat={Math.round(Hour.main.temp)} Unit={UnitSystem.temp} Size={20}></Stat>
+        <Stat
+          Stat={Math.round(Hour.main.temp)}
+          Unit={UnitSystem.temp}
+          Size={20}
+        ></Stat>
       </View>
 
       <View style={hourly.statRight}>
@@ -124,17 +161,17 @@ function getHourlyStyle(colors) {
       minWidth: 40,
     },
     statLeft: {
-      minWidth: 64,
+      minWidth: 68,
       justifyContent: 'center',
       alignItems: 'flex-start',
     },
     statRight: {
-      minWidth: 64,
+      minWidth: 68,
       justifyContent: 'center',
       alignItems: 'flex-end',
     },
     statCenter: {
-      minWidth: 64,
+      minWidth: 68,
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -143,7 +180,7 @@ function getHourlyStyle(colors) {
 
 export function WeeklySection({ Weather, UnitSystem }) {
   let weekly = getWeeklyStyle(Colors._z)
-  
+
   let weeklyForecast
   if (!Weather) {
     return <View></View>
@@ -192,8 +229,16 @@ function WeeklyListItem({ Weather, Day, UnitSystem }) {
         style={weekly.icon}
       ></WeatherIcon>
 
-      <Stat Stat={Math.round(Weather.temp.max)} Unit={UnitSystem.temp} Size={18}></Stat>
-      <Stat Stat={Math.round(Weather.temp.min)} Unit={UnitSystem.temp} Size={18}></Stat>
+      <Stat
+        Stat={Math.round(Weather.temp.max)}
+        Unit={UnitSystem.temp}
+        Size={18}
+      ></Stat>
+      <Stat
+        Stat={Math.round(Weather.temp.min)}
+        Unit={UnitSystem.temp}
+        Size={18}
+      ></Stat>
     </View>
   )
 }
