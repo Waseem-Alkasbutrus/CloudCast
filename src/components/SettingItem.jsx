@@ -69,6 +69,7 @@ function getStyle(colors) {
     icon: {
       height: 28,
       width: 28,
+      tintColor: colors.text
     },
   })
 }

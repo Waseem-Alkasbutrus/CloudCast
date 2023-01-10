@@ -144,6 +144,7 @@ function getHourlyStyle(colors) {
     icon: {
       width: 28,
       height: 28,
+      tintColor: colors.text
     },
     hourHeaderWrapper: {
       display: 'flex',
@@ -273,6 +274,7 @@ function getWeeklyStyle(colors) {
       width: 28,
       height: 28,
       marginVertical: 8,
+      tintColor: colors.text
     },
   })
 }

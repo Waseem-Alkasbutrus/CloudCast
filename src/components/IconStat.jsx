@@ -43,7 +43,7 @@ const getStyle = (Size, Weight, colors) => {
     icon: {
       height: Size + 2,
       width: Size + 2,
-      overlayColor: colors.text,
+      tintColor: colors.text,
     },
 
     textWrapper: {

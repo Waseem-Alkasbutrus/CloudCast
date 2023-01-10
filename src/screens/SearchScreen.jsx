@@ -122,6 +122,7 @@ function getStyle(colors) {
       flexGrow: 1,
       width: 24,
       height: 24,
+      tintColor: colors.text
     },
     emptySearch: {
       fontSize: 20,

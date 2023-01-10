@@ -27,7 +27,7 @@ function CustomTab(icon, label, focused) {
     >
       <Image
         source={icon}
-        style={focused ? tabStyles.focusedIcon : tabStyles.unfocusedIcon}
+        style={focused ? [tabStyles.focusedIcon, {tintColor: colors.text}] : tabStyles.unfocusedIcon}
       ></Image>
       <Font style={focused? [tabStyles.label, {color: colors.text}] : [tabStyles.label, {color: transparentText}]}>
         {label}

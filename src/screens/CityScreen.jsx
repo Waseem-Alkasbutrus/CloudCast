@@ -14,7 +14,7 @@ import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import { CustomToast } from '../components/CustomToast'
 
 import { API_KEY } from '@env'
-import { getUnitSystem } from '../components/GlobalVars'
+import { Colors, getUnitSystem } from '../components/GlobalVars'
 
 async function saveFavs(favs) {
   try {
@@ -103,7 +103,12 @@ async function isInFavorites(city, lon, lat, setBookmarked) {
   }
 }
 
-async function fetchWeather(coords, setWeeklyWeather, setHourlyWeather, setUnitSystem) {
+async function fetchWeather(
+  coords,
+  setWeeklyWeather,
+  setHourlyWeather,
+  setUnitSystem,
+) {
   let unitSystem = await getUnitSystem()
   setUnitSystem(unitSystem)
 
@@ -159,6 +164,7 @@ export default function CityScreen({ navigation, route }) {
     )
   }, [])
 
+  let favorite = getFavoriteStyle(Colors._z)
   let BookmarkButton
 
   if (Bookmarked == true || Bookmarked == false) {
@@ -213,7 +219,7 @@ export default function CityScreen({ navigation, route }) {
             color={'#FBFBFB'}
           ></ActivityIndicator>
         </View>
-        
+
         <Toast
           position="bottom"
           bottomOffset={80}
@@ -227,11 +233,20 @@ export default function CityScreen({ navigation, route }) {
       <SafeAreaScreenWrapper>
         {BookmarkButton}
 
-        <Details Weather={HourlyWeather.list[0]} UnitSystem={UnitSystem}></Details>
+        <Details
+          Weather={HourlyWeather.list[0]}
+          UnitSystem={UnitSystem}
+        ></Details>
 
-        <WeeklySection Weather={WeeklyWeather} UnitSystem={UnitSystem}></WeeklySection>
+        <WeeklySection
+          Weather={WeeklyWeather}
+          UnitSystem={UnitSystem}
+        ></WeeklySection>
 
-        <HourlySection Weather={HourlyWeather} UnitSystem={UnitSystem}></HourlySection>
+        <HourlySection
+          Weather={HourlyWeather}
+          UnitSystem={UnitSystem}
+        ></HourlySection>
 
         <Toast
           position="bottom"
@@ -244,28 +259,31 @@ export default function CityScreen({ navigation, route }) {
   }
 }
 
-const favorite = StyleSheet.create({
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  button: {
-    position: 'absolute',
-    right: 16,
-    top: 8,
-    width: 40,
-    height: 40,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 16,
-    zIndex: 1,
-  },
-  icon: {
-    height: 48,
-    width: 48,
-  },
-})
+function getFavoriteStyle(colors) {
+  return StyleSheet.create({
+    container: {
+      display: 'flex',
+      alignItems: 'center',
+    },
+    button: {
+      position: 'absolute',
+      right: 16,
+      top: 8,
+      width: 40,
+      height: 40,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 16,
+      zIndex: 1,
+    },
+    icon: {
+      height: 48,
+      width: 48,
+      tintColor: colors.text
+    },
+  })
+}
 
 function Details({ Weather, UnitSystem }) {
   return (
@@ -281,8 +299,16 @@ function Details({ Weather, UnitSystem }) {
         </View>
 
         <View style={[details.flexCol, details.highLowTempsWrapper]}>
-          <Stat Size={32} Stat={Math.round(Weather.main.temp_max)} Unit={UnitSystem.temp} />
-          <Stat Size={32} Stat={Math.round(Weather.main.temp_min)} Unit={UnitSystem.temp} />
+          <Stat
+            Size={32}
+            Stat={Math.round(Weather.main.temp_max)}
+            Unit={UnitSystem.temp}
+          />
+          <Stat
+            Size={32}
+            Stat={Math.round(Weather.main.temp_min)}
+            Unit={UnitSystem.temp}
+          />
         </View>
       </View>
 

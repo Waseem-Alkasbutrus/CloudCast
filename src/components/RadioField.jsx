@@ -93,6 +93,7 @@ function getStyle(colors) {
     check: {
       width: 24,
       height: 24,
+      tintColor: colors.text
     },
   })
 }

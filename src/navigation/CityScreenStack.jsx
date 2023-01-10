@@ -32,6 +32,7 @@ function getHeaderStyle(colors) {
     buttonIcon: {
       width: 32,
       height: 28,
+      tintColor: colors.text
     },
   })
 }
