@@ -198,7 +198,7 @@ export function WeeklySection({ Weather, UnitSystem }) {
 
   return (
     <View style={weekly.section}>
-      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+      <ScrollView snapToInterval={80} horizontal={true} showsHorizontalScrollIndicator={false}>
         {weeklyForecast}
       </ScrollView>
     </View>
@@ -257,6 +257,7 @@ function getWeeklyStyle(colors) {
       paddingHorizontal: 16,
       paddingVertical: 8,
       marginHorizontal: 4,
+      minWidth: 72,
 
       backgroundColor: colors.pressable,
       borderRadius: 8,
