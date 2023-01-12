@@ -61,14 +61,14 @@ function CustomHeaderBackButton(props) {
 }
 
 const animConfig = {
-  open: {
+  bounce: {
     animation: 'timing',
     config: {
       duration: 500,
       easing: Easing.in(Easing.bounce),
     },
   },
-  close: {
+  slide: {
     animation: 'timing',
     config: {
       duration: 150,
@@ -87,8 +87,8 @@ export default function CityScreenStack({ MainScreen }) {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         transitionSpec: {
-          open: animConfig.open,
-          close: animConfig.close,
+          open: animConfig.slide,
+          close: animConfig.slide,
         },
       }}
     >
