@@ -57,8 +57,8 @@ async function getFormattedHours(dtTxt, setTimeVariables) {
 
   await getTimeFormat().then((format) => {
     if (format === '12-Hour') {
-      hour = hour % 12 === 0 ? 12 : hour % 12
       identifier = hour < 12 ? 'am' : 'pm'
+      hour = hour % 12 === 0 ? 12 : hour % 12
     }
 
     setTimeVariables({ hour: hour, identifier: identifier })
