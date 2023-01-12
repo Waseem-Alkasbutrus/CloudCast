@@ -45,7 +45,8 @@ const tabStyles = StyleSheet.create({
     paddingVertical: 4,
     paddingHorizontal: 16,
     borderRadius: 8,
-    backgroundColor: '#00000000'
+    backgroundColor: '#00000000',
+    minWidth:  96,
   },
   focusedIcon: {
     height: 32,
@@ -62,6 +63,7 @@ const tabStyles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: '400',
+    textAlign: 'center',
   }
 })
 
