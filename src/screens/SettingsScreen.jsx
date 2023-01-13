@@ -13,6 +13,7 @@ import * as Location from 'expo-location'
 import { Colors } from '../components/GlobalVars'
 import RadioField from '../components/RadioField'
 import { LinearGradient } from 'expo-linear-gradient'
+import { Warning } from '../components/Dialogue'
 
 async function deleteSaves() {
   try {
@@ -33,27 +34,13 @@ async function resetToDefaults(setters) {
     await AsyncStorage.setItem('ColorScheme', 'Light')
 
     setters.map((setter) => setter.func(setter.param))
+
+    Toast.show({
+      type: 'custom',
+      text1: 'Reset settings. Restart app to see all changes.'
+    })
   } catch (e) {
     console.error(e)
-  }
-}
-
-function getDeleteDialogue(resetFunction, parameters) {
-  return function deleteSavesDialogue() {
-    Alert.alert(
-      'Are you sure?',
-      'You will not be able to restore changes after resetting them',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        { text: 'Reset Data', onPress: () => resetFunction(parameters) },
-      ],
-      {
-        cancelable: true,
-      },
-    )
   }
 }
 
@@ -186,14 +173,61 @@ export default function SettingsScreen() {
       <TitledSection Label={'Reset Data'}>
         <PrimaryButton
           Label={'RESET FAVORITES'}
-          Action={getDeleteDialogue(deleteSaves, [])}
+          Action={() => {
+            setModalContent(
+              <Warning
+                Title={'Reset Favorite Cities?'}
+                Content={
+                  'This action cannot be undone. All cities in your favorites list will be removed.'
+                }
+                Ok={{
+                  label: 'Reset',
+                  action: () => {
+                    deleteSaves()
+                    setModalVisibility(false)
+                  },
+                }}
+                Cancel={{
+                  label: 'Cancel',
+                  action: () => {
+                    setModalVisibility(false)
+                  },
+                }}
+              ></Warning>,
+            )
+            setModalVisibility(true)
+          }}
         ></PrimaryButton>
+
         <PrimaryButton
           Label={'RESET TO DEFAULT SETTINGS'}
-          Action={getDeleteDialogue(resetToDefaults, [
-            { func: setColorScheme, param: 'Light' },
-            { func: setUnitSystem, param: 'imperial' },
-          ])}
+          Action={() => {
+            setModalContent(
+              <Warning
+                Title={'Reset All Settings?'}
+                Content={
+                  'This action cannot be undone. All your settings will revert to their default values.'
+                }
+                Ok={{
+                  label: 'Reset',
+                  action: () => {
+                    resetToDefaults([
+                      { func: setColorScheme, param: 'Light' },
+                      { func: setUnitSystem, param: 'imperial' },
+                    ])
+                    setModalVisibility(false)
+                  },
+                }}
+                Cancel={{
+                  label: 'Cancel',
+                  action: () => {
+                    setModalVisibility(false)
+                  },
+                }}
+              ></Warning>,
+            )
+            setModalVisibility(true)
+          }}
         ></PrimaryButton>
       </TitledSection>
 
@@ -216,7 +250,7 @@ function getStyle(colors) {
       backgroundColor: colors.bg,
     },
     dialogue: {
-      minWidth: 320,
+      width: 360,
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'stretch',

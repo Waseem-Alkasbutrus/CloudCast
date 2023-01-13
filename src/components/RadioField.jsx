@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useEffect, useState } from 'react'
 import { Image, Pressable, StyleSheet, View } from 'react-native'
-import { PrimaryButton, SecondaryButton } from './Button'
+import { OkCancelButtons } from './Dialogue'
 import Font from './Font'
 import { Colors, saveVar } from './GlobalVars'
 
@@ -47,22 +47,23 @@ export default function RadioField({
   return (
     <View>
       <View style={{ marginBottom: 8 }}>{RadioButtons}</View>
-      <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-        <PrimaryButton
-          style={{ paddingHorizontal: 16 }}
-          Label="Select"
-          Action={() => {
+
+      <OkCancelButtons
+        Ok={{
+          label: 'Select',
+          action: () => {
             saveVar(AsyncKey, Options[ActiveButton])
             setDescription(Options[ActiveButton])
             HideModal(false)
-          }}
-        ></PrimaryButton>
-        <SecondaryButton
-          Action={() => HideModal(false)}
-          Label="Cancel"
-          style={{ marginLeft: 8 }}
-        ></SecondaryButton>
-      </View>
+          },
+        }}
+        Cancel={{
+          label: 'Cancel',
+          action: () => {
+            HideModal(false)
+          },
+        }}
+      ></OkCancelButtons>
     </View>
   )
 }
