@@ -28,13 +28,13 @@ export function HourlySection({ Weather, UnitSystem }) {
 
         <View style={hourly.statCenter}></View>
 
-        <View style={hourly.statCenter}>
+        <View style={[hourly.statCenter, hourly.wideStatCenter]}>
           <Font style={hourly.headerLabel}>Wind</Font>
         </View>
-        <View style={hourly.statCenter}>
+        <View style={hourly.statRight}>
           <Font style={hourly.headerLabel}>Temp</Font>
         </View>
-        <View style={hourly.statCenter}>
+        <View style={hourly.statRight}>
           <Font style={hourly.headerLabel}>Rain</Font>
         </View>
       </View>
@@ -95,7 +95,7 @@ function HourlyForecastItem({ Hour, UnitSystem }) {
         ></WeatherIcon>
       </View>
 
-      <View style={hourly.statRight}>
+      <View style={[hourly.statRight, hourly.wideStatCenter]}>
         <Stat
           Stat={Hour.wind.speed.toFixed(1)}
           Unit={UnitSystem.speed}
@@ -147,7 +147,7 @@ function getHourlyStyle(colors) {
     hourHeaderWrapper: {
       display: 'flex',
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      justifyContent: 'space-evenly',
       borderBottomColor: colors.text30,
       borderBottomWidth: 2,
       paddingVertical: 4,
@@ -157,23 +157,25 @@ function getHourlyStyle(colors) {
       fontSize: 16,
       textAlign: 'center',
       marginHorizontal: 4,
-      minWidth: 40,
     },
     statLeft: {
-      minWidth: 68,
+      minWidth: 64,
       justifyContent: 'center',
       alignItems: 'flex-start',
     },
     statRight: {
-      minWidth: 68,
+      minWidth: 56,
       justifyContent: 'center',
       alignItems: 'flex-end',
     },
     statCenter: {
-      minWidth: 68,
+      minWidth: 40,
       justifyContent: 'center',
       alignItems: 'center',
     },
+    wideStatCenter: {
+      minWidth: 88,
+    }
   })
 }
 
