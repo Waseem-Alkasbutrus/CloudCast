@@ -3,10 +3,10 @@ import { Pressable, StyleSheet } from 'react-native'
 import Font from './Font'
 import { Colors } from './GlobalVars'
 
-export default function Button({ Label, Action }) {
+export default function Button({ Label, Action, style }) {
   let styles = getStyle(Colors._z)
   return (
-    <Pressable onPress={Action} style={styles.button}>
+    <Pressable onPress={Action} style={[styles.button, style]}>
       <Font style={styles.label}>{Label}</Font>
     </Pressable>
   )
