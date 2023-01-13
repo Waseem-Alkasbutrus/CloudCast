@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useEffect, useState } from 'react'
 import { Image, Pressable, StyleSheet, View } from 'react-native'
-import Button from './Button'
+import { PrimaryButton, SecondaryButton } from './Button'
 import Font from './Font'
 import { Colors, saveVar } from './GlobalVars'
 
@@ -16,7 +16,12 @@ async function getCurrentValue(options, asyncKey, setActiveButton) {
   setActiveButton(currentKey)
 }
 
-export default function RadioField({ Options, HideModal, AsyncKey, setDescription }) {
+export default function RadioField({
+  Options,
+  HideModal,
+  AsyncKey,
+  setDescription,
+}) {
   const [ActiveButton, setActiveButton] = useState(0)
 
   useEffect(() => {
@@ -42,14 +47,22 @@ export default function RadioField({ Options, HideModal, AsyncKey, setDescriptio
   return (
     <View>
       <View style={{ marginBottom: 8 }}>{RadioButtons}</View>
-      <Button
-        Label="Select"
-        Action={() => {
-          saveVar(AsyncKey, Options[ActiveButton])
-          setDescription(Options[ActiveButton])
-          HideModal(false)
-        }}
-      ></Button>
+      <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+        <PrimaryButton
+          style={{ paddingHorizontal: 16 }}
+          Label="Select"
+          Action={() => {
+            saveVar(AsyncKey, Options[ActiveButton])
+            setDescription(Options[ActiveButton])
+            HideModal(false)
+          }}
+        ></PrimaryButton>
+        <SecondaryButton
+          Action={() => HideModal(false)}
+          Label="Cancel"
+          style={{ marginLeft: 8 }}
+        ></SecondaryButton>
+      </View>
     </View>
   )
 }
@@ -93,7 +106,7 @@ function getStyle(colors) {
     check: {
       width: 24,
       height: 24,
-      tintColor: colors.text
+      tintColor: colors.text,
     },
   })
 }

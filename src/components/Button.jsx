@@ -3,10 +3,19 @@ import { Pressable, StyleSheet } from 'react-native'
 import Font from './Font'
 import { Colors } from './GlobalVars'
 
-export default function Button({ Label, Action, style }) {
+export function PrimaryButton({ Label, Action, style }) {
   let styles = getStyle(Colors._z)
   return (
-    <Pressable onPress={Action} style={[styles.button, style]}>
+    <Pressable onPress={Action} style={[styles.buttonTemplate, styles.primaryButton, style]}>
+      <Font style={styles.label}>{Label}</Font>
+    </Pressable>
+  )
+}
+
+export function SecondaryButton({ Label, Action, style }) {
+  let styles = getStyle(Colors._z)
+  return (
+    <Pressable onPress={Action} style={[styles.buttonTemplate, styles.secondaryButton, style]}>
       <Font style={styles.label}>{Label}</Font>
     </Pressable>
   )
@@ -14,16 +23,21 @@ export default function Button({ Label, Action, style }) {
 
 function getStyle(colors) {
   return StyleSheet.create({
-    button: {
+    buttonTemplate: {
       display: 'flex',
-
+      
       alignItems: 'center',
       padding: 8,
       marginVertical: 4,
-
+  
       borderRadius: 10,
-
+    },
+    primaryButton: {
       backgroundColor: colors.button,
+    },
+    secondaryButton: {
+      borderWidth: 2,
+      borderColor: colors.button,
     },
     label: {
       fontSize: 18,

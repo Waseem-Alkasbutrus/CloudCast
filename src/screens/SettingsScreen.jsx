@@ -3,7 +3,7 @@ import { StyleSheet, Alert, Linking, Modal, View } from 'react-native'
 
 import TitledSection from '../components/TitledSection'
 import { OpenDialogue } from '../components/SettingItem'
-import Button from '../components/Button'
+import { PrimaryButton } from '../components/Button'
 import { SafeAreaScreenWrapper } from '../components/ScreenWrapper'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -131,7 +131,7 @@ export default function SettingsScreen() {
       </TitledSection>
 
       <TitledSection Label={'Customization'}>
-      <OpenDialogue
+        <OpenDialogue
           SettingName={'Theme'}
           Description={ColorScheme}
           Icon={require('../../assets/icons/Moon.png')}
@@ -164,7 +164,7 @@ export default function SettingsScreen() {
             setModalVisibility(true)
           }}
         />
-        
+
         <OpenDialogue
           SettingName={'Time Format'}
           Description={TimeFormat}
@@ -184,17 +184,17 @@ export default function SettingsScreen() {
       </TitledSection>
 
       <TitledSection Label={'Reset Data'}>
-        <Button
+        <PrimaryButton
           Label={'RESET FAVORITES'}
           Action={getDeleteDialogue(deleteSaves, [])}
-        ></Button>
-        <Button
+        ></PrimaryButton>
+        <PrimaryButton
           Label={'RESET TO DEFAULT SETTINGS'}
           Action={getDeleteDialogue(resetToDefaults, [
             { func: setColorScheme, param: 'Light' },
             { func: setUnitSystem, param: 'imperial' },
           ])}
-        ></Button>
+        ></PrimaryButton>
       </TitledSection>
 
       <Toast
