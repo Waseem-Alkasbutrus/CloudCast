@@ -233,7 +233,8 @@ export default function CityScreen({ navigation, route }) {
         {BookmarkButton}
 
         <Details
-          Weather={HourlyWeather.list[0]}
+          Day={WeeklyWeather.list[0]}
+          Current={HourlyWeather.list[0]}
           UnitSystem={UnitSystem}
         ></Details>
 
@@ -284,13 +285,13 @@ function getFavoriteStyle(colors) {
   })
 }
 
-function Details({ Weather, UnitSystem }) {
+function Details({ Day, Current, UnitSystem }) {
   return (
     <View style={details.cardView}>
       <View style={details.flexRow}>
         <View style={details.temp}>
           <Stat
-            Stat={Math.round(Weather.main.temp)}
+            Stat={Math.round(Current.main.temp)}
             Unit={UnitSystem.temp}
             Size={120}
             Weight={'420'}
@@ -300,12 +301,12 @@ function Details({ Weather, UnitSystem }) {
         <View style={[details.flexCol, details.highLowTempsWrapper]}>
           <Stat
             Size={32}
-            Stat={Math.round(Weather.main.temp_max)}
+            Stat={Math.round(Day.temp.max)}
             Unit={UnitSystem.temp}
           />
           <Stat
             Size={32}
-            Stat={Math.round(Weather.main.temp_min)}
+            Stat={Math.round(Day.temp.min)}
             Unit={UnitSystem.temp}
           />
         </View>
@@ -313,8 +314,8 @@ function Details({ Weather, UnitSystem }) {
 
       <View style={details.desc}>
         <Stat
-          Icon={getWeatherIconPath(Weather.weather[0].icon)}
-          Stat={Weather.weather[0].description}
+          Icon={getWeatherIconPath(Current.weather[0].icon)}
+          Stat={Current.weather[0].description}
           Size={20}
         ></Stat>
       </View>
@@ -323,7 +324,7 @@ function Details({ Weather, UnitSystem }) {
         <Stat
           Icon={require('../../assets/icons/Rain-Shower.png')}
           Size={18}
-          Stat={(Weather.pop * 100).toFixed(0)}
+          Stat={(Current.pop * 100).toFixed(0)}
           Unit="%"
         />
 
@@ -332,7 +333,7 @@ function Details({ Weather, UnitSystem }) {
         <Stat
           Icon={require('../../assets/icons/Feels-Like.png')}
           Size={18}
-          Stat={Math.round(Weather.main.feels_like)}
+          Stat={Math.round(Current.main.feels_like)}
           Unit={UnitSystem.temp}
         />
 
@@ -341,7 +342,7 @@ function Details({ Weather, UnitSystem }) {
         <Stat
           Icon={require('../../assets/icons/Wind.png')}
           Size={18}
-          Stat={Weather.wind.speed}
+          Stat={Current.wind.speed}
           Unit={UnitSystem.speed}
         />
 
@@ -350,7 +351,7 @@ function Details({ Weather, UnitSystem }) {
         <Stat
           Icon={require('../../assets/icons/Humidity.png')}
           Size={18}
-          Stat={Weather.main.humidity}
+          Stat={Current.main.humidity}
           Unit="%"
         />
       </View>
