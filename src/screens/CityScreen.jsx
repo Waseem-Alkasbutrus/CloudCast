@@ -133,8 +133,7 @@ async function fetchWeather(
       '&appid=' +
       API_KEY +
       '&units=' +
-      unitSystem.units +
-      '&cnt=13',
+      unitSystem.units
   )
     .then((res) => res.json())
     .then((res) => setHourlyWeather(res))

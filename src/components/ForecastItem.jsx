@@ -1,12 +1,30 @@
 import react, { useEffect, useState } from 'react'
-import { View, Image, StyleSheet, ScrollView } from 'react-native'
+import { View, Image, StyleSheet, ScrollView, Pressable } from 'react-native'
 import Stat from './IconStat'
 import Font from './Font'
 
 import WeatherIcon from './WeatherIcon'
 import { Colors, getTimeFormat } from './GlobalVars'
+import ChipField from './ChipField'
+
+function getHour(dtTxt) {
+  let dt = new Date(dtTxt.replace(' ', 'T'))
+  let hr = dt.getHours()
+
+  return hr
+}
+
+function getDay(dayIndex) {
+  let dt = new Date()
+  let day = dt.getDay() + dayIndex
+
+  return day
+}
 
 export function HourlySection({ Weather, UnitSystem }) {
+  const [ActivePage, setActivePage] = useState(0)
+  const [FilteredForecast, setFilteredForecast] = useState()
+
   let hourlyForecast = Weather.list.map((entry) => {
     return (
       <HourlyForecastItem
@@ -16,6 +34,18 @@ export function HourlySection({ Weather, UnitSystem }) {
       ></HourlyForecastItem>
     )
   })
+
+  let today = new Date().getDay()
+
+  useEffect(() => {
+    setFilteredForecast(
+      hourlyForecast.filter((item) => {
+        let dt = new Date(item.props.Hour.dt_txt.replace(' ', 'T')).getDay()
+
+        return dt - today === ActivePage
+      }),
+    )
+  }, [ActivePage])
 
   let hourly = getHourlyStyle(Colors._z)
 
@@ -39,16 +69,20 @@ export function HourlySection({ Weather, UnitSystem }) {
         </View>
       </View>
 
-      <ScrollView>{hourlyForecast}</ScrollView>
+      <ChipField
+        Options={[
+          'TODAY',
+          weekdays[(today + 1) % 7],
+          weekdays[(today + 2) % 7],
+          weekdays[(today + 3) % 7],
+        ]}
+        setActiveIndex={setActivePage}
+        ActiveIndex={ActivePage}
+      ></ChipField>
+
+      <ScrollView>{FilteredForecast}</ScrollView>
     </View>
   )
-}
-
-function getHour(dtTxt) {
-  const dt = new Date(dtTxt.replace(' ', 'T'))
-  const hr = dt.getHours()
-
-  return hr
 }
 
 async function getFormattedHours(dtTxt, setTimeVariables) {
@@ -140,9 +174,9 @@ function getHourlyStyle(colors) {
       paddingVertical: 4,
     },
     icon: {
-      width: 28,
-      height: 28,
-      tintColor: colors.text
+      width: 32,
+      height: 32,
+      tintColor: colors.text,
     },
     hourHeaderWrapper: {
       display: 'flex',
@@ -175,7 +209,7 @@ function getHourlyStyle(colors) {
     },
     wideStatCenter: {
       minWidth: 88,
-    }
+    },
   })
 }
 
@@ -200,18 +234,15 @@ export function WeeklySection({ Weather, UnitSystem }) {
 
   return (
     <View style={weekly.section}>
-      <ScrollView snapToInterval={80} horizontal={true} showsHorizontalScrollIndicator={false}>
+      <ScrollView
+        snapToInterval={88}
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+      >
         {weeklyForecast}
       </ScrollView>
     </View>
   )
-}
-
-function getDay(dayIndex) {
-  const dt = new Date()
-  const day = dt.getDay() + dayIndex
-
-  return day
 }
 
 const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -259,7 +290,7 @@ function getWeeklyStyle(colors) {
       paddingHorizontal: 16,
       paddingVertical: 8,
       marginHorizontal: 4,
-      minWidth: 72,
+      minWidth: 80,
 
       backgroundColor: colors.pressable,
       borderRadius: 8,
@@ -272,10 +303,10 @@ function getWeeklyStyle(colors) {
       textTransform: 'uppercase',
     },
     icon: {
-      width: 28,
-      height: 28,
-      marginVertical: 8,
-      tintColor: colors.text
+      width: 32,
+      height: 32,
+      marginVertical: 4,
+      tintColor: colors.text,
     },
   })
 }
