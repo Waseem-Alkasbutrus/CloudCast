@@ -36,7 +36,7 @@ export default function ChipField({
 
 function getStyles(colors) {
   return StyleSheet.create({
-    fieldWrapper: { flexDirection: 'row', marginVertical: 4 },
+    fieldWrapper: { flexDirection: 'row', marginBottom: 8 },
     chip: {
       borderColor: colors.text,
       borderWidth: 1,
